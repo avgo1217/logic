@@ -1,0 +1,52 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,12:13:13:007,target,BB Gun,0.252s,2,1,0.5,1,2,0.5,false
+2,12:13:13:182,target,BB Gun,0s,1,1,1,1,1,1,false
+3,12:13:13:636,target,BB Gun,0s,1,1,1,1,1,1,false
+4,12:13:13:810,target,BB Gun,0s,1,1,1,1,1,1,false
+5,12:13:13:994,target,BB Gun,0s,1,1,1,1,1,1,false
+6,12:13:14:483,target,BB Gun,0s,1,1,1,1,1,1,false
+7,12:13:14:788,target,BB Gun,0.112s,2,1,0.5,1,2,0.5,false
+8,12:13:15:183,target,BB Gun,0s,1,1,1,1,1,1,false
+9,12:13:15:439,target,BB Gun,0s,1,1,1,1,1,1,false
+10,12:13:15:775,target,BB Gun,0s,1,1,1,1,1,1,false
+11,12:13:16:471,target,BB Gun,0.436s,2,1,0.5,1,2,0.5,false
+12,12:13:16:650,target,BB Gun,0s,1,1,1,1,1,1,false
+13,12:13:16:946,target,BB Gun,0s,1,1,1,1,1,1,false
+14,12:13:17:175,target,BB Gun,0s,1,1,1,1,1,1,false
+15,12:13:17:377,target,BB Gun,0.001s,1,1,1,1,1,1,false
+16,12:13:17:561,target,BB Gun,0s,1,1,1,1,1,1,false
+17,12:13:17:740,target,BB Gun,0s,1,1,1,1,1,1,false
+18,12:13:18:190,target,BB Gun,0.001s,1,1,1,1,1,1,false
+19,12:13:18:468,target,BB Gun,0s,1,1,1,1,1,1,false
+20,12:13:19:023,target,BB Gun,0s,1,1,1,1,1,1,false
+21,12:13:19:347,target,BB Gun,0.174s,2,1,0.5,1,2,0.5,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+BB Gun,28,21,21.0,28.0,
+
+Kills:,21
+Deaths:,0
+Fight Time:,0.976
+Avg TTK:,0.046
+Damage Done:,21.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,15.75
+Scenario:,1wall6targets TE
+Hash:,3e50391f3c3f484c10a4b8fb362ded17
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,223.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.8
+Vert Sens:,1.8
+FOV:,80.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

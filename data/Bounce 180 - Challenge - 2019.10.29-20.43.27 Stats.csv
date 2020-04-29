@@ -1,0 +1,72 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,20:42:17:823,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+2,20:42:19:315,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+3,20:42:20:797,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+4,20:42:21:999,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+5,20:42:23:346,Pigeon,pistol,0.329s,2,1,0.5,50,250,0.2,false
+6,20:42:23:801,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+7,20:42:24:619,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+8,20:42:28:121,Pigeon,pistol,2.939s,3,1,0.333,50,375,0.133,false
+9,20:42:29:314,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+10,20:42:30:905,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+11,20:42:33:380,Pigeon,pistol,1.315s,3,1,0.333,50,375,0.133,false
+12,20:42:34:717,Pigeon,pistol,0.873s,2,1,0.5,50,250,0.2,false
+13,20:42:35:059,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+14,20:42:36:376,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+15,20:42:41:867,Pigeon,pistol,4.194s,5,1,0.2,50,625,0.08,false
+16,20:42:44:106,Pigeon,pistol,0.881s,2,1,0.5,50,250,0.2,false
+17,20:42:44:779,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+18,20:42:46:038,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+19,20:42:46:777,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+20,20:42:50:986,Pigeon,pistol,3.575s,5,1,0.2,50,625,0.08,false
+21,20:42:51:587,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+22,20:42:52:370,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+23,20:42:54:241,Pigeon,pistol,1.206s,2,1,0.5,50,250,0.2,false
+24,20:42:59:423,Pigeon,pistol,4.504s,4,1,0.25,50,500,0.1,false
+25,20:43:00:525,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+26,20:43:01:192,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+27,20:43:03:186,Pigeon,pistol,1.267s,2,1,0.5,50,250,0.2,false
+28,20:43:05:120,Pigeon,pistol,1.104s,2,1,0.5,50,250,0.2,false
+29,20:43:07:457,Pigeon,pistol,1.401s,2,1,0.5,50,250,0.2,false
+30,20:43:09:272,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+31,20:43:10:917,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+32,20:43:12:291,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+33,20:43:13:063,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+34,20:43:14:224,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+35,20:43:17:054,Pigeon,pistol,2.303s,4,1,0.25,50,500,0.1,false
+36,20:43:20:627,Pigeon,pistol,2.387s,3,1,0.333,50,375,0.133,false
+37,20:43:22:322,Pigeon,pistol,0.869s,2,1,0.5,50,250,0.2,false
+38,20:43:23:058,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+39,20:43:24:256,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+40,20:43:24:991,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+41,20:43:26:109,Pigeon,pistol,0s,1,1,1,50,125,0.4,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+pistol,70,41,2050.0,8750.0,
+
+Kills:,41
+Deaths:,0
+Fight Time:,29.146999
+Avg TTK:,0.711
+Damage Done:,2050.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,24.014286
+Scenario:,Bounce 180
+Hash:,28c00569c77cdbb9a321ffb8a8363220
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,240.0
+Sens Scale:,Quake/Source
+Horiz Sens:,2.252
+Vert Sens:,2.252
+FOV:,80.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

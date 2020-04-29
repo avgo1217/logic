@@ -1,0 +1,69 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,20:36:55:916,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+2,20:36:56:137,Snake 25 Tiles,Shooter Pistol,0.001s,1,1,1,10,10,1,false
+3,20:36:56:378,Snake 25 Tiles,Shooter Pistol,0.001s,1,1,1,10,10,1,false
+4,20:36:56:651,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+5,20:36:56:886,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+6,20:36:57:138,Snake 25 Tiles,Shooter Pistol,0.001s,1,1,1,10,10,1,false
+7,20:36:57:339,Snake 25 Tiles,Shooter Pistol,0.001s,1,1,1,10,10,1,false
+8,20:36:57:557,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+9,20:36:58:317,Snake 25 Tiles,Shooter Pistol,0.56s,2,1,0.5,10,20,0.5,false
+10,20:36:58:511,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+11,20:36:58:769,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+12,20:36:59:343,Snake 25 Tiles,Shooter Pistol,0.295s,2,1,0.5,10,20,0.5,false
+13,20:36:59:559,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+14,20:36:59:897,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+15,20:37:00:094,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+16,20:37:00:390,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+17,20:37:00:578,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+18,20:37:00:826,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+19,20:37:01:032,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+20,20:37:01:331,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+21,20:37:02:235,Snake 25 Tiles,Shooter Pistol,0.647s,2,1,0.5,10,20,0.5,false
+22,20:37:02:440,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+23,20:37:02:653,Snake 25 Tiles,Shooter Pistol,0.001s,1,1,1,10,10,1,false
+24,20:37:02:902,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+25,20:37:03:150,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+26,20:37:03:367,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+27,20:37:03:896,Snake 25 Tiles,Shooter Pistol,0.255s,2,1,0.5,10,20,0.5,false
+28,20:37:04:134,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+29,20:37:04:392,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+30,20:37:04:753,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+31,20:37:05:017,Snake 25 Tiles,Shooter Pistol,0.001s,1,1,1,10,10,1,false
+32,20:37:05:704,Snake 25 Tiles,Shooter Pistol,0.414s,2,1,0.5,10,20,0.5,false
+33,20:37:06:334,Snake 25 Tiles,Shooter Pistol,0.411s,2,1,0.5,10,20,0.5,false
+34,20:37:06:520,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+35,20:37:06:758,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+36,20:37:07:009,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+37,20:37:07:241,Snake 25 Tiles,Shooter Pistol,0s,1,1,1,10,10,1,false
+38,20:37:07:896,Snake 25 Tiles,Shooter Pistol,0.44s,3,1,0.333,10,30,0.333,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+Shooter Pistol,47,38,380.0,470.0,
+
+Kills:,38
+Deaths:,0
+Fight Time:,3.029
+Avg TTK:,0.08
+Damage Done:,380.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,30.723406
+Scenario:,Snake Tiles
+Hash:,9a616176003628e87bbe2db0d178cf4c
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,223.0
+Sens Scale:,Quake/Source
+Horiz Sens:,2.15
+Vert Sens:,2.15
+FOV:,80.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

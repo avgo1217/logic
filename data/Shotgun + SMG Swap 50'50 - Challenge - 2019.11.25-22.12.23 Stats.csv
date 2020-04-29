@@ -1,0 +1,48 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,22:11:28:043,Botz Bot,shotgun,2.817s,20,20,1,121.5,180,0.675,false
+1,22:11:28:043,Botz Bot,SMG,2.817s,31,14,0.452,40,124,0.323,false
+2,22:11:30:138,Botz Bot,SMG,1.996s,41,14,0.341,40,164,0.244,false
+3,22:11:36:063,Botz Bot,shotgun,5.349s,30,9,0.3,81,270,0.3,false
+3,22:11:36:063,Botz Bot,SMG,5.349s,72,33,0.458,82,288,0.285,false
+4,22:11:40:828,Botz Bot,SMG,4.516s,87,27,0.31,74,348,0.213,false
+5,22:11:44:878,Botz Bot,SMG,3.754s,76,30,0.395,106,304,0.349,false
+6,22:11:48:098,Botz Bot,SMG,2.925s,58,29,0.5,88,232,0.379,false
+7,22:11:52:386,Botz Bot,SMG,3.898s,79,35,0.443,104,316,0.329,false
+8,22:11:56:369,Botz Bot,SMG,3.731s,71,37,0.521,116,284,0.408,false
+9,22:11:58:934,Botz Bot,SMG,2.418s,47,31,0.66,84,188,0.447,false
+10,22:12:03:455,Botz Bot,SMG,4.094s,80,36,0.45,104,320,0.325,false
+11,22:12:10:343,Botz Bot,SMG,6.637s,118,33,0.28,96,472,0.203,false
+12,22:12:14:402,Botz Bot,SMG,3.224s,61,35,0.574,112,244,0.459,false
+13,22:12:17:963,Botz Bot,SMG,2.614s,53,30,0.566,92,212,0.434,false
+14,22:12:23:511,Botz Bot,SMG,4.786s,89,33,0.371,100,356,0.281,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+shotgun,50,29,202.5,450.0,
+SMG,963,417,1238.0,3852.0,
+
+Kills:,14
+Deaths:,0
+Fight Time:,52.758999
+Avg TTK:,3.768
+Damage Done:,1440.5
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,26853.167969
+Score:,7006.816895
+Scenario:,Shotgun + SMG Swap 50'50
+Hash:,574519c93af35a5294263577e9a4edf9
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,223.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.89
+Vert Sens:,1.89
+FOV:,90.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

@@ -1,0 +1,82 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,13:46:25:966,TileFrenzyStrafing Cube 400pct,pistol,4.073s,7,5,0.714,125,350,0.357,false
+2,13:46:29:285,TileFrenzyStrafing Cube 300pct,pistol,2.528s,7,5,0.714,125,350,0.357,false
+3,13:46:31:497,TileFrenzyStrafing Cube 500pct,pistol,1.673s,5,3,0.6,75,250,0.3,false
+4,13:46:32:467,TileFrenzyStrafing Cube 300pct,pistol,0.467s,3,3,1,75,150,0.5,false
+5,13:46:32:768,TileFrenzyStrafing Cube 400pct,pistol,0s,1,1,1,25,50,0.5,false
+6,13:46:33:879,TileFrenzyStrafing Cube 400pct,pistol,0.832s,5,3,0.6,75,250,0.3,false
+7,13:46:34:815,TileFrenzyStrafing Cube 300pct,pistol,0.306s,3,3,1,75,150,0.5,false
+8,13:46:37:285,TileFrenzyStrafing Cube 400pct,pistol,2.065s,10,5,0.5,125,500,0.25,false
+9,13:46:38:135,TileFrenzyStrafing Cube 500pct,pistol,0.001s,1,1,1,25,50,0.5,false
+10,13:46:38:917,TileFrenzyStrafing Cube 300pct,pistol,0.297s,3,3,1,75,150,0.5,false
+11,13:46:39:895,TileFrenzyStrafing Cube 400pct,pistol,0.277s,3,3,1,75,150,0.5,false
+12,13:46:40:898,TileFrenzyStrafing Cube 500pct,pistol,0.872s,5,3,0.6,75,250,0.3,false
+13,13:46:41:613,TileFrenzyStrafing Cube 500pct,pistol,0.277s,3,3,1,75,150,0.5,false
+14,13:46:42:708,TileFrenzyStrafing Cube 500pct,pistol,0.989s,6,3,0.5,75,300,0.25,false
+15,13:46:45:185,TileFrenzyStrafing Cube 200pct,pistol,2.063s,7,5,0.714,125,350,0.357,false
+16,13:46:45:633,TileFrenzyStrafing Cube 200pct,pistol,0s,1,1,1,25,50,0.5,false
+17,13:46:46:115,TileFrenzyStrafing Cube,pistol,0s,1,1,1,25,50,0.5,false
+18,13:46:47:506,TileFrenzyStrafing Cube,pistol,1.241s,5,4,0.8,100,250,0.4,false
+19,13:46:48:210,TileFrenzyStrafing Cube 400pct,pistol,0.33s,3,3,1,75,150,0.5,false
+20,13:46:48:997,TileFrenzyStrafing Cube 300pct,pistol,0.291s,3,3,1,75,150,0.5,false
+21,13:46:51:490,TileFrenzyStrafing Cube 400pct,pistol,2.17s,10,5,0.5,125,500,0.25,false
+22,13:46:52:661,TileFrenzyStrafing Cube 500pct,pistol,0.529s,4,3,0.75,75,200,0.375,false
+23,13:46:53:825,TileFrenzyStrafing Cube,pistol,0.491s,4,3,0.75,75,200,0.375,false
+24,13:46:55:412,TileFrenzyStrafing Cube,pistol,0.688s,4,3,0.75,75,200,0.375,false
+25,13:46:56:247,TileFrenzyStrafing Cube 500pct,pistol,0.262s,2,1,0.5,25,100,0.25,false
+26,13:46:56:795,TileFrenzyStrafing Cube 400pct,pistol,0.352s,3,2,0.667,50,150,0.333,false
+27,13:46:57:560,TileFrenzyStrafing Cube 400pct,pistol,0.304s,3,3,1,75,150,0.5,false
+28,13:46:59:167,TileFrenzyStrafing Cube,pistol,1.26s,6,3,0.5,75,300,0.25,false
+29,13:46:59:812,TileFrenzyStrafing Cube 400pct,pistol,0.288s,3,3,1,75,150,0.5,false
+30,13:47:00:896,TileFrenzyStrafing Cube 200pct,pistol,0.989s,5,3,0.6,75,250,0.3,false
+31,13:47:01:985,TileFrenzyStrafing Cube 400pct,pistol,0.385s,3,3,1,75,150,0.5,false
+32,13:47:03:088,TileFrenzyStrafing Cube,pistol,0.952s,5,3,0.6,75,250,0.3,false
+33,13:47:05:070,TileFrenzyStrafing Cube 300pct,pistol,1.56s,10,3,0.3,75,500,0.15,false
+34,13:47:05:945,TileFrenzyStrafing Cube 500pct,pistol,0.343s,3,3,1,75,150,0.5,false
+35,13:47:06:706,TileFrenzyStrafing Cube 300pct,pistol,0.307s,3,3,1,75,150,0.5,false
+36,13:47:07:385,TileFrenzyStrafing Cube 300pct,pistol,0.283s,3,3,1,75,150,0.5,false
+37,13:47:09:202,TileFrenzyStrafing Cube 300pct,pistol,1.671s,8,3,0.375,75,400,0.188,false
+38,13:47:10:536,TileFrenzyStrafing Cube 400pct,pistol,0.309s,3,3,1,75,150,0.5,false
+39,13:47:12:133,TileFrenzyStrafing Cube 200pct,pistol,1.083s,5,5,1,125,250,0.5,false
+40,13:47:13:044,TileFrenzyStrafing Cube,pistol,0.313s,3,3,1,75,150,0.5,false
+41,13:47:14:916,TileFrenzyStrafing Cube 300pct,pistol,1.438s,6,3,0.5,75,300,0.25,false
+42,13:47:15:478,TileFrenzyStrafing Cube 200pct,pistol,0s,1,1,1,25,50,0.5,false
+43,13:47:16:329,TileFrenzyStrafing Cube,pistol,0.343s,3,3,1,75,150,0.5,false
+44,13:47:17:198,TileFrenzyStrafing Cube 200pct,pistol,0.285s,3,3,1,75,150,0.5,false
+45,13:47:17:918,TileFrenzyStrafing Cube 500pct,pistol,0.323s,3,3,1,75,150,0.5,false
+46,13:47:18:731,TileFrenzyStrafing Cube 500pct,pistol,0.351s,3,3,1,75,150,0.5,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+pistol strong,0,0,0.0,0.0,
+weak pistol,0,0,0.0,0.0,
+pistol,191,138,3450.0,9550.0,
+Spider Rifle,0,0,0.0,0.0,
+Spider Rifle Laser,0,0,0.0,0.0,
+Generic Projectile,0,0,0.0,0.0,
+
+Kills:,46
+Deaths:,0
+Fight Time:,35.861
+Avg TTK:,0.78
+Damage Done:,3450.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,33.235603
+Scenario:,MienTommy's Tile Frenzy 180 Pro
+Hash:,a26aabeb1609557d9f1288d89b8c5f9c
+Game Version:,2.0.0.2
+
+Input Lag:,0
+Max FPS (config):,300.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.92
+Vert Sens:,1.92
+FOV:,103.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

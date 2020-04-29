@@ -1,0 +1,45 @@
+scenario_name,scenario_type,scenario_level,scenario_direction,scenario_fov,scenario_skills_tags,scenario_click_data,scenario_target_acquisition
+1w2ts reload,Clicking,Intermediate,,,Long distance flicks,1,1
+1wall5targets_pasu,Clicking,Beginner,,,,0,0
+1wall6targets small,Clicking,Intermediate,,,,0,0
+1wall6targets TE,Clicking,Beginner,,,,0,0
+Bounce 180,Clicking,Intermediate,,,,1,1
+Bounce 180 Reload,Clicking,Intermediate,,,,1,1
+Bounce 360 Reload,Clicking,Intermediate,,,,1,1
+Close Fast Strafes Easy Thin Shotgun,Clicking,Beginner,,,,1,0
+Jumbo Tile Frenzy,Clicking,Beginner,,,,1,0
+patTargetClick,Clicking,Beginner,,,,1,0
+patTargetshotgun,Clicking,Beginner,,,,1,0
+Pokeball Frenzy Auto Small,Clicking,Advanced,,,Stopping your crosshair on a target ,1,0
+Pokeball Frenzy Auto TE,Clicking,Intermediate,,,Stopping your crosshair on a target ,1,0
+Target Acquisition Flick ,Clicking,Intermediate,,120 FOV,,1,0
+Target Acquisition Flick Easy,Clicking,Beginner,,120 FOV,,1,0
+Tile Frenzy,Clicking,Beginner,,,,1,0
+Wide Wall 6Targets,Clicking,Beginner,,,,1,0
+Air dodge,Movement,Intermediate,,,,0,0
+Close FS Easy Dodge,Movement,Beginner,,,,0,0
+Close Long Strafes Easy Dodge,Movement,Beginner,,,,0,0
+Pasu Track Dodge,Movement,Intermediate,,,,0,0
+Pasu Track Easy Dodge,Movement,Beginner,,,,0,0
+XY Tracking Dodge,Movement,Beginner,,,,0,0
+Bounce 180 Tracking ,Switching,Intermediate,,,,1,0
+Bounce 180 Tracking small,Switching,Intermediate,,,,1,0
+Bounce 360 Tracking ,Switching,Intermediate,,,,1,0
+Bounce 360 Tracking small,Switching,Intermediate,,,,1,0
+fuglaab180t,Switching,,,,,1,0
+patTargetSwitch,Switching,Beginner,,,Target acquisition,1,0
+patTargetSwitch small,Switching,Intermediate,,,Target acquisition,1,0
+Tile Frenzy 180 Tracking ,Switching,Beginner,,,Target acquisition,1,0
+Tile Frenzy 180 Tracking 200%,Switching,Beginner,,,Target acquisition,1,0
+Tile Frenzy 180 Tracking 300%,Switching,Intermediate,,,Target acquisition,1,0
+Tile Frenzy 180 Tracking 400%,Switching,Intermediate,,,Target acquisition,1,0
+Air Invincible,Tracking ,Intermediate,Vertical,,,0,0
+Close Fast Strafes Invincible,Tracking ,Intermediate,Horizontal,,,0,0
+Close Long Strafes Easy Invincible,Tracking ,Beginner,Horizontal,,Smoothness; reactivity,0,0
+Close Long Strafes Invincible,Tracking ,Intermediate,Horizontal,,Smoothness; reactivity,0,0
+Midrange Long Strafes Invincible,Tracking ,Intermediate,Horizontal,,Smoothness; reactivity; precision,0,0
+Overhead Jumps,Tracking ,Intermediate,Vertical,,,0,0
+Thin Aiming Long Invincible ,Tracking ,Intermediate,Horizontal,,Smoothness; reactivity; precision,0,0
+Thin Aiming Long Invincible Easy,Tracking ,Beginner,Horizontal,,Smoothness; reactivity; precision,0,0
+Vertical Hand Warmup,Tracking ,Intermediate,Vertical,,,0,0
+VSS Long (TODO),Tracking ,Intermediate,Horizontal,,Reactivity to speed changes,0,0

@@ -1,0 +1,35 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,21:59:35:874,Quaker Bot Fast Strafes Thin,shotgun,2.722s,30,30,1,300,600,0.5,false
+2,21:59:51:898,Quaker Bot Fast Strafes Thin,shotgun,13.054s,90,32,0.356,320,1800,0.178,false
+3,22:00:10:654,Quaker Bot Fast Strafes Thin,shotgun,16.06s,130,39,0.3,390,2600,0.15,false
+4,22:00:19:860,Quaker Bot Fast Strafes Thin,shotgun,6.002s,60,34,0.567,340,1200,0.283,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+shotgun,400,155,1550.0,8000.0,
+
+Kills:,4
+Deaths:,0
+Fight Time:,37.838001
+Avg TTK:,9.46
+Damage Done:,1550.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,1102.574463
+Score:,4650.0
+Scenario:,Close Fast Strafes Easy Thin Shotgun
+Hash:,038c3922fc99ebd1a7cd6e8b587ef819
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,223.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.89
+Vert Sens:,1.89
+FOV:,90.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

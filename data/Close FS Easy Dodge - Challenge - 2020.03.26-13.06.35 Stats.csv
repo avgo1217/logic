@@ -1,0 +1,35 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,13:05:47:654,Quaker Bot Fast Strafes,LG,11.687s,232,67,0.289,402,1392,0.289,false
+2,13:06:00:650,Quaker Bot Fast Strafes,LG,12.762s,216,67,0.31,402,1296,0.31,false
+3,13:06:16:270,Quaker Bot Fast Strafes,LG,14.146s,284,67,0.236,402,1704,0.236,false
+4,13:06:28:769,Quaker Bot Fast Strafes,LG,12.222s,231,67,0.29,402,1386,0.29,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+LG,1065,298,1788.0,6390.0,
+
+Kills:,4
+Deaths:,0
+Fight Time:,50.817001
+Avg TTK:,12.704
+Damage Done:,1788.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,58676.21875
+Score:,10204.478516
+Scenario:,Close FS Easy Dodge
+Hash:,7cba877273be94b0f315bd1e8a79eb68
+Game Version:,2.0.0.2
+
+Input Lag:,0
+Max FPS (config):,300.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.92
+Vert Sens:,1.92
+FOV:,103.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

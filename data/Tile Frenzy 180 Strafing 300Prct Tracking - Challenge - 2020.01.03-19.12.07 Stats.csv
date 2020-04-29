@@ -1,0 +1,94 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,19:11:08:762,TileFrenzyStrafing Cube,LG,0.781s,18,9,0.5,54,108,0.5,false
+2,19:11:09:871,TileFrenzyStrafing Cube,LG,0.594s,14,9,0.643,54,84,0.643,false
+3,19:11:10:642,TileFrenzyStrafing Cube,LG,0.459s,11,9,0.818,54,66,0.818,false
+4,19:11:11:487,TileFrenzyStrafing Cube,LG,0.551s,13,9,0.692,54,78,0.692,false
+5,19:11:12:531,TileFrenzyStrafing Cube,LG,0.414s,10,9,0.9,54,60,0.9,false
+6,19:11:13:457,TileFrenzyStrafing Cube,LG,0.55s,13,9,0.692,54,78,0.692,false
+7,19:11:14:180,TileFrenzyStrafing Cube,LG,0.456s,11,9,0.818,54,66,0.818,false
+8,19:11:14:840,TileFrenzyStrafing Cube,LG,0.412s,10,9,0.9,54,60,0.9,false
+9,19:11:15:903,TileFrenzyStrafing Cube,LG,0.55s,13,9,0.692,54,78,0.692,false
+10,19:11:16:995,TileFrenzyStrafing Cube,LG,0.505s,12,9,0.75,54,72,0.75,false
+11,19:11:18:687,TileFrenzyStrafing Cube,LG,1.009s,23,9,0.391,54,138,0.391,false
+12,19:11:19:263,TileFrenzyStrafing Cube,LG,0.46s,11,9,0.818,54,66,0.818,false
+13,19:11:20:394,TileFrenzyStrafing Cube,LG,0.458s,11,9,0.818,54,66,0.818,false
+14,19:11:21:147,TileFrenzyStrafing Cube,LG,0.411s,10,9,0.9,54,60,0.9,false
+15,19:11:22:390,TileFrenzyStrafing Cube,LG,0.968s,22,9,0.409,54,132,0.409,false
+16,19:11:23:128,TileFrenzyStrafing Cube,LG,0.462s,11,9,0.818,54,66,0.818,false
+17,19:11:23:800,TileFrenzyStrafing Cube,LG,0.508s,12,9,0.75,54,72,0.75,false
+18,19:11:24:275,TileFrenzyStrafing Cube,LG,0.368s,9,9,1,54,54,1,false
+19,19:11:25:249,TileFrenzyStrafing Cube,LG,0.643s,15,9,0.6,54,90,0.6,false
+20,19:11:26:302,TileFrenzyStrafing Cube,LG,0.876s,20,15,0.75,90,120,0.75,false
+21,19:11:27:126,TileFrenzyStrafing Cube,LG,0.411s,10,9,0.9,54,60,0.9,false
+22,19:11:27:495,TileFrenzyStrafing Cube,LG,0.092s,3,3,1,18,18,1,false
+23,19:11:28:187,TileFrenzyStrafing Cube,LG,0.551s,13,9,0.692,54,78,0.692,false
+24,19:11:30:659,TileFrenzyStrafing Cube,LG,1.894s,36,17,0.472,102,216,0.472,false
+25,19:11:31:299,TileFrenzyStrafing Cube,LG,0.367s,9,9,1,54,54,1,false
+26,19:11:32:923,TileFrenzyStrafing Cube,LG,1.489s,27,17,0.63,102,162,0.63,false
+27,19:11:33:735,TileFrenzyStrafing Cube,LG,0.457s,11,9,0.818,54,66,0.818,false
+28,19:11:34:629,TileFrenzyStrafing Cube,LG,0.458s,11,9,0.818,54,66,0.818,false
+29,19:11:35:033,TileFrenzyStrafing Cube,LG,0.228s,6,6,1,36,36,1,false
+30,19:11:35:233,TileFrenzyStrafing Cube,LG,0.137s,4,4,1,24,24,1,false
+31,19:11:36:469,TileFrenzyStrafing Cube,LG,1.173s,17,9,0.529,54,102,0.529,false
+32,19:11:37:505,TileFrenzyStrafing Cube,LG,0.458s,11,9,0.818,54,66,0.818,false
+33,19:11:38:113,TileFrenzyStrafing Cube,LG,0.461s,9,9,1,54,54,1,false
+34,19:11:38:714,TileFrenzyStrafing Cube,LG,0.366s,9,9,1,54,54,1,false
+35,19:11:39:854,TileFrenzyStrafing Cube,LG,0.414s,10,9,0.9,54,60,0.9,false
+36,19:11:40:493,TileFrenzyStrafing Cube,LG,0.412s,10,9,0.9,54,60,0.9,false
+37,19:11:41:333,TileFrenzyStrafing Cube,LG,0.457s,11,9,0.818,54,66,0.818,false
+38,19:11:42:354,TileFrenzyStrafing Cube,LG,0.689s,16,9,0.562,54,96,0.562,false
+39,19:11:43:350,TileFrenzyStrafing Cube,LG,0.503s,12,9,0.75,54,72,0.75,false
+40,19:11:44:193,TileFrenzyStrafing Cube,LG,0.504s,12,9,0.75,54,72,0.75,false
+41,19:11:45:040,TileFrenzyStrafing Cube,LG,0.549s,13,9,0.692,54,78,0.692,false
+42,19:11:45:817,TileFrenzyStrafing Cube,LG,0.458s,11,9,0.818,54,66,0.818,false
+43,19:11:46:795,TileFrenzyStrafing Cube,LG,0.551s,13,9,0.692,54,78,0.692,false
+44,19:11:47:416,TileFrenzyStrafing Cube,LG,0.366s,9,9,1,54,54,1,false
+45,19:11:49:075,TileFrenzyStrafing Cube,LG,1.193s,27,9,0.333,54,162,0.333,false
+46,19:11:49:703,TileFrenzyStrafing Cube,LG,0.366s,9,9,1,54,54,1,false
+47,19:11:50:713,TileFrenzyStrafing Cube,LG,0.457s,11,9,0.818,54,66,0.818,false
+48,19:11:51:669,TileFrenzyStrafing Cube,LG,0.366s,9,9,1,54,54,1,false
+49,19:11:53:578,TileFrenzyStrafing Cube,LG,1.033s,17,17,1,102,102,1,false
+50,19:11:54:342,TileFrenzyStrafing Cube,LG,0.553s,13,9,0.692,54,78,0.692,false
+51,19:11:54:408,TileFrenzyStrafing Cube,LG,0s,1,1,1,6,6,1,false
+52,19:11:55:229,TileFrenzyStrafing Cube,LG,0.689s,16,9,0.562,54,96,0.562,false
+53,19:11:55:896,TileFrenzyStrafing Cube,LG,0.503s,12,9,0.75,54,72,0.75,false
+54,19:11:57:125,TileFrenzyStrafing Cube,LG,0.458s,11,9,0.818,54,66,0.818,false
+55,19:11:58:266,TileFrenzyStrafing Cube,LG,0.502s,12,9,0.75,54,72,0.75,false
+56,19:11:59:365,TileFrenzyStrafing Cube,LG,0.365s,9,9,1,54,54,1,false
+57,19:12:00:465,TileFrenzyStrafing Cube,LG,0.504s,12,9,0.75,54,72,0.75,false
+58,19:12:02:286,TileFrenzyStrafing Cube,LG,1.607s,36,17,0.472,102,216,0.472,false
+59,19:12:02:996,TileFrenzyStrafing Cube,LG,0.413s,10,9,0.9,54,60,0.9,false
+60,19:12:03:919,TileFrenzyStrafing Cube,LG,0.182s,5,1,0.2,6,30,0.2,false
+61,19:12:04:809,TileFrenzyStrafing Cube,LG,0.456s,11,9,0.818,54,66,0.818,false
+62,19:12:05:748,TileFrenzyStrafing Cube,LG,0.596s,14,9,0.643,54,84,0.643,false
+63,19:12:06:836,TileFrenzyStrafing Cube,LG,0.595s,14,9,0.643,54,84,0.643,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+LG,820,583,3498.0,4920.0,
+
+Kills:,63
+Deaths:,0
+Fight Time:,35.719002
+Avg TTK:,0.567
+Damage Done:,3498.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,63.0
+Scenario:,Tile Frenzy 180 Strafing 300Prct Tracking
+Hash:,203079f00dec4fdc02f745bd1e439feb
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,300.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.89375
+Vert Sens:,1.89375
+FOV:,80.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

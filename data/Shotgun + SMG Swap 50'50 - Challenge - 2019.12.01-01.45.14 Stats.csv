@@ -1,0 +1,54 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,01:44:16:026,Botz Bot,shotgun,0.606s,10,10,1,85.5,90,0.95,false
+1,01:44:16:026,Botz Bot,SMG,0.606s,4,4,1,16,16,1,false
+2,01:44:22:742,Botz Bot,shotgun,6.463s,20,16,0.8,99,180,0.55,false
+2,01:44:22:742,Botz Bot,SMG,6.463s,78,26,0.333,82,312,0.263,false
+3,01:44:24:065,Botz Bot,SMG,0.946s,20,8,0.4,20,80,0.25,false
+4,01:44:31:261,Botz Bot,shotgun,6.093s,20,0,0,0,180,0,false
+4,01:44:31:261,Botz Bot,SMG,6.093s,77,37,0.481,100,308,0.325,false
+5,01:44:41:216,Botz Bot,shotgun,9.705s,20,13,0.65,72,180,0.4,false
+5,01:44:41:216,Botz Bot,SMG,9.705s,142,45,0.317,128,568,0.225,false
+6,01:44:41:993,Botz Bot,SMG,0.525s,3,1,0.333,4,12,0.333,false
+7,01:44:46:511,Botz Bot,shotgun,3.35s,20,7,0.35,63,180,0.35,false
+7,01:44:46:511,Botz Bot,SMG,3.35s,37,13,0.351,38,148,0.257,false
+8,01:44:48:950,Botz Bot,shotgun,1.953s,20,12,0.6,76.5,180,0.425,false
+8,01:44:48:950,Botz Bot,SMG,1.953s,21,17,0.81,42,84,0.5,false
+9,01:44:55:378,Botz Bot,shotgun,6.328s,20,11,0.55,63,180,0.35,false
+9,01:44:55:378,Botz Bot,SMG,6.328s,87,36,0.414,94,348,0.27,false
+10,01:44:57:714,Botz Bot,SMG,2.103s,43,18,0.419,46,172,0.267,false
+11,01:44:59:433,Botz Bot,shotgun,1.005s,10,10,1,90,90,1,false
+11,01:44:59:433,Botz Bot,SMG,1.005s,13,4,0.308,10,52,0.192,false
+12,01:45:06:344,Botz Bot,shotgun,6.43s,30,12,0.4,67.5,270,0.25,false
+12,01:45:06:344,Botz Bot,SMG,6.43s,86,22,0.256,78,344,0.227,false
+13,01:45:08:354,Botz Bot,SMG,1.349s,28,21,0.75,60,112,0.536,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+shotgun,190,101,661.5,1710.0,
+SMG,729,270,780.0,2916.0,
+
+Kills:,13
+Deaths:,0
+Fight Time:,46.855999
+Avg TTK:,3.604
+Damage Done:,1441.5
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,21467.044922
+Score:,6471.20459
+Scenario:,Shotgun + SMG Swap 50'50
+Hash:,574519c93af35a5294263577e9a4edf9
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,223.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.7675
+Vert Sens:,1.7675
+FOV:,110.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

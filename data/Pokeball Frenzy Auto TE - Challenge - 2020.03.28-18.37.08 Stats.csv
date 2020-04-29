@@ -1,0 +1,91 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,18:36:39:131,Regenerating Pokeball,Poke-Drill,0.048s,6,6,1,1.2,1.2,1,false
+2,18:36:39:549,Regenerating Pokeball,Poke-Drill,0.098s,11,11,1,2.2,2.2,1,false
+3,18:36:40:077,Regenerating Pokeball,Poke-Drill,0.058s,7,7,1,1.4,1.4,1,false
+4,18:36:40:274,Regenerating Pokeball,Poke-Drill,0.047s,6,6,1,1.2,1.2,1,false
+5,18:36:40:703,Regenerating Pokeball,Poke-Drill,0.35s,8,7,0.875,1.4,1.6,0.875,false
+6,18:36:40:843,Regenerating Pokeball,Poke-Drill,0.079s,9,9,1,1.8,1.8,1,false
+7,18:36:41:193,Regenerating Pokeball,Poke-Drill,0.047s,6,6,1,1.2,1.2,1,false
+8,18:36:41:964,Regenerating Pokeball,Poke-Drill,0.594s,17,6,0.353,1.2,3.4,0.353,false
+9,18:36:42:314,Regenerating Pokeball,Poke-Drill,0.047s,6,6,1,1.2,1.2,1,false
+10,18:36:43:360,Regenerating Pokeball,Poke-Drill,0.669s,41,18,0.439,3.6,8.2,0.439,false
+11,18:36:44:257,Regenerating Pokeball,Poke-Drill,0.593s,30,20,0.667,4,6,0.667,false
+12,18:36:44:515,Regenerating Pokeball,Poke-Drill,0.071s,8,8,1,1.6,1.6,1,false
+13,18:36:45:215,Regenerating Pokeball,Poke-Drill,0.048s,6,6,1,1.2,1.2,1,false
+14,18:36:45:810,Regenerating Pokeball,Poke-Drill,0.047s,6,6,1,1.2,1.2,1,false
+15,18:36:45:979,Regenerating Pokeball,Poke-Drill,0.047s,6,6,1,1.2,1.2,1,false
+16,18:36:46:650,Regenerating Pokeball,Poke-Drill,0.646s,27,10,0.37,2,5.4,0.37,false
+17,18:36:47:350,Regenerating Pokeball,Poke-Drill,0.299s,20,18,0.9,3.6,4,0.9,false
+18,18:36:48:050,Regenerating Pokeball,Poke-Drill,0.357s,37,6,0.162,1.2,7.4,0.162,false
+19,18:36:48:510,Regenerating Pokeball,Poke-Drill,0.068s,8,6,0.75,1.2,1.6,0.75,false
+20,18:36:48:818,Regenerating Pokeball,Poke-Drill,0.048s,6,6,1,1.2,1.2,1,false
+21,18:36:49:409,Regenerating Pokeball,Poke-Drill,0.402s,41,11,0.268,2.2,8.2,0.268,false
+22,18:36:49:476,Regenerating Pokeball,Poke-Drill,0.05s,6,6,1,1.2,1.2,1,false
+23,18:36:50:679,Regenerating Pokeball,Poke-Drill,0.95s,96,14,0.146,2.8,19.2,0.146,false
+24,18:36:51:180,Regenerating Pokeball,Poke-Drill,0.247s,26,11,0.423,2.2,5.2,0.423,false
+25,18:36:51:722,Regenerating Pokeball,Poke-Drill,0.381s,39,6,0.154,1.2,7.8,0.154,false
+26,18:36:52:362,Regenerating Pokeball,Poke-Drill,0.048s,6,6,1,1.2,1.2,1,false
+27,18:36:52:655,Regenerating Pokeball,Poke-Drill,0.069s,8,8,1,1.6,1.6,1,false
+28,18:36:52:915,Regenerating Pokeball,Poke-Drill,0.077s,9,9,1,1.8,1.8,1,false
+29,18:36:52:982,Regenerating Pokeball,Poke-Drill,0.057s,7,6,0.857,1.2,1.4,0.857,false
+30,18:36:53:880,Regenerating Pokeball,Poke-Drill,0.64s,65,8,0.123,1.6,13,0.123,false
+31,18:36:54:164,Regenerating Pokeball,Poke-Drill,0.049s,6,6,1,1.2,1.2,1,false
+32,18:36:54:470,Regenerating Pokeball,Poke-Drill,0.058s,7,7,1,1.4,1.4,1,false
+33,18:36:55:384,Regenerating Pokeball,Poke-Drill,0.75s,76,13,0.171,2.6,15.2,0.171,false
+34,18:36:55:472,Regenerating Pokeball,Poke-Drill,0.049s,6,6,1,1.2,1.2,1,false
+35,18:36:56:652,Regenerating Pokeball,Poke-Drill,0.971s,98,12,0.122,2.4,19.6,0.122,false
+36,18:36:56:980,Regenerating Pokeball,Poke-Drill,0.08s,9,9,1,1.8,1.8,1,false
+37,18:36:57:264,Regenerating Pokeball,Poke-Drill,0.059s,7,6,0.857,1.2,1.4,0.857,false
+38,18:36:58:001,Regenerating Pokeball,Poke-Drill,0.49s,50,11,0.22,2.2,10,0.22,false
+39,18:36:58:263,Regenerating Pokeball,Poke-Drill,0.111s,12,10,0.833,2,2.4,0.833,false
+40,18:36:58:370,Regenerating Pokeball,Poke-Drill,0.06s,7,7,1,1.4,1.4,1,false
+41,18:36:58:864,Regenerating Pokeball,Poke-Drill,0.27s,28,6,0.214,1.2,5.6,0.214,false
+42,18:36:59:570,Regenerating Pokeball,Poke-Drill,0.458s,47,14,0.298,2.8,9.4,0.298,false
+43,18:36:59:913,Regenerating Pokeball,Poke-Drill,0.161s,17,6,0.353,1.2,3.4,0.353,false
+44,18:36:59:982,Regenerating Pokeball,Poke-Drill,0.05s,6,6,1,1.2,1.2,1,false
+45,18:37:00:574,Regenerating Pokeball,Poke-Drill,0.368s,38,6,0.158,1.2,7.6,0.158,false
+46,18:37:00:822,Regenerating Pokeball,Poke-Drill,0.049s,6,6,1,1.2,1.2,1,false
+47,18:37:01:893,Regenerating Pokeball,Poke-Drill,0.911s,92,24,0.261,4.8,18.4,0.261,false
+48,18:37:01:982,Regenerating Pokeball,Poke-Drill,0.051s,6,6,1,1.2,1.2,1,false
+49,18:37:02:371,Regenerating Pokeball,Poke-Drill,0.13s,14,6,0.429,1.2,2.8,0.429,false
+50,18:37:02:812,Regenerating Pokeball,Poke-Drill,0.187s,20,6,0.3,1.2,4,0.3,false
+51,18:37:03:104,Regenerating Pokeball,Poke-Drill,0.1s,11,9,0.818,1.8,2.2,0.818,false
+52,18:37:03:171,Regenerating Pokeball,Poke-Drill,0.047s,6,6,1,1.2,1.2,1,false
+53,18:37:03:982,Regenerating Pokeball,Poke-Drill,0.552s,56,11,0.196,2.2,11.2,0.196,false
+54,18:37:04:309,Regenerating Pokeball,Poke-Drill,0.068s,8,6,0.75,1.2,1.6,0.75,false
+55,18:37:04:770,Regenerating Pokeball,Poke-Drill,0.209s,22,7,0.318,1.4,4.4,0.318,false
+56,18:37:05:603,Regenerating Pokeball,Poke-Drill,0.66s,67,16,0.239,3.2,13.4,0.239,false
+57,18:37:05:682,Regenerating Pokeball,Poke-Drill,0.049s,6,6,1,1.2,1.2,1,false
+58,18:37:06:309,Regenerating Pokeball,Poke-Drill,0.37s,38,6,0.158,1.2,7.6,0.158,false
+59,18:37:06:585,Regenerating Pokeball,Poke-Drill,0.109s,12,11,0.917,2.2,2.4,0.917,false
+60,18:37:06:669,Regenerating Pokeball,Poke-Drill,0.047s,6,6,1,1.2,1.2,1,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+Poke-Drill,1538,533,106.599518,307.600372,
+
+Kills:,60
+Deaths:,0
+Fight Time:,14.705
+Avg TTK:,0.245
+Damage Done:,106.599518
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,60.0
+Scenario:,Pokeball Frenzy Auto TE
+Hash:,4bbc57c1d7252c1273bdcbfd68c72e78
+Game Version:,2.0.0.2
+
+Input Lag:,0
+Max FPS (config):,300.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.92
+Vert Sens:,1.92
+FOV:,103.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

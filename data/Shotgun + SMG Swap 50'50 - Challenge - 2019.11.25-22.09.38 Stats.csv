@@ -1,0 +1,59 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,22:08:43:379,Botz Bot,shotgun,3.606s,20,13,0.65,72,180,0.4,false
+1,22:08:43:379,Botz Bot,SMG,3.606s,43,9,0.209,28,172,0.163,false
+2,22:08:46:411,Botz Bot,shotgun,2.798s,10,6,0.6,54,90,0.6,false
+2,22:08:46:411,Botz Bot,SMG,2.798s,38,18,0.474,46,152,0.303,false
+3,22:08:49:008,Botz Bot,shotgun,0.83s,10,10,1,90,90,1,false
+3,22:08:49:008,Botz Bot,SMG,0.83s,9,3,0.333,10,36,0.278,false
+4,22:08:50:475,Botz Bot,shotgun,0.435s,10,10,1,90,90,1,false
+4,22:08:50:475,Botz Bot,SMG,0.435s,4,3,0.75,12,16,0.75,false
+5,22:08:57:106,Botz Bot,shotgun,5.416s,30,20,0.667,103.5,270,0.383,false
+5,22:08:57:106,Botz Bot,SMG,5.416s,60,23,0.383,86,240,0.358,false
+6,22:08:58:025,Botz Bot,SMG,0.498s,11,6,0.545,14,44,0.318,false
+7,22:09:01:680,Botz Bot,shotgun,3.549s,20,15,0.75,94.5,180,0.525,false
+7,22:09:01:680,Botz Bot,SMG,3.549s,38,9,0.237,28,152,0.184,false
+8,22:09:09:561,Botz Bot,shotgun,7.732s,30,2,0.067,9,270,0.033,false
+8,22:09:09:561,Botz Bot,SMG,7.732s,94,40,0.426,104,376,0.277,false
+9,22:09:11:956,Botz Bot,shotgun,2.18s,10,7,0.7,54,90,0.6,false
+9,22:09:11:956,Botz Bot,SMG,2.18s,31,14,0.452,30,124,0.242,false
+10,22:09:18:183,Botz Bot,shotgun,5.679s,20,18,0.9,108,180,0.6,false
+10,22:09:18:183,Botz Bot,SMG,5.679s,95,34,0.358,94,380,0.247,false
+11,22:09:19:024,Botz Bot,shotgun,0.001s,10,4,0.4,36,90,0.4,false
+12,22:09:27:344,Botz Bot,shotgun,8.074s,20,20,1,103.5,180,0.575,false
+12,22:09:27:344,Botz Bot,SMG,8.074s,84,30,0.357,78,336,0.232,false
+13,22:09:27:894,Botz Bot,shotgun,0.001s,10,9,0.9,67.5,90,0.75,false
+14,22:09:31:559,Botz Bot,shotgun,3.417s,10,10,1,90,90,1,false
+14,22:09:31:559,Botz Bot,SMG,3.417s,28,7,0.25,22,112,0.196,false
+15,22:09:37:430,Botz Bot,shotgun,4.136s,20,3,0.15,13.5,180,0.075,false
+15,22:09:37:430,Botz Bot,SMG,4.136s,61,26,0.426,78,244,0.32,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+shotgun,240,157,1062.0,2160.0,
+SMG,602,224,638.0,2408.0,
+
+Kills:,15
+Deaths:,0
+Fight Time:,48.352001
+Avg TTK:,3.223
+Damage Done:,1700.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,26222.013672
+Score:,7722.201172
+Scenario:,Shotgun + SMG Swap 50'50
+Hash:,574519c93af35a5294263577e9a4edf9
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,223.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.89
+Vert Sens:,1.89
+FOV:,90.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

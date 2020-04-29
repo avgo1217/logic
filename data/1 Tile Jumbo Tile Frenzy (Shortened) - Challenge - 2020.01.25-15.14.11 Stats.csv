@@ -1,0 +1,61 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,15:14:01:531,target,pistol,0s,1,1,1,25,50,0.5,false
+2,15:14:01:822,target,pistol,0s,1,1,1,25,50,0.5,false
+3,15:14:02:133,target,pistol,0s,1,1,1,25,50,0.5,false
+4,15:14:02:431,target,pistol,0s,1,1,1,25,50,0.5,false
+5,15:14:02:761,target,pistol,0s,1,1,1,25,50,0.5,false
+6,15:14:03:119,target,pistol,0s,1,1,1,25,50,0.5,false
+7,15:14:03:850,target,pistol,0.443s,2,1,0.5,25,100,0.25,false
+8,15:14:04:161,target,pistol,0s,1,1,1,25,50,0.5,false
+9,15:14:04:445,target,pistol,0s,1,1,1,25,50,0.5,false
+10,15:14:04:785,target,pistol,0s,1,1,1,25,50,0.5,false
+11,15:14:05:096,target,pistol,0s,1,1,1,25,50,0.5,false
+12,15:14:05:390,target,pistol,0s,1,1,1,25,50,0.5,false
+13,15:14:05:684,target,pistol,0s,1,1,1,25,50,0.5,false
+14,15:14:05:961,target,pistol,0s,1,1,1,25,50,0.5,false
+15,15:14:06:294,target,pistol,0s,1,1,1,25,50,0.5,false
+16,15:14:06:615,target,pistol,0.001s,1,1,1,25,50,0.5,false
+17,15:14:06:925,target,pistol,0s,1,1,1,25,50,0.5,false
+18,15:14:07:256,target,pistol,0s,1,1,1,25,50,0.5,false
+19,15:14:07:547,target,pistol,0s,1,1,1,25,50,0.5,false
+20,15:14:07:898,target,pistol,0s,1,1,1,25,50,0.5,false
+21,15:14:08:165,target,pistol,0s,1,1,1,25,50,0.5,false
+22,15:14:08:446,target,pistol,0s,1,1,1,25,50,0.5,false
+23,15:14:08:746,target,pistol,0s,1,1,1,25,50,0.5,false
+24,15:14:09:000,target,pistol,0s,1,1,1,25,50,0.5,false
+25,15:14:09:260,target,pistol,0s,1,1,1,25,50,0.5,false
+26,15:14:09:858,target,pistol,0.297s,2,1,0.5,25,100,0.25,false
+27,15:14:10:122,target,pistol,0s,1,1,1,25,50,0.5,false
+28,15:14:10:403,target,pistol,0s,1,1,1,25,50,0.5,false
+29,15:14:10:713,target,pistol,0.001s,1,1,1,25,50,0.5,false
+30,15:14:11:053,target,pistol,0s,1,1,1,25,50,0.5,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+pistol,32,30,750.0,1600.0,
+
+Kills:,30
+Deaths:,0
+Fight Time:,0.742
+Avg TTK:,0.025
+Damage Done:,750.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,30.0
+Scenario:,1 Tile Jumbo Tile Frenzy (Shortened)
+Hash:,c8de60e6ad47631367880488da63da68
+Game Version:,2.0.0.1
+
+Input Lag:,0
+Max FPS (config):,300.0
+Sens Scale:,Quake/Source
+Horiz Sens:,2.02
+Vert Sens:,2.02
+FOV:,100.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

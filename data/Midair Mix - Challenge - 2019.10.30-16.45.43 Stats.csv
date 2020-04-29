@@ -1,0 +1,54 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,16:44:47:803,Pigeon,Rocket Launcher,2.984s,3,2,0.667,110.92,360,0.308,false
+2,16:44:54:102,Pigeon,Rocket Launcher,4.243s,5,4,0.8,125.428,600,0.209,false
+3,16:45:06:226,Pigeon,Rocket Launcher,10.773s,11,8,0.727,167.019,1320,0.127,false
+4,16:45:09:656,Pigeon,Rocket Launcher,2.08s,3,3,1,100.277,360,0.279,false
+5,16:45:14:499,Pigeon,Rocket Launcher,3.528s,2,2,1,63.524,240,0.265,false
+5,16:45:14:499,Pigeon,LG,3.528s,18,10,0.556,60,108,0.556,false
+6,16:45:17:663,Pigeon,Rocket Launcher,1.725s,1,1,1,36.946,120,0.308,false
+6,16:45:17:663,Pigeon,LG,1.725s,21,11,0.524,66,126,0.524,false
+7,16:45:23:142,Pigeon,Rocket Launcher,4.252s,3,3,1,113.497,360,0.315,false
+7,16:45:23:143,Pigeon,LG,4.252s,12,8,0.667,48,72,0.667,false
+8,16:45:24:933,Pigeon,LG,1.008s,23,11,0.478,66,138,0.478,false
+9,16:45:29:214,Pigeon,LG,3.597s,77,32,0.416,192,462,0.416,false
+10,16:45:29:901,Pigeon,LG,0.09s,3,2,0.667,12,18,0.667,false
+11,16:45:32:556,Pigeon,LG,1.588s,29,17,0.586,102,174,0.586,false
+12,16:45:34:431,Pigeon,LG,1.471s,33,17,0.515,102,198,0.515,false
+13,16:45:37:337,Pigeon,Rocket Launcher,1.625s,1,1,1,49.089,120,0.409,false
+13,16:45:37:337,Pigeon,LG,1.625s,19,9,0.474,54,114,0.474,false
+14,16:45:40:406,Pigeon,Rocket Launcher,1.672s,1,1,1,89.135,120,0.743,false
+14,16:45:40:406,Pigeon,LG,1.672s,20,8,0.4,48,120,0.4,false
+15,16:45:42:804,Pigeon,Rocket Launcher,1.167s,1,1,1,34.48,120,0.287,false
+15,16:45:42:804,Pigeon,LG,1.167s,9,6,0.667,36,54,0.667,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+Rocket Launcher,32,27,1027.413574,3840.0,
+LG,264,131,786.0,1584.0,
+Railgun,0,0,0.0,0.0,
+
+Kills:,15
+Deaths:,0
+Fight Time:,41.803001
+Avg TTK:,2.787
+Damage Done:,1813.413574
+Damage Taken:,34.851181
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,197.789307
+Score:,1813.413574
+Scenario:,Midair Mix
+Hash:,7edac56bff764f869afd491c132c7f9a
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,240.0
+Sens Scale:,Quake/Source
+Horiz Sens:,2.252
+Vert Sens:,2.252
+FOV:,80.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

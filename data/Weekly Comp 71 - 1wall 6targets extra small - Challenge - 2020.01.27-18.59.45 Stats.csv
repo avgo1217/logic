@@ -1,0 +1,89 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,18:58:46:464,target,pistol,0s,1,1,1,25,50,0.5,false
+2,18:58:48:002,target,pistol,0.883s,2,1,0.5,25,100,0.25,false
+3,18:58:48:758,target,pistol,0s,1,1,1,25,50,0.5,false
+4,18:58:49:469,target,pistol,0s,1,1,1,25,50,0.5,false
+5,18:58:51:064,target,pistol,0.823s,2,1,0.5,25,100,0.25,false
+6,18:58:51:658,target,pistol,0s,1,1,1,25,50,0.5,false
+7,18:58:52:396,target,pistol,0s,1,1,1,25,50,0.5,false
+8,18:58:53:413,target,pistol,0s,1,1,1,25,50,0.5,false
+9,18:58:54:285,target,pistol,0s,1,1,1,25,50,0.5,false
+10,18:58:55:887,target,pistol,0.724s,2,1,0.5,25,100,0.25,false
+11,18:58:56:692,target,pistol,0s,1,1,1,25,50,0.5,false
+12,18:58:58:173,target,pistol,0.477s,2,1,0.5,25,100,0.25,false
+13,18:58:58:972,target,pistol,0.001s,1,1,1,25,50,0.5,false
+14,18:59:00:081,target,pistol,0s,1,1,1,25,50,0.5,false
+15,18:59:01:115,target,pistol,0s,1,1,1,25,50,0.5,false
+16,18:59:02:071,target,pistol,0s,1,1,1,25,50,0.5,false
+17,18:59:02:885,target,pistol,0s,1,1,1,25,50,0.5,false
+18,18:59:03:714,target,pistol,0s,1,1,1,25,50,0.5,false
+19,18:59:04:398,target,pistol,0s,1,1,1,25,50,0.5,false
+20,18:59:05:328,target,pistol,0s,1,1,1,25,50,0.5,false
+21,18:59:06:114,target,pistol,0s,1,1,1,25,50,0.5,false
+22,18:59:07:048,target,pistol,0s,1,1,1,25,50,0.5,false
+23,18:59:09:539,target,pistol,1.64s,3,1,0.333,25,150,0.167,false
+24,18:59:10:408,target,pistol,0.001s,1,1,1,25,50,0.5,false
+25,18:59:11:215,target,pistol,0s,1,1,1,25,50,0.5,false
+26,18:59:14:757,target,pistol,2.582s,4,1,0.25,25,200,0.125,false
+27,18:59:15:764,target,pistol,0.001s,1,1,1,25,50,0.5,false
+28,18:59:16:795,target,pistol,0s,1,1,1,25,50,0.5,false
+29,18:59:17:854,target,pistol,0s,1,1,1,25,50,0.5,false
+30,18:59:18:606,target,pistol,0s,1,1,1,25,50,0.5,false
+31,18:59:19:835,target,pistol,0.575s,2,1,0.5,25,100,0.25,false
+32,18:59:20:820,target,pistol,0s,1,1,1,25,50,0.5,false
+33,18:59:21:656,target,pistol,0s,1,1,1,25,50,0.5,false
+34,18:59:22:399,target,pistol,0.001s,1,1,1,25,50,0.5,false
+35,18:59:23:026,target,pistol,0s,1,1,1,25,50,0.5,false
+36,18:59:23:608,target,pistol,0s,1,1,1,25,50,0.5,false
+37,18:59:24:290,target,pistol,0s,1,1,1,25,50,0.5,false
+38,18:59:25:438,target,pistol,0s,1,1,1,25,50,0.5,false
+39,18:59:26:214,target,pistol,0s,1,1,1,25,50,0.5,false
+40,18:59:27:384,target,pistol,0s,1,1,1,25,50,0.5,false
+41,18:59:28:296,target,pistol,0s,1,1,1,25,50,0.5,false
+42,18:59:29:115,target,pistol,0s,1,1,1,25,50,0.5,false
+43,18:59:30:055,target,pistol,0s,1,1,1,25,50,0.5,false
+44,18:59:30:815,target,pistol,0s,1,1,1,25,50,0.5,false
+45,18:59:31:849,target,pistol,0.001s,1,1,1,25,50,0.5,false
+46,18:59:32:956,target,pistol,0s,1,1,1,25,50,0.5,false
+47,18:59:33:735,target,pistol,0s,1,1,1,25,50,0.5,false
+48,18:59:34:686,target,pistol,0s,1,1,1,25,50,0.5,false
+49,18:59:35:863,target,pistol,0s,1,1,1,25,50,0.5,false
+50,18:59:36:479,target,pistol,0s,1,1,1,25,50,0.5,false
+51,18:59:37:356,target,pistol,0s,1,1,1,25,50,0.5,false
+52,18:59:38:084,target,pistol,0s,1,1,1,25,50,0.5,false
+53,18:59:39:015,target,pistol,0s,1,1,1,25,50,0.5,false
+54,18:59:40:638,target,pistol,1.003s,2,1,0.5,25,100,0.25,false
+55,18:59:41:549,target,pistol,0s,1,1,1,25,50,0.5,false
+56,18:59:42:764,target,pistol,0s,1,1,1,25,50,0.5,false
+57,18:59:43:515,target,pistol,0s,1,1,1,25,50,0.5,false
+58,18:59:44:667,target,pistol,0s,1,1,1,25,50,0.5,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+pistol,69,58,1450.0,3450.0,
+
+Kills:,58
+Deaths:,0
+Fight Time:,8.712
+Avg TTK:,0.15
+Damage Done:,1450.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,487.536224
+Scenario:,Weekly Comp 71 - 1wall 6targets extra small
+Hash:,36a1ce71eea96ce00162183d466619d5
+Game Version:,2.0.0.1
+
+Input Lag:,0
+Max FPS (config):,300.0
+Sens Scale:,Quake/Source
+Horiz Sens:,2.02
+Vert Sens:,2.02
+FOV:,80.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF

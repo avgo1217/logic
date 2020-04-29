@@ -1,0 +1,43 @@
+Kill #,Timestamp,Bot,Weapon,TTK,Shots,Hits,Accuracy,Damage Done,Damage Possible,Efficiency,Cheated
+1,01:26:01:672,Pigeon5,pistol,0s,1,1,1,100,200,0.5,false
+2,01:26:03:824,Pigeon3,pistol,0.363s,2,1,0.5,100,400,0.25,false
+3,01:26:10:660,Pigeon3,pistol,6.203s,8,1,0.125,100,1600,0.062,false
+4,01:26:16:706,Pigeon4,pistol,3.696s,5,1,0.2,100,1000,0.1,false
+5,01:26:24:515,Pigeon3,pistol,6.916s,9,1,0.111,100,1800,0.056,false
+6,01:26:27:215,Pigeon3,pistol,1.291s,3,1,0.333,100,600,0.167,false
+7,01:26:29:714,Pigeon,pistol,1.39s,4,1,0.25,100,800,0.125,false
+8,01:26:34:845,Pigeon,pistol,4.543s,4,1,0.25,100,800,0.125,false
+9,01:26:40:438,Pigeon5,pistol,3.346s,5,1,0.2,100,1000,0.1,false
+10,01:26:46:794,Pigeon3,pistol,5.046s,9,1,0.111,100,1800,0.056,false
+11,01:26:49:800,Pigeon5,pistol,1.973s,4,1,0.25,100,800,0.125,false
+
+Weapon,Shots,Hits,Damage Done,Damage Possible,,Sens Scale,Horiz Sens,Vert Sens,FOV,Hide Gun,Crosshair,Crosshair Scale,Crosshair Color,ADS Sens,ADS Zoom Scale
+pistol,64,11,1100.0,12800.0,
+LG,0,0,0.0,0.0,
+
+Kills:,11
+Deaths:,0
+Fight Time:,34.766998
+Avg TTK:,3.161
+Damage Done:,1100.0
+Damage Taken:,0.0
+Midairs:,0
+Midaired:,0
+Directs:,0
+Directed:,0
+Distance Traveled:,0.0
+Score:,207.96875
+Scenario:,POPCORN
+Hash:,21f0bc5b7d01c9cc8a25f4e5a195770b
+Game Version:,1.0.8.0
+
+Input Lag:,0
+Max FPS (config):,223.0
+Sens Scale:,Quake/Source
+Horiz Sens:,1.7675
+Vert Sens:,1.7675
+FOV:,80.0
+Hide Gun:,false
+Crosshair:,plus.png
+Crosshair Scale:,1.0
+Crosshair Color:,FFFFFF
