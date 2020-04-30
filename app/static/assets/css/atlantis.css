@@ -2198,6 +2198,7 @@ body {
     color: #575962;
     text-decoration: none; }
 
+
 .card-sub {
   display: block;
   margin: 5px 0 10px 0;
@@ -8958,5 +8959,6 @@ body {
   background: #F25961 !important;
   background: -webkit-linear-gradient(legacy-direction(-45deg), #E80A15, #F25961) !important;
   background: linear-gradient(-45deg, #E80A15, #F25961) !important; }
+
 
 /*# sourceMappingURL=atlantis.css.map */

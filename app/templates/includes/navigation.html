@@ -7,17 +7,7 @@
 				<a href="index.html" class="logo">
 					<img src="/static/assets/img/logo.svg" alt="navbar brand" class="navbar-brand">
 				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="icon-menu"></i>
-					</span>
-				</button>
-				<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
-				<div class="nav-toggle">
-					<button class="btn btn-toggle toggle-sidebar">
-						<i class="icon-menu"></i>
-					</button>
-				</div>
+				
 			</div>
 			<!-- End Logo Header -->
 
@@ -26,6 +16,9 @@
 
 				<a href={{ url_for('index') }}>
 					<span class="nav-link">Home</span>
+				</a>
+				<a href={{ url_for('logic_browse') }}>
+					<span class="nav-link">Browse</span>
 				</a>
 				<a href={{ url_for('aim_tracker') }}>
 					<span class="nav-link">Aim Tracker</span>

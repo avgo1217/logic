@@ -8,6 +8,7 @@ Copyright (c) 2019 - present AppSeed.us
 import os, logging 
 import json
 import urllib.request
+from datetime import datetime
 
 from flask import redirect, render_template, request, url_for, flash, jsonify, session
 from flask_login import current_user,login_required
@@ -28,6 +29,8 @@ from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, Res
 from app.models import User, TrainingInstance, Scenarios, TrainingInstanceSchema
 from app.email import send_password_reset_email
 
+# sql modules
+from sqlalchemy.sql import func
 
 # Logout user
 @app.route('/logout.html')
@@ -133,34 +136,158 @@ def index(path):
 # App main route + generic routing
 @app.route('/aim-data-tracker/')
 def aim_tracker():
-    if current_user.is_authenticated:
-        url = url_for('get_training_instances', username = current_user.username)
-        url = "http://127.0.0.1:5000/api/traininginstances/N1Esports"
-        response = requests.get(url)
-        data = response.json()
-        #data = data.json()
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-
-    #content = None
-
     try:
-
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'aim-data-tracker.html', data=data )
-    
+        return render_template( 'aim-data-tracker.html')    
     except:
-        
         return render_template( 'pages/error-404.html' )
 
-@app.route("/api/traininginstances/<username>", methods=["GET"])
-def get_training_instances(username):
+# App main route + generic routing
+@app.route('/browse/')
+def logic_browse():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'logic-browse.html')    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+def process_date_range(filtered_df, date_range):
+    #Check for date range
+    if date_range == "today":
+        filtered_df = filtered_df[filtered_df.date_time > datetime.now() - pd.to_timedelta('1day')]
+
+    if date_range == "this_week":
+        filtered_df = filtered_df[filtered_df.date_time > datetime.now() - pd.to_timedelta('7day')]
+
+    if date_range == "this_month":
+        filtered_df = filtered_df[filtered_df.date_time > datetime.now() - pd.to_timedelta('30day')]
+
+    filtered_df['date_time'] = filtered_df['date_time'].dt.strftime('%m/%d/%Y')
+    return filtered_df
+
+def filter_for_aim_metric(filtered_df, aim_metric):
+    df = filtered_df[[aim_metric,"date_time"]]
+    return df
+
+def apply_smoothing(filtered_df,smooth_flag, aim_metric):
+    if smooth_flag == "smooth":
+        target = filtered_df[aim_metric]
+        mean = target.mean()
+        sd = target.std()
+        filtered_df = filtered_df[(target > mean - 2*sd) & (target < mean + 2*sd)]
+    return filtered_df
+
+def calculate_global_stat(scenario, aim_metric, stat_type):
+    if stat_type == "none":
+        return jsonify([])
+    if stat_type == "avg":
+        df = pd.read_sql(db.session.query(TrainingInstance)
+        .filter(TrainingInstance.scenario==scenario).statement, db.session.bind)
+        average_stat = df[aim_metric].mean()
+        return jsonify(["{0:.2f}".format(average_stat)])
+    if stat_type == "best":
+        df = pd.read_sql(db.session.query(TrainingInstance)
+        .filter(TrainingInstance.scenario==scenario).statement, db.session.bind)
+        if aim_metric == "avg_ttk":
+            best_stat = df[aim_metric].min()
+        else:
+            best_stat = df[aim_metric].max()
+        return jsonify(["{0:.2f}".format(best_stat)])
+
+def calculate_bottom_row_stats(username, scenario, selected_aim_metric,date_range,smoothflag):
+    filtered_df = process_for_all_filtered_data(username, scenario, current_user, selected_aim_metric, date_range, smoothflag)
+    if filtered_df.shape[0] > 0:
+        data_list = filtered_df[selected_aim_metric].values
+        best = data_list.max()
+        average = data_list.mean()
+        if selected_aim_metric == 'accuracy':
+            best = "{0:.2f}%".format(best*100)
+            average = "{0:.2f}%".format(average*100)
+        else:
+            best = "{0:.2f}".format(best)
+            average = "{0:.2f}".format(average)
+        improvement = [(data_list[i + 1] - data_list[i])/data_list[i] for i in range(len(data_list)-1)]
+        improvement = sum(improvement)/len(improvement)*100
+        if improvement > 0:
+            improvement = "+ {0:.2f}%".format(improvement)
+        else:
+            improvement = "- {0:.2f}%".format(improvement)
+        num_scenario_played = len(data_list)
+
+    else:
+        best = "-"
+        average = "-"
+        improvement = "-"
+        num_scenario_played = "-"
+
+    return jsonify([best,average,improvement,num_scenario_played])
+
+def process_for_all_filtered_data(username, scenario, current_user, aim_metric, date_range, smooth_flag):
+    user = User.query.filter_by(username = current_user.username).first()
+    df = pd.read_sql(db.session.query(TrainingInstance)
+        .filter(TrainingInstance.user_id == current_user.id)
+        .filter(TrainingInstance.scenario==scenario)
+        .order_by(TrainingInstance.date_time.asc()).statement, db.session.bind)
+    df = process_date_range(df, date_range)
+    df = filter_for_aim_metric(df, aim_metric)
+    df = apply_smoothing(df, smooth_flag, aim_metric)
+    return df
+
+def get_training_instances_by_username_scenario(username, scenario, current_user, aim_metric, date_range, smooth_flag):
+    df = process_for_all_filtered_data(username, scenario, current_user, aim_metric, date_range, smooth_flag)
+    df_json = df.to_json(orient='records')
+    #training_instances_schema = TrainingInstanceSchema(many=True)
+    #all_training_instances = TrainingInstance.query.filter(TrainingInstance.user_id==user.id).filter(TrainingInstance.scenario==scenario).all()
+    #result = training_instances_schema.dump(all_training_instances)
+    return jsonify(df_json)
+
+def get_unique_list_of_user_scenarios(username, current_user):
+    user = User.query.filter_by(username = current_user.username).first()
+    df = pd.read_sql(db.session.query(TrainingInstance).filter(TrainingInstance.user_id == current_user.id).order_by(TrainingInstance.scenario.asc()).statement, db.session.bind)
+    list_of_unique_scenarios = df.scenario.unique()
+    #result_dict = { i : list_of_unique_scenarios[i] for i in range(0, len(list_of_unique_scenarios) ) }
+    #result = training_instances_schema.dump(all_training_instances)
+    return jsonify(list(list_of_unique_scenarios))
+
+#APIs
+
+@app.route("/api/traininginstances/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
+def get_training_instances(username, scenario, aimmetric,daterange,smoothflag):
     if current_user.is_authenticated and current_user.username == username:
-        user = User.query.filter_by(username = current_user.username).first()
-        training_instances_schema = TrainingInstanceSchema(many=True)
-        all_training_instances = TrainingInstance.query.filter(TrainingInstance.user_id==user.id).all()
-        result = training_instances_schema.dump(all_training_instances)
-        return jsonify(result[0])
+        result = get_training_instances_by_username_scenario(username, scenario, current_user,aimmetric, daterange, smoothflag)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/api/scenarios/<username>", methods=["GET"])
+def get_unique_scenarios(username):
+
+    # Angular, react, to abstract away raw jquery (vue.js)
+    if current_user.is_authenticated and current_user.username == username:
+        result = get_unique_list_of_user_scenarios(username, current_user)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/api/stats/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
+def get_bottom_row_stats(username, scenario, aimmetric,daterange,smoothflag):
+    if current_user.is_authenticated and current_user.username == username:
+        result = calculate_bottom_row_stats(username, scenario, aimmetric, daterange, smoothflag)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/api/globalstat/<scenario>/<aim_metric>/<stat_type>", methods=["GET"])
+def get_global_comparison_stat(scenario,aim_metric,stat_type):
+
+    # Angular, react, to abstract away raw jquery (vue.js)
+    if current_user.is_authenticated:
+        result = calculate_global_stat(scenario, aim_metric, stat_type)
+        return result
     else:
         return redirect(url_for('login'))
 
