@@ -22,7 +22,8 @@
 	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
@@ -127,15 +128,15 @@
 			                                    <label class="form-label">Global Score Comparison</label>
 			                                    <div class="selectgroup w-100">
 			                                        <label class="selectgroup-item">
-			                                            <input type="radio" name="value" value="none" class="selectgroup-input" id="none-global" checked="">
+			                                            <input type="radio" name="value" value="none" class="selectgroup-input" id="none-global" checked="" onclick="UpdatePage()">
 			                                            <span class="selectgroup-button">None</span>
 			                                        </label>
 			                                        <label class="selectgroup-item">
-			                                            <input type="radio" name="value" value="avg" id="avg-global" class="selectgroup-input">
+			                                            <input type="radio" name="value" value="avg" id="avg-global" class="selectgroup-input" onclick="UpdatePage()">
 			                                            <span class="selectgroup-button">Avg.</span>
 			                                        </label>
 			                                        <label class="selectgroup-item">
-			                                            <input type="radio" name="value" value="best" id="best-global" class="selectgroup-input">
+			                                            <input type="radio" name="value" value="best" id="best-global" class="selectgroup-input" onclick="UpdatePage()">
 			                                            <span class="selectgroup-button">Best</span>
 			                                        </label>
 			                                    </div>
@@ -144,16 +145,12 @@
 			                            <div class="row">
 			                            	<div class="form-check">
 			                                    <label class="form-check-label">
-			                                        <input class="form-check-input" id="smoothcheckbox" type="checkbox" value="smooth" name="smooth_check">
+			                                        <input class="form-check-input" id="smoothcheckbox" type="checkbox" value="smooth" name="smooth_check" onclick="UpdatePage()">
 			                                        <span class="form-check-sign">Smooth</span>
 			                                    </label>
 			                                </div>
 			                            </div>
-			                            <div class="row">
-
-						                    <input class="btn btn-default" id = "btnSubmit" type="submit" value="Update Chart"/>
-
-						                </div>
+			                           
 				                    </div>
 			                    </div>
 			                </div>
@@ -175,11 +172,18 @@
 							<div class="card">   
 			                    <div class="card-body">
 			                    	<div class="col-md-12">
-				                        <div class="row">
-	                                    	<div>
-		                                        <input type="text" id="autocomplete" placeholder="Choose a scenario..." />            
-		                                    </div>
-				                        </div>
+			                    		<div class="row">
+			                    		<div class="col-md-7">
+	                                        <h1 id="scenario-title"></h1>        
+	                                    </div>
+				                        
+                                    	<div class="col-md-5">
+
+                                    		<h5>Search</h5>
+	                                        <select class="js-data-example-ajax form-control"  id="analytics-search-bar"></select>
+	                                       	         
+	                                    </div>
+				                      	</div>
 				                    </div>
 			                    </div>
 			                </div>
@@ -298,12 +302,12 @@
 		var trainingapipath = 'traininginstances/';
 		var statsapipath = 'stats/';
 		var globalstats = 'globalstat/';
-		var scenario_selected = '';
 
-		
+		var scenario_selected = '{{ scenario }}';
+		document.getElementById('scenario-title').innerHTML = scenario_selected;
 		var current_user_name = document.getElementById('current_user_name').innerHTML;
-
 		var lineChart = document.getElementById('lineChart').getContext('2d');
+
 		
 		var myLineChart = new Chart(lineChart, {
 			type: 'line',
@@ -373,145 +377,139 @@
 					padding:{left:15,right:15,top:15,bottom:15}
 				}
 			}
-		});
+		})
 
 	    $(document).ready(function() {
 	    	
-	   		GetAimMetric();
-	        BindControls();
-	        GetScenario();
+	    	$('#analytics-search-bar').select2({
+	   			ajax: {
+				    url: path.concat('scenarios/',current_user_name),
+				    dataType:'json',
+				    placeholder: scenario_selected,
+				    delay:250,
+				    data: function (params) {
+				    	var query = {
+				    		search: params.term
+				    	}
+				    	return query;
+			    	
+			   		},
+				    
+			  	}
+	   		});
 
-	        //Refresh button to relead all of the necessary data to display
-	        $('#btnSubmit').click(function(){
-	        	var aim_metric = String(document.getElementById('aimmetrics1').value);
-	        	var date_range = String(document.getElementById('datedropdown').value);
-	        	var smooth_check=""
-	        	var checkbox_status = document.getElementById('smoothcheckbox');
-	        	var global_comparison_status = "";
-
-	        	if(document.getElementById('none-global').checked) {
-	        		global_comparison_status = "none"
-				}else if(document.getElementById('avg-global').checked) {
-				 	global_comparison_status = "avg"
-				}else if(document.getElementById('best-global').checked) {
-					global_comparison_status = "best"
-				}
-
-	        	if (checkbox_status.checked == true){
-	        		smooth_check = "smooth";
-	        	} else {
-	        		smooth_check ="none"
-	        	}
-
-	        	//if global, get other dataset
-	        	//if smooth or date, set the patterns in the api call
-	        	var training_url = path.concat(trainingapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
-
-	        	var stats_url = path.concat(statsapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
-
-	        	var global_url = path.concat(globalstats,scenario_selected,'/',aim_metric,'/',global_comparison_status)
-	        	
-	        	
-				$.ajax({
-					url:training_url,
-					type:"GET",
-
-					//If the api call is successful
-					success: function(result){
-						var chart_data = [];
-						var label_data = [];
-						var date_time_data = [];
-						
-						data_object = JSON.parse(result)
-						for (key in data_object) {
-
-							label_data.push(key);        
-					        chart_data.push(data_object[key][aim_metric]);
-					        date_time_data.push(data_object[key]["date_time"]);
-						    
-						}
-
-						myLineChart['data']['labels'] = date_time_data;
-						myLineChart['data']['datasets'][0]['data'] = chart_data;
-						myLineChart.update();
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-				})
-				$.ajax({
-					url:stats_url,
-					type:"GET",
-
-					//If the api call is successful
-					success: function(result){
-						document.getElementById("best_stat").textContent=result[0];
-						document.getElementById("average_stat").textContent=result[1];
-						document.getElementById("improvement_stat").textContent=result[2];
-						document.getElementById("count_stat").textContent=result[3];
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-				})
-
-				$.ajax({
-					url:global_url,
-					type:"GET",
-
-					//If the api call is successful
-					success: function(result){
-						var global_horizontal_data = []
-						if(result.length>0){
-							for (var i =0; i< myLineChart['data']['datasets'][0]['data'].length; i++) {
-								global_horizontal_data.push(result[0])
-							}
-						}
-						myLineChart['data']['datasets'][1]['data'] = global_horizontal_data;
-						myLineChart.update();
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-				})
-			})
-	    });
-
-	    function GetScenario() {
-	    	$('#autocomplete').on("propertychange change click keyup input paste", function(){
-	    		scenario_selected = $(this).val();
+	        UpdatePage();
+	        $('#analytics-search-bar').on('select2:select', function (e) {
+	        	var data = $('#analytics-search-bar').select2('data');
+	        	scenario_selected = data[0]['text']
+	   			UpdatePage();			
 			});
-	    }
-	    function GetAimMetric() {
-	    	$('#aimmetrics1').change(function(){
-	    		var aim_metric = $(this).val();
+			$('#aimmetrics1').change(function(){
+	    		UpdatePage();
 			});
-	    }
-	    //Function for autocomplete on scenario search
-	    function BindControls() {
-	    	
-	        var url_scen = path.concat('scenarios/',current_user_name);
-	        var countries = [];
-			$.ajax({
-				url:url_scen,
-				type:"GET",
-				success: function(result){
-
-					$('#autocomplete').autocomplete({
-			            source: result,
-			            minLength: 0,
-			            scroll: true
-			        }).focus(function() {
-			            $(this).autocomplete("search", "");
-			        });
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-			})
-
+			$('#datedropdown').change(function(){
+	    		UpdatePage();
+			});
+			$('#datedropdown').change(function(){
+	    		UpdatePage();
+			});
+		});
 	        
+	  
+	    function UpdatePage() {
+	    	document.getElementById('scenario-title').innerHTML = scenario_selected;
+	    	var aim_metric = String(document.getElementById('aimmetrics1').value);
+        	var date_range = String(document.getElementById('datedropdown').value);
+        	var smooth_check=""
+        	var checkbox_status = document.getElementById('smoothcheckbox');
+        	var global_comparison_status = "";
+        	
+        	
+
+        	if(document.getElementById('none-global').checked) {
+        		global_comparison_status = "none"
+			}else if(document.getElementById('avg-global').checked) {
+			 	global_comparison_status = "avg"
+			}else if(document.getElementById('best-global').checked) {
+				global_comparison_status = "best"
+			}
+
+        	if (checkbox_status.checked == true){
+        		smooth_check = "smooth";
+        	} else {
+        		smooth_check ="none"
+        	}
+
+        	//if global, get other dataset
+        	//if smooth or date, set the patterns in the api call
+        	var training_url = path.concat(trainingapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+
+        	var stats_url = path.concat(statsapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+
+        	var global_url = path.concat(globalstats,scenario_selected,'/',aim_metric,'/',global_comparison_status)
+        	
+        	
+			$.ajax({
+				url:training_url,
+				type:"GET",
+
+				//If the api call is successful
+				success: function(result){
+					var chart_data = [];
+					var label_data = [];
+					var date_time_data = [];
+					
+					data_object = JSON.parse(result)
+					for (key in data_object) {
+						label_data.push(key);        
+				        chart_data.push(data_object[key][aim_metric]);
+				        date_time_data.push(data_object[key]["date_time"]);	    
+					}
+
+					myLineChart['data']['labels'] = date_time_data;
+					myLineChart['data']['datasets'][0]['data'] = chart_data;
+					myLineChart.update();
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})
+			$.ajax({
+				url:stats_url,
+				type:"GET",
+
+				//If the api call is successful
+				success: function(result){
+					document.getElementById("best_stat").textContent=result[0];
+					document.getElementById("average_stat").textContent=result[1];
+					document.getElementById("improvement_stat").textContent=result[2];
+					document.getElementById("count_stat").textContent=result[3];
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})
+			$.ajax({
+				url:global_url,
+				type:"GET",
+
+				//If the api call is successful
+				success: function(result){
+					var global_horizontal_data = []
+					if(result.length>0){
+						for (var i =0; i< myLineChart['data']['datasets'][0]['data'].length; i++) {
+							global_horizontal_data.push(result[0])
+						}
+					}
+					myLineChart['data']['datasets'][1]['data'] = global_horizontal_data;
+					myLineChart.update();
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})
 	    }
+
 	</script>
 
 

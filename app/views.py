@@ -141,7 +141,10 @@ def aim_tracker():
         return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'aim-data-tracker.html')    
+
+        result = get_most_played_scenario(current_user.username)
+        print(result)
+        return render_template( 'aim-data-tracker.html', scenario = result)    
     except:
         return render_template( 'pages/error-404.html' )
 
@@ -210,13 +213,17 @@ def get_training_instances(username, scenario, aimmetric,daterange,smoothflag):
 
 @app.route("/api/scenarios/<username>", methods=["GET"])
 def get_unique_scenarios(username):
-
     # Angular, react, to abstract away raw jquery (vue.js)
     if current_user.is_authenticated and current_user.username == username:
-        result = get_unique_list_of_user_scenarios(username, current_user)
+        if request.args.get('search'):
+            term = request.args.get('search')
+        else:
+            term = ""
+        result = get_scenarios_data_for_bar(username, term)
         return result
     else:
         return redirect(url_for('login'))
+
 
 @app.route("/api/stats/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
 def get_bottom_row_stats(username, scenario, aimmetric,daterange,smoothflag):
@@ -258,13 +265,40 @@ def get_videos_by_filters(tag_list, game, difficulty, n1select, n1original):
         for tag in tag_list:
             df = df[df['tags'].str.contains('|'.join([tag])).any(level=0)]
 
+
     df_json = df.to_json(orient='records')
     return jsonify(df_json)
+
+def get_scenarios_data_for_bar(username, term):
+    user = User.query.filter_by(username = current_user.username).first()
+    df = pd.read_sql(db.session.query(TrainingInstance).filter(TrainingInstance.user_id == current_user.id).order_by(TrainingInstance.scenario.asc()).statement, db.session.bind)
+    list_of_unique_scenarios = df.scenario.unique()
+
+    all_results={}
+    all_results['results'] = []
+    count = 1
+    for scenario in list_of_unique_scenarios:
+        all_results['results'].append(dict(id=count,text=scenario))
+        count = count+1
+
+    #Filter out for search term
+    if len(term)>0:
+        all_results['results'] = [s for s in all_results['results'] if term.upper() in s["text"].upper()]
+
+    return jsonify(all_results)
+
+def get_most_played_scenario(username):
+    user = User.query.filter_by(username = current_user.username).first()
+    df = pd.read_sql(db.session.query(TrainingInstance).filter(TrainingInstance.user_id == current_user.id).statement, db.session.bind)
+    df = df.scenario.value_counts().reset_index()
+    most_played = df['index'].iloc[0]
+    
+    return most_played
 
 def get_search_bar_data(term): 
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
     all_tags = []
-    count = 1;
+    count = 1
     for item in df.tags:
         if item is not None:
             tag_list = item.split(',')
