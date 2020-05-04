@@ -162,12 +162,17 @@ def logic_browse_single(video_id):
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'single-video.html')    
+        return render_template( 'single-video.html', video_id = video_id)    
     except:
         return render_template( 'pages/error-404.html' )
 
 
 #APIs
+@app.route("/api/videos/search/<video_id>", methods=["GET"])
+def get_one_video_search(video_id):
+    result = get_one_video(video_id)
+    return result
+
 @app.route("/api/videos/search/", methods=["GET"])
 def get_all_videos_search():
     if request.args.get('search'):
@@ -356,8 +361,14 @@ def calculate_bottom_row_stats(username, scenario, selected_aim_metric,date_rang
 #SQL CALLS
 def get_all_videos():
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
-
     df_json = df.to_json(orient='records')
+    return jsonify(df_json)
+
+def get_one_video(video_id):
+    videoquery = Videos.query.filter_by(id=video_id)
+    df = pd.read_sql(videoquery.statement, videoquery.session.bind)
+    df_json = df.to_json(orient='records')
+    
     return jsonify(df_json)
 
 def process_for_all_filtered_data(username, scenario, current_user, aim_metric, date_range, smooth_flag):

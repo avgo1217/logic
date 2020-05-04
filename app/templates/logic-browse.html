@@ -214,8 +214,6 @@
 			                </div>
 			            </div>
 			        </div>
-
-			        
 		    	</div>
 		    </div>
 		    {% include 'includes/footer.html' %}
@@ -411,7 +409,7 @@
 	            div2.innerHTML = labnolThumb(result);
 	            div2.onclick = 
 	            	function () {
-	            		labnolIframe(data_object[key].id)
+	            		labnolIframe(this.id);
 	            	}
 
 	            title_house.appendChild(title)

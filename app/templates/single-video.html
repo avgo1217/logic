@@ -92,13 +92,13 @@
 		.single-video-tags{
 			font-size: 18px;
 			text-align: right;
-			margin-right: 5px;
+			margin-right: 10px;
 			margin-bottom: 5px;
 		}
 		.single-video-flags{
 			font-size: 18px;
 			text-align: right;
-			margin-right: 5px;
+			margin-right: 10px;
 		}
 		#description-box{
 			width:500px;
@@ -164,6 +164,9 @@
         background: url("//i.imgur.com/TxzC70f.png") no-repeat;
         cursor: pointer;
     }
+    .badge {
+    	margin-left: 5px;
+    }
 
 </style>
 
@@ -183,21 +186,21 @@
 					<div class="video-container">
 						<div class="video-playlist-container">
 			                <div class="row row-demo-grid" id="video-results">
-			                	<div class="col-md-12">
-		                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
+			                	<div class="col-md-12" id="video-iframe-container">
+		                    		<div class="youtube-player"></div>
 		                    	</div>
 			                </div>
 			                <div class="row row-demo-grid">
 				              	<div class="col-12 col-md-8">
-				              		<div class="single-video-title">Video Title: something long but limited to x characters
+				              		<div class="single-video-title" id="video_title">
 				              		</div>
-				              		<div class="single-video-description">Channel where the video comes from
+				              		<div class="single-video-description" id="video_description">
 				              		</div>
 				              	</div>
 				              	<div class="col-6 col-md-4">
-				              		<div class="single-video-tags">adsfdas
+				              		<div class="single-video-tags" id="tags-list"><span class="badge badge-dark">Light</span>
 				              		</div>
-				              		<div class="single-video-flags">adsfdas
+				              		<div class="single-video-flags">n1 select
 				              		</div>
 				              	</div>
 				            </div>
@@ -205,10 +208,10 @@
 				       	<div class="video-info-container">
 							<div class="card" id ="video-info-card">
 			                    <div class="card-header">
-			                        <div class="card-category"><h4>Description</h4></div>
+			                        <div class="card-category"><h4>The Breakdown</h4></div>
 			                    </div>
 			                    <div class="card-body" id ="description-box">
-			                    	<div>text about this video goes here. Logic staff oriented description of the video and some highlights/things to look into.asdfasdfasdfasdfsda
+			                    	<div>
 			                    	</div>
 			                   	</div>
 			                </div>
@@ -218,9 +221,7 @@
 			                    	
 					                	<div class="row row-demo-grid">
 							              	<div class="col-12 col-md-6">
-							              		
-						                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
-						                    	
+						                    	<div class="youtube-player" data-id="aSL-iIskEFU"></div>
 							              	</div>
 							              	<div class="col-6 col-md-6">
 							              		<div class="single-video-description" id="suggested-video">Title of next suggested video
@@ -302,7 +303,67 @@
 
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
+    <script>
+    	var path = 'http://127.0.0.1:5000/api/videos/search/';
+    	var video_id = {{ video_id }};
+    	$(document).ready(function() { 
+	   		GetVideo(path.concat(video_id))
+	   	})
+	   	function GetVideo(url) {
+	    	$.ajax({
+					url:url,
+					type:"GET",
 
+					//If the api call is successful
+					success: function(result){
+						data_object = JSON.parse(result);
+						PopulateVideoPage(data_object);	
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})
+		}
+
+		function PopulateVideoPage(result){
+			document.getElementById("video_title").innerHTML = result[0]['video_title']
+			document.getElementById("video_description").innerHTML = result[0]['video_description']
+			document.getElementById("description-box").innerHTML = result[0]['n1_description']
+			CreateVideoIframe(result[0]['video_url'])
+			CreateTags(result[0]["tags"])
+
+			//get related videos
+		}
+
+		function CreateVideoIframe(video_url){
+			var parent = document.getElementById("video-iframe-container")
+			parent.innerHTML=''
+			var iframe = document.createElement("iframe");
+	        var embed = "https://www.youtube.com/embed/ID?autoplay=1";
+	        iframe.setAttribute("src", embed.replace("ID", video_url));
+	        iframe.setAttribute("frameborder", "0");
+	        iframe.setAttribute("allowfullscreen", "1");
+	        iframe.setAttribute("height","477");
+	        iframe.setAttribute("width","848");
+
+	        parent.appendChild(iframe)
+		}
+
+		function CreateTags(tags){
+			var parent = document.getElementById("tags-list")
+			parent.innerHTML=''
+			tag_array = tags.split(",")
+			taglength = tag_array.length
+
+			for (var i = 0; i<taglength;i++){
+				var spantemp = document.createElement("span");
+				spantemp.setAttribute("class", "badge badge-dark")
+				spantemp.innerHTML = tag_array[i]
+				parent.appendChild(spantemp)	
+			}
+		}
+
+    </script>
 
 	
 	

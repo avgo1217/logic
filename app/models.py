@@ -222,6 +222,25 @@ class Videos(db.Model):
 	def get_date_time(self, date_string):
 		return datetime.strptime(date_string, '%m/%d/%Y')
 
+class Playlists(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	playlist_date_created = db.Column(db.DateTime, index=True)
+	playlist_name = db.Column(db.String(200))
+	playlist_description = db.Column(db.String(5000))
+	list_of_videos = db.Column(db.String(200))
+	playlist_img_src = db.Column(db.String(10))
+	playlist_author_id = db.Column(db.Integer)
+	playlist_author_name = db.Column(db.String(50))
+
+	def __repr__(self):
+		return '<Playlist {}>'.format(self.video_title)
+
+	def __init__(self, **kwargs):
+		self.__dict__.update(kwargs)
+
+	def get_date_time(self, date_string):
+		return datetime.strptime(date_string, '%m/%d/%Y')
+
 class Scenarios(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	scenario_name = db.Column(db.String(100))
