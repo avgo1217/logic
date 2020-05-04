@@ -61,6 +61,10 @@
 		    margin-top: 0px;
 		    border:0;
 		}
+		.container-fluid {
+			width:200px;
+			float:right;
+		}
     </style>
 
     <!-- Specific CSS goes HERE -->
@@ -222,7 +226,19 @@
 			                    </div>
 			                </div>
 						</div>
+
 	                </div>
+	                <div class="row">
+			            <div class="col-md-12">
+			                <div class="card">
+			                    <div class="card-body">
+			                        <div class="chart-container">
+			                            <canvas id="lineChart"></canvas>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
 			    </div>
 			
 			</div>
@@ -276,6 +292,228 @@
 
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
+    <script>
+
+		var path = 'http://127.0.0.1:5000/api/';
+		var trainingapipath = 'traininginstances/';
+		var statsapipath = 'stats/';
+		var globalstats = 'globalstat/';
+		var scenario_selected = '';
+
+		
+		var current_user_name = document.getElementById('current_user_name').innerHTML;
+
+		var lineChart = document.getElementById('lineChart').getContext('2d');
+		
+		var myLineChart = new Chart(lineChart, {
+			type: 'line',
+
+			data: {
+				labels: [],
+				datasets: [{
+					
+					borderColor: "#ff7b00",
+					pointBorderColor: "#FFF",
+					pointBackgroundColor: "#ff7b00",
+					pointRadius:0,
+					pointBorderWidth: 0,
+					pointHoverRadius: 4,
+					pointHoverBorderWidth: 1,
+					backgroundColor: 'transparent',
+					fill: false,
+					borderWidth: 2,
+					data: []
+				},{
+					
+					borderColor: "#6e6e6e",
+					pointBorderColor: "#FFF",
+					pointBackgroundColor: "#6e6e6e",
+					borderDash: [10,5],
+					pointRadius:0,
+					pointBorderWidth: 0,
+					pointHoverRadius: 4,
+					pointHoverBorderWidth: 1,
+					backgroundColor: 'transparent',
+					fill: false,
+					borderWidth: 2,
+					data: []
+				}]
+			},
+			options : {
+				
+				responsive: true, 
+				elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+				maintainAspectRatio: false,
+				scaleBeginAtZero: true,
+				legend: {
+		            display: false
+		         },
+		        scales: {
+		          yAxes: [{
+		            ticks: {
+		                beginAtZero: true
+		            }
+		          }]
+		        },
+				
+				tooltips: {
+					bodySpacing: 4,
+					mode:"nearest",
+					intersect: 0,
+					position:"nearest",
+					xPadding:10,
+					yPadding:10,
+					caretPadding:10
+				},
+				layout:{
+					padding:{left:15,right:15,top:15,bottom:15}
+				}
+			}
+		});
+
+	    $(document).ready(function() {
+	    	
+	   		GetAimMetric();
+	        BindControls();
+	        GetScenario();
+
+	        //Refresh button to relead all of the necessary data to display
+	        $('#btnSubmit').click(function(){
+	        	var aim_metric = String(document.getElementById('aimmetrics1').value);
+	        	var date_range = String(document.getElementById('datedropdown').value);
+	        	var smooth_check=""
+	        	var checkbox_status = document.getElementById('smoothcheckbox');
+	        	var global_comparison_status = "";
+
+	        	if(document.getElementById('none-global').checked) {
+	        		global_comparison_status = "none"
+				}else if(document.getElementById('avg-global').checked) {
+				 	global_comparison_status = "avg"
+				}else if(document.getElementById('best-global').checked) {
+					global_comparison_status = "best"
+				}
+
+	        	if (checkbox_status.checked == true){
+	        		smooth_check = "smooth";
+	        	} else {
+	        		smooth_check ="none"
+	        	}
+
+	        	//if global, get other dataset
+	        	//if smooth or date, set the patterns in the api call
+	        	var training_url = path.concat(trainingapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+
+	        	var stats_url = path.concat(statsapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+
+	        	var global_url = path.concat(globalstats,scenario_selected,'/',aim_metric,'/',global_comparison_status)
+	        	
+	        	
+				$.ajax({
+					url:training_url,
+					type:"GET",
+
+					//If the api call is successful
+					success: function(result){
+						var chart_data = [];
+						var label_data = [];
+						var date_time_data = [];
+						
+						data_object = JSON.parse(result)
+						for (key in data_object) {
+
+							label_data.push(key);        
+					        chart_data.push(data_object[key][aim_metric]);
+					        date_time_data.push(data_object[key]["date_time"]);
+						    
+						}
+
+						myLineChart['data']['labels'] = date_time_data;
+						myLineChart['data']['datasets'][0]['data'] = chart_data;
+						myLineChart.update();
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+				})
+				$.ajax({
+					url:stats_url,
+					type:"GET",
+
+					//If the api call is successful
+					success: function(result){
+						document.getElementById("best_stat").textContent=result[0];
+						document.getElementById("average_stat").textContent=result[1];
+						document.getElementById("improvement_stat").textContent=result[2];
+						document.getElementById("count_stat").textContent=result[3];
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+				})
+
+				$.ajax({
+					url:global_url,
+					type:"GET",
+
+					//If the api call is successful
+					success: function(result){
+						var global_horizontal_data = []
+						if(result.length>0){
+							for (var i =0; i< myLineChart['data']['datasets'][0]['data'].length; i++) {
+								global_horizontal_data.push(result[0])
+							}
+						}
+						myLineChart['data']['datasets'][1]['data'] = global_horizontal_data;
+						myLineChart.update();
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+				})
+			})
+	    });
+
+	    function GetScenario() {
+	    	$('#autocomplete').on("propertychange change click keyup input paste", function(){
+	    		scenario_selected = $(this).val();
+			});
+	    }
+	    function GetAimMetric() {
+	    	$('#aimmetrics1').change(function(){
+	    		var aim_metric = $(this).val();
+			});
+	    }
+	    //Function for autocomplete on scenario search
+	    function BindControls() {
+	    	
+	        var url_scen = path.concat('scenarios/',current_user_name);
+	        var countries = [];
+			$.ajax({
+				url:url_scen,
+				type:"GET",
+				success: function(result){
+
+					$('#autocomplete').autocomplete({
+			            source: result,
+			            minLength: 0,
+			            scroll: true
+			        }).focus(function() {
+			            $(this).autocomplete("search", "");
+			        });
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})
+
+	        
+	    }
+	</script>
+
 
 	
 </body>

@@ -22,6 +22,8 @@
 	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     
 
 	<!-- CSS Files -->
@@ -49,19 +51,73 @@
         	font-size: 20px;
         	text-align: center;
         	color: "#191919";
-        }
-        #autocomplete
-		{
-		    font-size: 20px;
-		    width: 500px;
-		    height: 20px;
-		    float: left;
-		    padding-left: 5px;
-		    padding-right: 5px;
-		    margin-top: 0px;
-		    border:0;
+		}
+		#search-bar-browse{
+			height: 30px;
+		}
+		.container-fluid {
+			width:200px;
+			float:right;
 		}
     </style>
+    <style>
+    .youtube-player {
+        position: relative;
+        padding-bottom: 56.23%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+        margin: 5px;
+    }
+
+    .youtube-player iframe,
+    .youtube-player object,
+    .youtube-player embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background: transparent;
+    }
+
+    .youtube-player img {
+        bottom: 0;
+        display: block;
+        left: 0;
+        margin: auto;
+        max-width: 100%;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        height: auto;
+        cursor: pointer;
+        -webkit-transition: .4s all;
+        -moz-transition: .4s all;
+        transition: .4s all;
+    }
+
+    .youtube-player img:hover {
+        -webkit-filter: brightness(75%);
+    }
+
+    .youtube-player .play {
+        height: 72px;
+        width: 72px;
+        left: 50%;
+        top: 50%;
+        margin-left: -36px;
+        margin-top: -36px;
+        position: absolute;
+        background: url("//i.imgur.com/TxzC70f.png") no-repeat;
+        cursor: pointer;
+    }
+
+</style>
 
     <!-- Specific CSS goes HERE -->
     {% block stylesheets %}{% endblock stylesheets %}
@@ -82,74 +138,49 @@
 						<div class="col-md-12">
 							<div class="card">
 			                    <div class="card-header">
-			                        <div class="card-title" id="current_user_name">{{ current_user.username }}</div>
-			                    </div>
-			                </div>
-						</div>
-	                </div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-			                    <div class="card-header">
-			                        <div class="card-category">Controls</div>
+			                        <div class="card-category"><h4>Controls</h4></div>
 			                    </div>
 			                    <div class="card-body">
 			                    	<div class="col-md-12">
 				                        <div class="row">
 				                        	<div class="form-group form-group-default">
-			                                    <label>Aim Metric</label>
-			                                    <select class="form-control" id="aimmetrics1">
-			                                        <option value="score">Score</option>
-			                                        <option value="sum_shots">Shots</option>
-			                                        <option value="sum_hits">Hits</option>
-			                                        <option value="accuracy">Accuracy</option>
-			                                        <option value="avg_ttk">Avg TTK</option>
+			                                    <label>Game</label>
+			                                    <select class="form-control" onchange="collectParameters()"id="game-list">
+			                                    	<option value="All">All</option>
+			                                        <option value="Valorant">Valorant</option>
+			                                        <option value="Fortnite">Fortnite</option>
+			                                        <option value="League of Legends">League of Legends</option>
 			                                    </select>
 			                                </div>
 				                        </div>
 				                        <div class="row">
 				                        	<div class="form-group form-group-default">
-			                                    <label>Date Range</label>
-			                                    <select class="form-control" id="datedropdown">
-			                                        <option value="all_time">All Time</option>
-			                                        <option value="this_month">This Month</option>
-			                                        <option value="this_week">This Week</option>
-			                                        <option value="today">Today</option>
+			                                    <label>Difficulty</label>
+			                                    <select onchange="collectParameters()" class="form-control" id="difficulty-level">
+			                                    	<option value="All">All</option>
+			                                        <option value="Easy">Easy</option>
+			                                        <option value="Intermediate">Intermediate</option>
+			                                        <option value="Advanced">Advanced</option>
 			                                    </select>
 			                                </div>
 				                        </div>
-				                        <div class="row">
-					                        <div class="form-group mr-auto">
-			                                    <label class="form-label">Global Score Comparison</label>
-			                                    <div class="selectgroup w-100">
-			                                        <label class="selectgroup-item">
-			                                            <input type="radio" name="value" value="none" class="selectgroup-input" id="none-global" checked="">
-			                                            <span class="selectgroup-button">None</span>
-			                                        </label>
-			                                        <label class="selectgroup-item">
-			                                            <input type="radio" name="value" value="avg" id="avg-global" class="selectgroup-input">
-			                                            <span class="selectgroup-button">Avg.</span>
-			                                        </label>
-			                                        <label class="selectgroup-item">
-			                                            <input type="radio" name="value" value="best" id="best-global" class="selectgroup-input">
-			                                            <span class="selectgroup-button">Best</span>
-			                                        </label>
-			                                    </div>
+			                            <div class="row">
+			                            	<div class="form-check">
+			                                    <label class="form-check-label">
+			                                        <input class="form-check-input" id="n1-select" type="checkbox" name="n1select">
+			                                        <span class="form-check-sign">N1 Select</span>
+			                                    </label>
 			                                </div>
 			                            </div>
 			                            <div class="row">
 			                            	<div class="form-check">
 			                                    <label class="form-check-label">
-			                                        <input class="form-check-input" id="smoothcheckbox" type="checkbox" value="smooth" name="smooth_check">
-			                                        <span class="form-check-sign">Smooth</span>
+			                                        <input class="form-check-input" id="n1-original" type="checkbox" name="n1original">
+			                                        <span class="form-check-sign">N1 Original</span>
 			                                    </label>
 			                                </div>
 			                            </div>
-			                            <div class="row">
-
-						                    <input class="btn btn-default" id = "btnSubmit" type="submit" value="Update Chart"/>
-
-						                </div>
+			                            
 				                    </div>
 			                    </div>
 			                </div>
@@ -162,90 +193,33 @@
 
 
 
-
 		<div class="main-panel">
-
 			<div class="content">
-
 				<div class="page-inner">
-			        <div class="row">
-						<div class="col-md-12">
-							<div class="card">   
-			                    <div class="card-body">
-			                    	<div class="col-md-12">
-				                        <div class="row">
-	                                    	<div>
-		                                        <input type="text" id="autocomplete" placeholder="Choose a scenario..." />            
-		                                    </div>
-				                        </div>
-				                    </div>
-			                    </div>
-			                </div>
+			        <div class="page-header">
+			        	<h4>Search:</h4>
+			        	<div class="col-md-6">
+				        	
+				        	<select class="js-data-example-ajax form-control" name="data[]" multiple="multiple" id="browse-search-bar">
+						</select>
 						</div>
-	                </div>
-	                <div class="row">
-						<div class="col-md-3">
-							<div class="card">   
-			                    <div class="card-body">
-			                    	<div class="statheader">Best</div>
-			                    	<div class="statbody">
-			                    		<span id="best_stat"></span>
-			                    	</div>
-			                    </div>
-			                </div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">   
-			                    <div class="card-body">
-			                    	<div class="statheader">Average</div>
-			                    	<div class="statbody">
-			                    		<span id="average_stat"></span>
-			                    	</div>
-			                    </div>
-			                </div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">   
-			                    <div class="card-body">
-			                    	<div class="statheader">Improvement</div>
-			                    	<div class="statbody">
-			                    		<span id="improvement_stat"></span>
-			                    	</div>
-			                    </div>
-			                </div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">   
-			                    <div class="card-body">
-			                    	<div class="statheader">No. Times Played</div>
-			                    	<div class="statbody">
-			                    		<span id="count_stat"></span>
-			                    	</div>
-			                    </div>
-			                </div>
-						</div>
-	                </div>
-			        <div class="row">
-			            <div class="col-md-12">
-			                <div class="card">
-			                    <div class="card-body">
-			                        <div class="chart-container">
-			                            <canvas id="lineChart"></canvas>
-			                        </div>
+			        </div>
+			        
+			        <div class="card">
+			            <div class="card-body">
+			                <div class="row row-demo-grid" id="video-results">
+			                    <div class="col-md-4">
+		                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
 			                    </div>
 			                </div>
 			            </div>
 			        </div>
-			    </div>
-			
-			</div>
 
-			{% include 'includes/footer.html' %}
-
+			        
+		    	</div>
+		    </div>
+		    {% include 'includes/footer.html' %}
 		</div>
-		
-		{% include 'includes/aside-settings.html' %}
-
 	</div>
 
 	<!--   Core JS Files   -->
@@ -290,230 +264,182 @@
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
 
-      
-	<script>
+    <script>
+    	var path = 'http://127.0.0.1:5000/api/videos/';
+    	var video_title = '';
+    	$(document).ready(function() { 
+	   		$('#browse-search-bar').select2({
+	   			
+	   			ajax: {
+				    url: path.concat('search'),
+				    dataType:'json',
+				    delay:250,
+				    data: function (params) {
+				    	var query = {
+				    		search: params.term
+				    	}
+				    	return query;
+			    	
+			   		},
+				    processResults: function (data) {
+				    	
+				      // Transforms the top-level key of the response object from 'items' to 'results'
+						return {
+							results: data.results
+						};
 
-		var path = 'http://127.0.0.1:5000/api/';
-		var trainingapipath = 'traininginstances/';
-		var statsapipath = 'stats/';
-		var globalstats = 'globalstat/';
-		var scenario_selected = '';
+				    },
+			  	}
+	   		});
+	   		collectParameters();
+	   		
 
-		
-		var current_user_name = document.getElementById('current_user_name').innerHTML;
-
-		var lineChart = document.getElementById('lineChart').getContext('2d');
-		
-		var myLineChart = new Chart(lineChart, {
-			type: 'line',
-
-			data: {
-				labels: [],
-				datasets: [{
-					
-					borderColor: "#ff7b00",
-					pointBorderColor: "#FFF",
-					pointBackgroundColor: "#ff7b00",
-					pointRadius:0,
-					pointBorderWidth: 0,
-					pointHoverRadius: 4,
-					pointHoverBorderWidth: 1,
-					backgroundColor: 'transparent',
-					fill: false,
-					borderWidth: 2,
-					data: []
-				},{
-					
-					borderColor: "#6e6e6e",
-					pointBorderColor: "#FFF",
-					pointBackgroundColor: "#6e6e6e",
-					borderDash: [10,5],
-					pointRadius:0,
-					pointBorderWidth: 0,
-					pointHoverRadius: 4,
-					pointHoverBorderWidth: 1,
-					backgroundColor: 'transparent',
-					fill: false,
-					borderWidth: 2,
-					data: []
-				}]
-			},
-			options : {
-				
-				responsive: true, 
-				elements: {
-                    point:{
-                        radius: 0
-                    }
-                },
-				maintainAspectRatio: false,
-				scaleBeginAtZero: true,
-				legend: {
-		            display: false
-		         },
-		        scales: {
-		          yAxes: [{
-		            ticks: {
-		                beginAtZero: true
-		            }
-		          }]
-		        },
-				
-				tooltips: {
-					bodySpacing: 4,
-					mode:"nearest",
-					intersect: 0,
-					position:"nearest",
-					xPadding:10,
-					yPadding:10,
-					caretPadding:10
-				},
-				layout:{
-					padding:{left:15,right:15,top:15,bottom:15}
-				}
+	   		//listeners
+	   		$('#browse-search-bar').on('select2:unselect', function (e) {
+	   			collectParameters();
+			});
+	   		$('#browse-search-bar').on('select2:select', function (e) {
+	   			collectParameters();   			
+			});
+			$('#n1-original').change(function() {
+				collectParameters();
+			})
+			$('#n1-select').change(function() {
+				collectParameters();
+			})
+			if ($('#n1-select').is(':checked')) {
+	        	collectParameters();  
 			}
-		});
+			if ($('#n1-original').is(':checked')) {
+	        	collectParameters(); 
+			}
 
-	    $(document).ready(function() {
-	    	
-	   		GetAimMetric();
-	        BindControls();
-	        GetScenario();
+			
 
-	        //Refresh button to relead all of the necessary data to display
-	        $('#btnSubmit').click(function(){
-	        	var aim_metric = String(document.getElementById('aimmetrics1').value);
-	        	var date_range = String(document.getElementById('datedropdown').value);
-	        	var smooth_check=""
-	        	var checkbox_status = document.getElementById('smoothcheckbox');
-	        	var global_comparison_status = "";
+	   		//PopulateSearchBar();
+	   	})
+    	function collectParameters() {
+    		var new_url = path.concat('filters/');
+    		var searchterm = $('#browse-search-bar').select2('data');
+    		var game = document.getElementById("game-list").value;
+    		var difficulty = document.getElementById("difficulty-level").value;
+   			var count = 0;
+   			var n1select_flag = "none"
+   			var n1original_flag = "none"
+   			if ($('#n1-select').is(':checked')) {
+	        	n1select_flag = "select"
+			}
 
-	        	if(document.getElementById('none-global').checked) {
-	        		global_comparison_status = "none"
-				}else if(document.getElementById('avg-global').checked) {
-				 	global_comparison_status = "avg"
-				}else if(document.getElementById('best-global').checked) {
-					global_comparison_status = "best"
-				}
+			if ($('#n1-original').is(':checked')) {
+	        	n1original_flag = "original"
+			}
 
-	        	if (checkbox_status.checked == true){
-	        		smooth_check = "smooth";
-	        	} else {
-	        		smooth_check ="none"
-	        	}
+   			//collect all tags params
+   			for (var key in searchterm){
+   				if (count < 1){
+   					new_url = new_url.concat('?tag=',searchterm[key]["text"])
+   					count = count+1
+   				}
+   				else {
+   					new_url = new_url.concat('&tag=',searchterm[key]["text"])
+   					count = count+1
+   				}
+   			}
 
-	        	//if global, get other dataset
-	        	//if smooth or date, set the patterns in the api call
-	        	var training_url = path.concat(trainingapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+   			//collect other controls
+   			if (game) {
+   				if (count <1){
+   					new_url = new_url.concat('?game=',game)
+   					count = count+1
+   				}
+   				else {
+   					new_url = new_url.concat('&game=',game)
+   					count = count+1
+   				}
+   			}
 
-	        	var stats_url = path.concat(statsapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+   			if (difficulty) {
+   				if (count <1){
+   					new_url = new_url.concat('?difficulty=',difficulty)
+   					count = count+1
+   				}
+   				else {
+   					new_url = new_url.concat('&difficulty=',difficulty)
+   					count = count+1
+   				}
+   			}
 
-	        	var global_url = path.concat(globalstats,scenario_selected,'/',aim_metric,'/',global_comparison_status)
-	        	
-	        	
-				$.ajax({
-					url:training_url,
+   			new_url = new_url.concat('&n1select=',n1select_flag)
+   			new_url = new_url.concat('&n1original=',n1original_flag)
+
+
+   			GetVideos(new_url);
+    	}
+		function GetVideos(url) {
+	    	$.ajax({
+					url:url,
 					type:"GET",
 
 					//If the api call is successful
 					success: function(result){
-						var chart_data = [];
-						var label_data = [];
-						var date_time_data = [];
-						
-						data_object = JSON.parse(result)
-						console.log(data_object)
-						for (key in data_object) {
-
-							label_data.push(key);        
-					        chart_data.push(data_object[key][aim_metric]);
-					        date_time_data.push(data_object[key]["date_time"]);
-						    
-						}
-
-						myLineChart['data']['labels'] = date_time_data;
-						myLineChart['data']['datasets'][0]['data'] = chart_data;
-						myLineChart.update();
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-				})
-				$.ajax({
-					url:stats_url,
-					type:"GET",
-
-					//If the api call is successful
-					success: function(result){
-						document.getElementById("best_stat").textContent=result[0];
-						document.getElementById("average_stat").textContent=result[1];
-						document.getElementById("improvement_stat").textContent=result[2];
-						document.getElementById("count_stat").textContent=result[3];
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-				})
-
-				$.ajax({
-					url:global_url,
-					type:"GET",
-
-					//If the api call is successful
-					success: function(result){
-						var global_horizontal_data = []
-						if(result.length>0){
-							for (var i =0; i< myLineChart['data']['datasets'][0]['data'].length; i++) {
-								global_horizontal_data.push(result[0])
-							}
-						}
-						myLineChart['data']['datasets'][1]['data'] = global_horizontal_data;
-						myLineChart.update();
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-				})
-			})
-	    });
-
-	    function GetScenario() {
-	    	$('#autocomplete').on("propertychange change click keyup input paste", function(){
-	    		scenario_selected = $(this).val();
-			});
-	    }
-	    function GetAimMetric() {
-	    	$('#aimmetrics1').change(function(){
-	    		var aim_metric = $(this).val();
-			});
-	    }
-	    //Function for autocomplete on scenario search
-	    function BindControls() {
-	    	
-	        var url_scen = path.concat('scenarios/',current_user_name);
-	        var countries = [];
-			$.ajax({
-				url:url_scen,
-				type:"GET",
-				success: function(result){
-
-					$('#autocomplete').autocomplete({
-			            source: result,
-			            minLength: 0,
-			            scroll: true
-			        }).focus(function() {
-			            $(this).autocomplete("search", "");
-			        });
+						CreateBrowseDashboard(result)		
 				},
 				error:function(error){
 					console.log(`Error ${error}`)
 				}
 			})
+		}
 
-	        
+		function CreateBrowseDashboard(result){
+			data_object = JSON.parse(result);
+			var video_body = document.getElementById("video-results");
+
+			video_body.innerHTML = '';
+			for (var key in data_object) {
+				var div1 = document.createElement("div");
+				var div2 = document.createElement("div");
+				var title_house = document.createElement("h5");
+				var title = document.createTextNode(data_object[key].video_title)
+				var description_house = document.createElement("h6");
+				var description = document.createTextNode(data_object[key].video_description)
+				var result = data_object[key].video_url; 
+
+	            div1.classList.add("col-md-4");
+	            div2.classList.add("youtube-player")
+	            div2.setAttribute("data-id", result);
+	            div2.setAttribute("id", data_object[key].id);
+	            div2.innerHTML = labnolThumb(result);
+	            div2.onclick = 
+	            	function () {
+	            		labnolIframe(data_object[key].id)
+	            	}
+
+	            title_house.appendChild(title)
+	            description_house.appendChild(description)
+	            div1.appendChild(div2)
+	            div1.appendChild(title_house)
+	            div1.appendChild(description_house)
+	            video_body.appendChild(div1)
+			}
+		}
+		function labnolThumb(id) {
+	        var thumb = '<img src="https://i.ytimg.com/vi/ID/hqdefault.jpg">',
+	            play = '<div class="play"></div>';
+	        return thumb.replace("ID", id) + play;
 	    }
-	</script>
 
+	    //Must go to the specifc page about the video
+	    function labnolIframe(video_id) {
+	        //var iframe = document.createElement("iframe");
+	        //var embed = "https://www.youtube.com/embed/ID?autoplay=1";
+	        //iframe.setAttribute("src", embed.replace("ID", this.dataset.id));
+	        //iframe.setAttribute("frameborder", "0");
+	        //iframe.setAttribute("allowfullscreen", "1");
+	        //this.parentNode.replaceChild(iframe, this);
+	        window.open("http://127.0.0.1:5000/browse/".concat(video_id));
+	    }
+    </script>
+	
 	
 	
 </body>

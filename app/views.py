@@ -26,7 +26,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 # App modules
 from app import db, app
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, TrainingInstance, Scenarios, TrainingInstanceSchema
+from app.models import User, TrainingInstance, Scenarios, TrainingInstanceSchema, Videos
 from app.email import send_password_reset_email
 
 # sql modules
@@ -102,8 +102,10 @@ def login():
             return redirect(url_for('login'))
         login_user(user,remember=form.remember_me.data)
         user.update_scenarios_table(1,'all_scenarios.csv')
+        user.add_videos_table()
         all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
         user.add_all_new_sessions(all_scenarios_df)
+        #user.add_videos_table('temp_videos.csv')
 
         next_page = url_for('aim_tracker')
 
@@ -123,7 +125,6 @@ def index(path):
     #    return redirect(url_for('login'))
 
     #content = None
-
     try:
 
         # try to match the pages defined in -> pages/<input file>
@@ -154,6 +155,132 @@ def logic_browse():
         return render_template( 'logic-browse.html')    
     except:
         return render_template( 'pages/error-404.html' )
+
+@app.route('/browse/<video_id>')
+def logic_browse_single(video_id):
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'single-video.html')    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+
+#APIs
+@app.route("/api/videos/search/", methods=["GET"])
+def get_all_videos_search():
+    if request.args.get('search'):
+        term = request.args.get('search')
+    else:
+        term = ""
+    result = get_search_bar_data(term)
+    return result
+
+@app.route("/api/videos/filters/", methods=["GET"])
+def get_filtered_videos_list():
+    # get all args
+    tags = request.args.getlist('tag')
+    game = request.args.get('game')
+    difficulty = request.args.get('difficulty')
+    n1select = request.args.get('n1select')
+    n1original = request.args.get('n1original')
+
+    if tags:
+        tag_list = tags
+    else:
+        tag_list = []
+    
+
+    result = get_videos_by_filters(tag_list, game, difficulty, n1select, n1original)
+    return result
+
+@app.route("/api/traininginstances/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
+def get_training_instances(username, scenario, aimmetric,daterange,smoothflag):
+    if current_user.is_authenticated and current_user.username == username:
+        result = get_training_instances_by_username_scenario(username, scenario, current_user,aimmetric, daterange, smoothflag)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/api/scenarios/<username>", methods=["GET"])
+def get_unique_scenarios(username):
+
+    # Angular, react, to abstract away raw jquery (vue.js)
+    if current_user.is_authenticated and current_user.username == username:
+        result = get_unique_list_of_user_scenarios(username, current_user)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/api/stats/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
+def get_bottom_row_stats(username, scenario, aimmetric,daterange,smoothflag):
+    if current_user.is_authenticated and current_user.username == username:
+        result = calculate_bottom_row_stats(username, scenario, aimmetric, daterange, smoothflag)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/api/globalstat/<scenario>/<aim_metric>/<stat_type>", methods=["GET"])
+def get_global_comparison_stat(scenario,aim_metric,stat_type):
+
+    # Angular, react, to abstract away raw jquery (vue.js)
+    if current_user.is_authenticated:
+        result = calculate_global_stat(scenario, aim_metric, stat_type)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+# Return sitemap 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
+
+#Functions
+def get_videos_by_filters(tag_list, game, difficulty, n1select, n1original):
+    df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
+    if game != "All":
+        df = df.loc[df['game']==game]
+    if difficulty != "All":
+        df = df.loc[df['difficulty']==difficulty]
+
+    if n1select == "select":
+        df = df.loc[df['n1_select_tag']==1]
+    if n1original =="original":
+        df = df.loc[df['n1_original_content_tag']==1]
+
+    if len(tag_list)>0:
+        for tag in tag_list:
+            df = df[df['tags'].str.contains('|'.join([tag])).any(level=0)]
+
+    df_json = df.to_json(orient='records')
+    return jsonify(df_json)
+
+def get_search_bar_data(term): 
+    df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
+    all_tags = []
+    count = 1;
+    for item in df.tags:
+        if item is not None:
+            tag_list = item.split(',')
+            all_tags.extend(tag_list)
+    final_tags = []
+    [final_tags.append(x) for x in all_tags if x not in final_tags]
+    final_tags.sort()
+
+    #Create all tags to keep consistent id
+    all_results={}
+    all_results['results'] = [{"text":"Tags","children":[]}]
+    for tag in final_tags:
+        all_results['results'][0]["children"].append(dict(id=count,text=tag))
+        count = count+1
+
+    #Filter out for search term
+    if len(term)>0:
+        all_results['results'][0]["children"] = [s for s in all_results['results'][0]["children"] if term.upper() in s["text"].upper()]
+
+    #creates the result dict
+    return jsonify(all_results)
 
 def process_date_range(filtered_df, date_range):
     #Check for date range
@@ -215,7 +342,7 @@ def calculate_bottom_row_stats(username, scenario, selected_aim_metric,date_rang
         if improvement > 0:
             improvement = "+ {0:.2f}%".format(improvement)
         else:
-            improvement = "- {0:.2f}%".format(improvement)
+            improvement = "{0:.2f}%".format(improvement)
         num_scenario_played = len(data_list)
 
     else:
@@ -225,6 +352,13 @@ def calculate_bottom_row_stats(username, scenario, selected_aim_metric,date_rang
         num_scenario_played = "-"
 
     return jsonify([best,average,improvement,num_scenario_played])
+
+#SQL CALLS
+def get_all_videos():
+    df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
+
+    df_json = df.to_json(orient='records')
+    return jsonify(df_json)
 
 def process_for_all_filtered_data(username, scenario, current_user, aim_metric, date_range, smooth_flag):
     user = User.query.filter_by(username = current_user.username).first()
@@ -252,46 +386,3 @@ def get_unique_list_of_user_scenarios(username, current_user):
     #result_dict = { i : list_of_unique_scenarios[i] for i in range(0, len(list_of_unique_scenarios) ) }
     #result = training_instances_schema.dump(all_training_instances)
     return jsonify(list(list_of_unique_scenarios))
-
-#APIs
-
-@app.route("/api/traininginstances/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
-def get_training_instances(username, scenario, aimmetric,daterange,smoothflag):
-    if current_user.is_authenticated and current_user.username == username:
-        result = get_training_instances_by_username_scenario(username, scenario, current_user,aimmetric, daterange, smoothflag)
-        return result
-    else:
-        return redirect(url_for('login'))
-
-@app.route("/api/scenarios/<username>", methods=["GET"])
-def get_unique_scenarios(username):
-
-    # Angular, react, to abstract away raw jquery (vue.js)
-    if current_user.is_authenticated and current_user.username == username:
-        result = get_unique_list_of_user_scenarios(username, current_user)
-        return result
-    else:
-        return redirect(url_for('login'))
-
-@app.route("/api/stats/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
-def get_bottom_row_stats(username, scenario, aimmetric,daterange,smoothflag):
-    if current_user.is_authenticated and current_user.username == username:
-        result = calculate_bottom_row_stats(username, scenario, aimmetric, daterange, smoothflag)
-        return result
-    else:
-        return redirect(url_for('login'))
-
-@app.route("/api/globalstat/<scenario>/<aim_metric>/<stat_type>", methods=["GET"])
-def get_global_comparison_stat(scenario,aim_metric,stat_type):
-
-    # Angular, react, to abstract away raw jquery (vue.js)
-    if current_user.is_authenticated:
-        result = calculate_global_stat(scenario, aim_metric, stat_type)
-        return result
-    else:
-        return redirect(url_for('login'))
-
-# Return sitemap 
-@app.route('/sitemap.xml')
-def sitemap():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')

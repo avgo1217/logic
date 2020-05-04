@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Flask Dashboard Atlantis - {% block title %}Open-Source Admin Panel{% endblock %} | AppSeed </title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="/static/assets/img/icon.ico" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], 
+			urls: ['/static/assets/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/assets/css/atlantis.min.css">
+
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="/static/assets/css/demo.css">
+	<style>
+        p, div, input {
+            font: 14px Calibri;
+        }
+        .ui-autocomplete { 
+            cursor:pointer; 
+            height:150px;
+            width:400px;
+            overflow-y:scroll;
+        } 
+        .statheader {
+        	font-size: 15px;
+        	text-align: center;
+        	color: "#d3d3d3";
+        }
+        .statbody {
+        	font-size: 20px;
+        	text-align: center;
+        	color: "#191919";
+		}
+		#search-bar-browse{
+			height: 30px;
+		}
+		.container-fluid {
+			width:200px;
+			float:right;
+		}
+		.single-video-margin{
+			padding-top: 50px;
+			overflow-y:auto;
+		}
+		#video-info-card{
+			height: 100%
+			width:300px;
+		}
+		.video-container {
+			display:flex;
+			height: 650px;
+		}
+		.video-playlist-container {
+			width:1200px;
+		}
+		.video-info-container {
+			flex-grow:1;
+			margin-left: 10px;
+
+		}
+		.single-video-title {
+			font-size: 25px;
+			text-align: left;
+			margin-left: 5px;
+		}
+		.single-video-description {
+			font-size: 18px;
+			text-align: left;
+			margin-left: 5px;
+		}
+		.single-video-tags{
+			font-size: 18px;
+			text-align: right;
+			margin-right: 5px;
+			margin-bottom: 5px;
+		}
+		.single-video-flags{
+			font-size: 18px;
+			text-align: right;
+			margin-right: 5px;
+		}
+		#description-box{
+			width:500px;
+			height:400px;
+		}
+		#next-video-box{
+			width:500px;
+		}
+    </style>
+    <style>
+    .youtube-player {
+        position: relative;
+        padding-bottom: 56.23%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+        margin: 5px;
+    }
+
+    .youtube-player iframe,
+    .youtube-player object,
+    .youtube-player embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background: transparent;
+    }
+
+    .youtube-player img {
+        bottom: 0;
+        display: block;
+        left: 0;
+        margin: auto;
+        max-width: 100%;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        height: auto;
+        cursor: pointer;
+        -webkit-transition: .4s all;
+        -moz-transition: .4s all;
+        transition: .4s all;
+    }
+
+    .youtube-player img:hover {
+        -webkit-filter: brightness(75%);
+    }
+
+    .youtube-player .play {
+        height: 72px;
+        width: 72px;
+        left: 50%;
+        top: 50%;
+        margin-left: -36px;
+        margin-top: -36px;
+        position: absolute;
+        background: url("//i.imgur.com/TxzC70f.png") no-repeat;
+        cursor: pointer;
+    }
+
+</style>
+
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body>
+	<div class="wrapper {% block layout %}{% endblock layout %}">
+
+		{% include 'includes/navigation.html' %}
+
+		<div class="single-video-margin">
+			<div class="content">
+				<div class="page-inner">
+					<div class="video-container">
+						<div class="video-playlist-container">
+			                <div class="row row-demo-grid" id="video-results">
+			                	<div class="col-md-12">
+		                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
+		                    	</div>
+			                </div>
+			                <div class="row row-demo-grid">
+				              	<div class="col-12 col-md-8">
+				              		<div class="single-video-title">Video Title: something long but limited to x characters
+				              		</div>
+				              		<div class="single-video-description">Channel where the video comes from
+				              		</div>
+				              	</div>
+				              	<div class="col-6 col-md-4">
+				              		<div class="single-video-tags">adsfdas
+				              		</div>
+				              		<div class="single-video-flags">adsfdas
+				              		</div>
+				              	</div>
+				            </div>
+					    </div>
+				       	<div class="video-info-container">
+							<div class="card" id ="video-info-card">
+			                    <div class="card-header">
+			                        <div class="card-category"><h4>Description</h4></div>
+			                    </div>
+			                    <div class="card-body" id ="description-box">
+			                    	<div>text about this video goes here. Logic staff oriented description of the video and some highlights/things to look into.asdfasdfasdfasdfsda
+			                    	</div>
+			                   	</div>
+			                </div>
+			                <div class="card">
+			                    
+			                    <div class="card-body" id="next-video-box">
+			                    	
+					                	<div class="row row-demo-grid">
+							              	<div class="col-12 col-md-6">
+							              		
+						                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
+						                    	
+							              	</div>
+							              	<div class="col-6 col-md-6">
+							              		<div class="single-video-description" id="suggested-video">Title of next suggested video
+				              					</div>
+							              	</div>
+							            </div>
+							            <div class="row row-demo-grid">
+							              	<div class="col-12 col-md-6">
+							              		
+						                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
+						                    	
+							              	</div>
+							              	<div class="col-6 col-md-6">
+							              		<div class="single-video-description" id="suggested-video">Title of next suggested video
+				              					</div>
+							              	</div>
+							            </div>
+							            <div class="row row-demo-grid">
+							              	<div class="col-12 col-md-6">
+							              		
+						                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
+						                    	
+							              	</div>
+							              	<div class="col-6 col-md-6">
+							              		<div class="single-video-description" id="suggested-video">Title of next suggested video
+				              					</div>
+							              	</div>
+							            </div>
+					                
+
+			                   	</div>
+			                </div>
+				       	</div>
+				    </div>
+		    	</div>
+		    </div>
+		</div>
+
+	</div>
+
+	<!--   Core JS Files   -->
+
+	<!--<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>-->
+	<script src="/static/assets/js/core/popper.min.js"></script>
+	<script src="/static/assets/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<!--<script src="/static/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
+
+	<!-- jQuery Scrollbar -->
+	<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+	<!-- Chart JS -->
+	<script src="/static/assets/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="/static/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="/static/assets/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="/static/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="/static/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="/static/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="/static/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Atlantis JS -->
+	<script src="/static/assets/js/atlantis.min.js"></script>
+
+	<script src="/static/assets/js/setting-demo.js"></script>
+
+	<!-- Specific JS goes HERE -->
+    <script src="/static/assets/js/setting-demo2.js"></script>
+
+
+	
+	
+	
+</body>
+</html>
+
+	
+
+

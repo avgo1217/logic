@@ -46,3 +46,4 @@ def initialize_database():
 
 # Import routing, models and Start the App
 from app import views, models
+	
