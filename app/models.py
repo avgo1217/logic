@@ -231,7 +231,7 @@ class Playlists(db.Model):
 	playlist_name = db.Column(db.String(200))
 	playlist_description = db.Column(db.String(5000))
 	list_of_videos = db.Column(db.String(200))
-	playlist_img_src = db.Column(db.String(10))
+	playlist_img_src = db.Column(db.String(100))
 	playlist_author_id = db.Column(db.Integer)
 	playlist_author_name = db.Column(db.String(50))
 	playlist_difficulty = db.Column(db.String(14))

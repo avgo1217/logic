@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Flask Dashboard Atlantis - {% block title %}Open-Source Admin Panel{% endblock %} | AppSeed </title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="/static/assets/img/icon.ico" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], 
+			urls: ['/static/assets/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/assets/css/atlantis.min.css">
+
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="/static/assets/css/demo.css">
+	<style>
+        p, div, input {
+            font: 14px Calibri;
+        }
+        .ui-autocomplete { 
+            cursor:pointer; 
+            height:150px;
+            width:400px;
+            overflow-y:scroll;
+        } 
+        .statheader {
+        	font-size: 15px;
+        	text-align: center;
+        	color: "#d3d3d3";
+        }
+        .statbody {
+        	font-size: 20px;
+        	text-align: center;
+        	color: "#191919";
+		}
+		#search-bar-browse{
+			height: 30px;
+		}
+		.container-fluid {
+			width:200px;
+			float:right;
+		}
+		.video-title{
+			font-size:17px;
+			text-align: left;
+			margin-left: 5px;
+			font-weight: bold;
+			overflow: hidden;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+		.channel-link{
+			font-size:14px;
+			text-align: left;
+			margin-left: 5px;
+			margin-bottom: 5px;
+		}
+		.badge {
+	    	margin-left: 5px;
+	    	margin-bottom: 5px;
+    	}
+    	.tags-list{
+    		float:right;
+    		margin-bottom: 20px;
+    	}
+    	.page-header{
+    		margin-top: 60px;
+    	}
+    	.playlist-info{
+    		margin-top: 15px;
+    		margin-left: 10px;
+    	}
+    	.playlist-name{
+    		font-size: 25px;
+    		cursor: pointer;
+    	}
+    	.playlist-author{
+    		font-size: 14px;
+    	}
+    	.playlist-date-added{
+    		font-size: 14px;
+    	}
+    	.playlist-difficulty{
+    		font-size: 14px;
+    		font-weight: bold;
+    	}
+    	.playlist-description{
+    		white-space: pre-wrap;
+    		width: 100%;
+    		text-align: left;
+    		margin-top: 15px;
+    		font-size: 15px;
+    	}
+    	.playlist-image-container{
+    		cursor:pointer;
+    	}
+    </style>
+    <style>
+    .youtube-player {
+        position: relative;
+        padding-bottom: 56.23%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+        margin: 5px;
+    }
+    .playlist-image {
+        height: 100%;
+        width: 100%;
+
+    }
+
+
+
+    .youtube-player iframe,
+    .youtube-player object,
+    .youtube-player embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background: transparent;
+    }
+
+    .youtube-player img {
+        bottom: 0;
+        display: block;
+        left: 0;
+        margin: auto;
+        max-width: 100%;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        height: auto;
+        cursor: pointer;
+        -webkit-transition: .4s all;
+        -moz-transition: .4s all;
+        transition: .4s all;
+    }
+
+    .youtube-player img:hover {
+        -webkit-filter: brightness(75%);
+    }
+
+    .youtube-player .play {
+        height: 72px;
+        width: 72px;
+        left: 50%;
+        top: 50%;
+        margin-left: -36px;
+        margin-top: -36px;
+        position: absolute;
+        background: url("//i.imgur.com/TxzC70f.png") no-repeat;
+        cursor: pointer;
+    }
+
+</style>
+
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body>
+	<div class="wrapper {% block layout %}{% endblock layout %}">
+
+		{% include 'includes/navigation.html' %}
+
+
+		<div class="content">
+			<div class="page-inner" id="playlist-board">
+		        <div class="page-header">
+		        	<h2>All Playlists</h2>
+		        </div>
+		        
+		        <div class="card">
+		            <div class="card-body">
+		                <div class="row row-demo-grid" id="playlist-results">
+		                    <div class="col-md-3">
+	                    		<div class="playlist-image-container">
+
+	                    			<img src="https://i.imgur.com/BSuDGBm.jpg?1" class="playlist-image">
+	                    		</div>
+		                    </div>
+		                    <div class="col-md-5">
+	                    		<div class="row">
+	                    			<div class="playlist-name">Title</div>
+	                    		</div>
+	                    		<div class="row">
+	                    			<div class="playlist-author">author</div>
+	                    		</div>
+	                    		<div class="row">
+	                    			<div class="playlist-date-added">date added</div>
+	                    		</div>
+	                    		<div class="row">
+	                    			<div class="playlist-difficulty">difficulty</div>
+	                    		</div>
+	                    		<div class="row">
+	                    			<div class="playlist-description">description</div>
+	                    		</div>
+	                    		
+		                    </div>
+		                    <div class="col-md-2">
+		                    	Play
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+	    	</div>
+	    </div>
+
+
+	</div>
+
+	<!--   Core JS Files   -->
+
+	<!--<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>-->
+	<script src="/static/assets/js/core/popper.min.js"></script>
+	<script src="/static/assets/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<!--<script src="/static/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
+
+	<!-- jQuery Scrollbar -->
+	<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+	<!-- Chart JS -->
+	<script src="/static/assets/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="/static/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="/static/assets/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="/static/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="/static/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="/static/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="/static/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Atlantis JS -->
+	<script src="/static/assets/js/atlantis.min.js"></script>
+
+	<script src="/static/assets/js/setting-demo.js"></script>
+
+	<!-- Specific JS goes HERE -->
+    <script src="/static/assets/js/setting-demo2.js"></script>
+
+    <script>
+    	var path = 'http://127.0.0.1:5000/api/playlists/all';
+    	var host = 'http://127.0.0.1:5000/'
+    	$(document).ready(function() { 
+	   		GetPlaylists(path);
+	   		
+	   	})
+    	
+		function GetPlaylists(url) {
+	    	$.ajax({
+					url:url,
+					type:"GET",
+
+					//If the api call is successful
+					success: function(result){
+						CreatePlaylistDashboard(result)	
+
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})
+		}
+		function getFormattedDate(date) {
+			date = new Date(date)
+
+			var year = date.getFullYear();
+
+			var month = (1 + date.getMonth()).toString();
+			month = month.length > 1 ? month : '0' + month;
+
+			var day = date.getDate().toString();
+			day = day.length > 1 ? day : '0' + day;
+
+			return month + '/' + day + '/' + year;
+		}
+
+		function CreatePlaylistDashboard(result){
+			var playlist_body = document.getElementById("playlist-board");
+			playlist_body.innerHTML = '';
+
+			var page_header = document.createElement("div")
+			var x = document.createElement("h2")
+			page_header.setAttribute("class","page-header")
+			x.innerHTML="All Playlists"
+			page_header.appendChild(x)
+			playlist_body.appendChild(page_header)
+
+
+			for (var key in result) {
+		        var card = document.createElement("div")
+		        var card_body = document.createElement("div")
+		        var playlist_results = document.createElement("div")
+		        card.setAttribute("class","card")
+		        card_body.setAttribute("class","card_body")
+		        playlist_results.setAttribute("class","row row-demo-grid")
+
+				var image_column = document.createElement("div");
+				var image_container = document.createElement("div");
+				var image_source = document.createElement("img");
+				image_column.setAttribute("class","col-md-3 playlist-info");
+				image_container.setAttribute("class","playlist-image-container");
+				image_container.setAttribute("id",result[key]['id']);
+				image_container.onclick = function () {
+	            		window.open(host+"playlist/"+this.id+"/0","_self");
+	            	}
+				image_source.src=result[key]['playlist_img_src']
+				image_source.setAttribute("class","playlist-image")
+				image_container.appendChild(image_source);
+				image_column.appendChild(image_container);
+
+				var info_column = document.createElement("div");
+				var name_row = document.createElement("div");
+				var author_row = document.createElement("div");
+				var date_added_row = document.createElement("div");
+				var difficulty_row = document.createElement("div");
+				var description_row = document.createElement("div");
+				var name = document.createElement("div")
+				var author = document.createElement("div")
+				var date_added = document.createElement("div")
+				var difficulty = document.createElement("div")
+				var description = document.createElement("div")
+				info_column.setAttribute("class","col-md-7 playlist-info");
+				name_row.setAttribute("class","row");
+				name_row.setAttribute("id",result[key]['id'])
+				name_row.onclick = function () {
+	            		window.open(host+"playlist/"+this.id+"/0","_self");
+	            	}
+				author_row.setAttribute("class","row");
+				date_added_row.setAttribute("class","row");
+				difficulty_row.setAttribute("class","row");
+				description_row.setAttribute("class","row");
+				name.setAttribute("class","playlist-name");
+				author.setAttribute("class","playlist-author");
+				date_added.setAttribute("class","playlist-date-added");
+				difficulty.setAttribute("class","playlist-difficulty");
+				description.setAttribute("class","playlist-description");
+				name.innerHTML=result[key]['playlist_name'];
+				author.innerHTML=result[key]['playlist_author_name'];
+				date_added.innerHTML=getFormattedDate(result[key]['playlist_date_created']);
+				difficulty.innerHTML=result[key]['playlist_difficulty'];
+				description.innerHTML=result[key]['playlist_description'];
+				name_row.appendChild(name);
+				author_row.appendChild(author);
+				date_added_row.appendChild(date_added);
+				difficulty_row.appendChild(difficulty);
+				description_row.appendChild(description);
+				info_column.appendChild(name_row)
+				info_column.appendChild(author_row)
+				info_column.appendChild(date_added_row)
+				info_column.appendChild(difficulty_row)
+				info_column.appendChild(description_row)
+
+				var play_container = document.createElement("div")
+				play_container.setAttribute("class","play-container")
+				play_container.innerHTML="PLAY"
+				
+				playlist_results.appendChild(image_column)
+				playlist_results.appendChild(info_column)
+				playlist_results.appendChild(play_container)
+				card_body.appendChild(playlist_results)
+				card.appendChild(card_body)
+
+				playlist_body.appendChild(card)
+			}
+
+			
+		}
+		
+    </script>
+	
+	
+	
+</body>
+</html>
+
+	
+
+

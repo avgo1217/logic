@@ -227,6 +227,17 @@ def logic_playlist_single(playlist_id, video_id):
     except:
         return render_template( 'pages/error-404.html' )
 
+@app.route('/playlists/')
+def logic_playlist_all():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'playlist-browse.html')    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+
 
 #APIs
 @app.route("/api/videos/search/<video_id>", methods=["GET"])
@@ -238,6 +249,11 @@ def get_one_video_search(video_id):
 def get_one_playlist_search(playlist_id):
     result = get_one_playlist(playlist_id)
 
+    return result
+
+@app.route("/api/playlists/all", methods=["GET"])
+def get_all_playlists():
+    result = get_all_playlists()
     return result
 
 @app.route("/api/videos/search/", methods=["GET"])
@@ -470,6 +486,32 @@ def calculate_bottom_row_stats(username, scenario, selected_aim_metric,date_rang
 def get_all_videos():
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
     df_json = df.to_json(orient='records')
+    return jsonify(df_json)
+
+def get_all_playlists():
+    playlistquery = Playlists.query
+    df = pd.read_sql(playlistquery.statement, playlistquery.session.bind)
+    df_json = df.to_dict(orient='records')
+    for record in df_json:
+
+        the_list = record['list_of_videos'].split(",")
+        the_list.pop()
+        new_list=[]
+        for item in the_list:
+            videoquery = Videos.query.filter_by(id=int(item))
+            temp_df = pd.read_sql(videoquery.statement, videoquery.session.bind)
+            new_list.append({"video_id":int(item),
+                             "video_title":temp_df.iloc[0]['video_title'],
+                             "video_channel_name":temp_df.iloc[0]['video_channel_name'],
+                             "video_channel_url":temp_df.iloc[0]['video_channel_url'],
+                             "video_url":temp_df.iloc[0]['video_url'],
+                             "video_description":temp_df.iloc[0]['video_description'],
+                             "n1_description":temp_df.iloc[0]['n1_description'],
+                             "date_added_n1":temp_df.iloc[0]['date_added_n1'],
+                             "tags":temp_df.iloc[0]['tags']})
+        
+        record['list_of_videos']=new_list
+
     return jsonify(df_json)
 
 def get_all_videos_admin():

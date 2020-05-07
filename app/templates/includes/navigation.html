@@ -20,9 +20,14 @@
 				<a href={{ url_for('logic_browse') }}>
 					<span class="nav-link">Browse</span>
 				</a>
+				<a href={{ url_for('logic_playlist_all') }}>
+					<span class="nav-link">Playlists</span>
+				</a>
+				
 				<a href={{ url_for('aim_tracker') }}>
 					<span class="nav-link">Aim Tracker</span>
 				</a>
+
 				
 				{% if current_user.is_authenticated %}
 
