@@ -22,6 +22,7 @@ def load_user(id):
 class User(UserMixin, db.Model):
 		id = db.Column(db.Integer, primary_key=True)
 		username = db.Column(db.String(64), index=True, unique=True)
+		admin_status = db.Column(db.Integer)
 		user_enc = db.Column(db.String(44))
 		email = db.Column(db.String(120), index=True, unique=True)
 		password_hash = db.Column(db.String(128))
@@ -161,11 +162,12 @@ class User(UserMixin, db.Model):
 				new_video.video_url = x['video_url']
 				new_video.video_title = x['video_title']
 				new_video.video_description = x['video_description']
-				new_video.video_channel = x['video_channel']
+				new_video.video_channel_name = x['video_channel_name']
+				new_video.video_channel_url = x['video_channel_url']
 				new_video.date_added_n1 = new_video.get_date_time(x['date_added_n1'])
 				new_video.game = x['game']
 				new_video.difficulty = x['difficulty']
-				new_video.video_start_timestamp = x['video_start_timestamp']
+				new_video.timestamps = x['timestamps']
 				new_video.featured_video_tag = int(x['featured_video_tag'])
 				new_video.best_new_video_tag = int(x['best_new_video_tag'])
 				new_video.n1_original_content_tag = int(x['n1_original_content_tag'])
@@ -201,11 +203,12 @@ class Videos(db.Model):
 	video_url=db.Column(db.String(11))
 	video_title=db.Column(db.String(100))
 	video_description=db.Column(db.String(5000))
-	video_channel=db.Column(db.String(20))
+	video_channel_name=db.Column(db.String(20))
+	video_channel_url=db.Column(db.String(24))
 	date_added_n1=db.Column(db.DateTime)
 	game=db.Column(db.String(100))
 	difficulty=db.Column(db.String(100))
-	video_start_timestamp=db.Column(db.String(100))
+	timestamps=db.Column(db.String(100))
 	featured_video_tag=db.Column(db.Integer)
 	best_new_video_tag=db.Column(db.Integer)
 	n1_original_content_tag=db.Column(db.Integer)
@@ -231,6 +234,7 @@ class Playlists(db.Model):
 	playlist_img_src = db.Column(db.String(10))
 	playlist_author_id = db.Column(db.Integer)
 	playlist_author_name = db.Column(db.String(50))
+	playlist_difficulty = db.Column(db.String(14))
 
 	def __repr__(self):
 		return '<Playlist {}>'.format(self.video_title)

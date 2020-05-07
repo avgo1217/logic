@@ -34,6 +34,12 @@
 
 
 				{% endif %}
+
+				{% if current_user.admin_status==1 %}
+					<div class="navbar-nav topbar-nav ml-md-auto align-items-right">
+						<a href={{ url_for('admin_home') }}><span class="nav-link">Admin</span></a>
+					</div>
+				{% endif %}
 				
 			</nav>
 			<!-- End Navbar -->

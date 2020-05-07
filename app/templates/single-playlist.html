@@ -89,10 +89,13 @@
 			text-align: left;
 			margin-left: 5px;
 		}
-		.single-video-description {
-			font-size: 18px;
+		.single-video-channel-playlist {
+			font-size: 13px;
 			text-align: left;
-			margin-left: 5px;
+		}
+		.single-video-description {
+			font-size: 15px;
+			text-align: left;
 		}
 		.single-video-tags{
 			font-size: 18px;
@@ -104,6 +107,9 @@
 			font-size: 18px;
 			text-align: right;
 			margin-right: 10px;
+		}
+		.description-container{
+			margin-top: 5px;
 		}
 		.date-added{
 			font-size: 14px;
@@ -117,6 +123,9 @@
 		}
 		#next-video-box{
 			width:500px;
+		}
+		#picked_video {
+		    background:#e0ffff;
 		}
     </style>
     <style>
@@ -214,7 +223,7 @@
 				              	</div>
 				              	<div class="col-6 col-md-4">
 				              		<div class="date-added" id="date-added"></div>
-				              		<div class="single-video-tags" id="tags-list"><span class="badge badge-dark">Light</span>
+				              		<div class="single-video-tags" id="tags-list"><span class="badge badge-dark"></span>
 				              		</div>
 				              		<div class="single-video-flags">n1 select
 				              		</div>
@@ -224,46 +233,10 @@
 				       	<div class="video-info-container">
 							<div class="card" id ="video-info-card">
 			                    <div class="card-header">
-			                        <div class="card-category"><h4>The Breakdown</h4></div>
+			                        <div class="card-category"><h4 id="playlist-title"></h4></div>
 			                    </div>
-			                    <div class="card-body" id ="description-box">
-			                    	<div>
-			                    	</div>
-			                   	</div>
-			                </div>
-			                <div class="card">
-			                    <div class="card-body" id="next-video-box">
-				                	<div class="row row-demo-grid">
-						              	<div class="col-12 col-md-6">
-					                    	<div class="youtube-player" data-id="aSL-iIskEFU"></div>
-						              	</div>
-						              	<div class="col-6 col-md-6">
-						              		<div class="single-video-description" id="suggested-video">Title of next suggested video
-			              					</div>
-						              	</div>
-						            </div>
-						            <div class="row row-demo-grid">
-						              	<div class="col-12 col-md-6">
-						              		
-					                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
-					                    	
-						              	</div>
-						              	<div class="col-6 col-md-6">
-						              		<div class="single-video-description" id="suggested-video">Title of next suggested video
-			              					</div>
-						              	</div>
-						            </div>
-						            <div class="row row-demo-grid">
-						              	<div class="col-12 col-md-6">
-						              		
-					                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
-					                    	
-						              	</div>
-						              	<div class="col-6 col-md-6">
-						              		<div class="single-video-description" id="suggested-video">Title of next suggested video
-			              					</div>
-						              	</div>
-						            </div>
+			                    <div class="card-body" id ="description-box" style="overflow-y: scroll; height:500px;">
+			                    		
 			                   	</div>
 			                </div>
 				       	</div>
@@ -316,20 +289,25 @@
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
     <script>
-    	var path = 'http://127.0.0.1:5000/api/videos/search/';
+    	var path = 'http://127.0.0.1:5000/api/playlists/search/';
+    	var vid_path = 'http://127.0.0.1:5000/api/videos/search/';
+    	var host = 'http://127.0.0.1:5000/'
+    	var playlist_id = {{ playlist_id }};
     	var video_id = {{ video_id }};
+
     	$(document).ready(function() { 
-	   		GetVideo(path.concat(video_id))
+	   		GetPlaylist(path+playlist_id);
 	   	})
-	   	function GetVideo(url) {
+
+		function GetPlaylist(url) {
 	    	$.ajax({
 					url:url,
 					type:"GET",
 
 					//If the api call is successful
 					success: function(result){
-						data_object = JSON.parse(result);
-						PopulateVideoPage(data_object);	
+						PopulatePlaylist(result, video_id);
+
 				},
 				error:function(error){
 					console.log(`Error ${error}`)
@@ -337,34 +315,96 @@
 			})
 		}
 
+		function PopulatePlaylist(result){
+			var videos_dict = result[0]["list_of_videos"]
+			PopulateVideo(result, video_id);
+			PopulatePlaylistList(videos_dict)
+			document.getElementById("playlist-title").innerHTML = result[0]["playlist_name"]	
+		}
+
+		function PopulatePlaylistList(result){
+			var playlist_container = document.getElementById("description-box")
+			playlist_container.innerHTML = ''
+ 
+			for (var i = 0; i<result.length;i++){
+				var row = document.createElement("div")
+				var video_thumbnail_container = document.createElement("div")
+				var video_thumbnail = document.createElement("div")
+				var description_container = document.createElement("div")
+				var description_title = document.createElement("div")
+				var description_channel = document.createElement("div")
+				var channel_link = document.createElement("a");
+
+				//channel link
+				channel_link.href ="https://www.youtube.com/channel/".concat(result[i]["video_channel_url"]);
+				channel_link.setAttribute("target","_blank")
+				channel_link.innerHTML = result[i]["video_channel_name"];
+
+				//Set the table attributes
+				row.setAttribute("class", "row row-demo-grid")
+				if (i==video_id){
+					row.setAttribute("id","picked_video")
+				}
+				video_thumbnail_container.setAttribute("class", "col-12 col-md-5")
+				video_thumbnail.setAttribute("class","youtube-player")
+				video_thumbnail.setAttribute("data_id",result[i]["video_url"])
+				video_thumbnail.setAttribute("id",i)
+				video_thumbnail.onclick = function () {
+	            		window.open(host+"playlist/"+playlist_id+"/"+this.id,"_self");
+	            	}
+				description_container.setAttribute("class","col-6 col-md-7 description-container")
+				description_title.setAttribute("class","single-video-description")
+				description_title.setAttribute("id","title"+String(i))
+				description_channel.setAttribute("class","single-video-channel-playlist")
+				
+
+				description_title.innerHTML=result[i]["video_title"]
+				description_channel.appendChild(channel_link)
+
+				video_thumbnail.innerHTML = labnolThumb(result[i]["video_url"])
+				video_thumbnail_container.appendChild(video_thumbnail)
+				description_container.appendChild(description_title)
+				description_container.appendChild(description_channel)
+				row.appendChild(video_thumbnail_container)
+				row.appendChild(description_container)
+				playlist_container.appendChild(row)
+			}
+		}
+
+		function PopulateVideo(result, video_id){
+			PopulateVideoPage(result[0]['list_of_videos'][video_id])
+		}
+
 		function PopulateVideoPage(result){
 
-			document.getElementById("video_title").innerHTML = result[0]['video_title']
+			document.getElementById("video_title").innerHTML = result['video_title']
 
-			//Create the channel link
 			var channel_link = document.createElement("a");
-			channel_link.href ="https://www.youtube.com/channel/".concat(result[0]['video_channel_url']);
+
+			//channel link
+			channel_link.href ="https://www.youtube.com/channel/".concat(result["video_channel_url"]);
 			channel_link.setAttribute("target","_blank")
-			channel_link.innerHTML = result[0]['video_channel_name'];
+			channel_link.innerHTML = result["video_channel_name"];
 
 			//Add link to video channel div
 			document.getElementById("video_channel").appendChild(channel_link)
 
 			//Video description
-			document.getElementById("video_description").innerHTML = result[0]['video_description']
+			document.getElementById("video_description").innerHTML = result['video_description']
 
 			//N1 Description
-			document.getElementById("description-box").innerHTML = result[0]['n1_description']
+			document.getElementById("description-box").innerHTML = result['n1_description']
 
 			//date added by N1
-			var date = new Date(parseInt(result[0]['date_added_n1']))
+			var date = new Date(result['date_added_n1'])
 			document.getElementById("date-added").innerHTML = "Date added: "+getFormattedDate(date)
 
-			CreateVideoIframe(result[0]['video_url'])
-			CreateTags(result[0]["tags"])
+			CreateVideoIframe(result['video_url'])
+			CreateTags(result["tags"])
 
 			//get related videos
 		}
+
 		function getFormattedDate(date) {
 		  var year = date.getFullYear();
 
@@ -376,6 +416,11 @@
 		  
 		  return month + '/' + day + '/' + year;
 		}
+
+		function labnolThumb(id) {
+	        var thumb = '<img src="https://i.ytimg.com/vi/ID/hqdefault.jpg">';
+	        return thumb.replace("ID", id);
+	    }
 
 		function CreateVideoIframe(video_url){
 			var parent = document.getElementById("video-iframe-container")
@@ -395,6 +440,7 @@
 			var parent = document.getElementById("tags-list")
 			parent.innerHTML=''
 			tag_array = tags.split(",")
+
 			taglength = tag_array.length
 
 			for (var i = 0; i<taglength;i++){

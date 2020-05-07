@@ -431,16 +431,16 @@
 				var tags = document.createElement("div");
 				tags.setAttribute("class","tags-list")
 				var title = document.createTextNode(data_object[key].video_title)
-				var result_temp = data_object[key].video_url; 
+				var result = data_object[key].video_url; 
 
 				title_house.setAttribute("class","video-title");
-				link_house.setAttribute("class","channel-link");
+				link_house.setAttribute("class","channel-link")
 
 	            div1.classList.add("col-md-4");
 	            div2.classList.add("youtube-player")
 	            div2.setAttribute("data-id", result);
 	            div2.setAttribute("id", data_object[key].id);
-	            div2.innerHTML = labnolThumb(result_temp);
+	            div2.innerHTML = labnolThumb(result);
 	            div2.onclick = 
 	            	function () {
 	            		labnolIframe(this.id);

@@ -8,7 +8,7 @@ Copyright (c) 2019 - present AppSeed.us
 import os, logging 
 import json
 import urllib.request
-from datetime import datetime
+from datetime import datetime, date
 
 from flask import redirect, render_template, request, url_for, flash, jsonify, session
 from flask_login import current_user,login_required
@@ -26,7 +26,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 # App modules
 from app import db, app
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, TrainingInstance, Scenarios, TrainingInstanceSchema, Videos
+from app.models import User, TrainingInstance, Scenarios, TrainingInstanceSchema, Videos, Playlists
 from app.email import send_password_reset_email
 
 # sql modules
@@ -49,7 +49,7 @@ def register():
     # declare the Registration Form
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, aim_training_tool_user_status=1)
+        user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         user.set_name_encrypt()
         db.session.add(user)
@@ -115,6 +115,55 @@ def login():
 
     return render_template('auth/login.html', title='Sign In', form=form)
 
+@app.route('/admin/home')
+def admin_home():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    if not current_user.admin_status == 1:
+        return redirect(url_for('index'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+
+        return render_template( '/admin/admin-home.html')    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+@app.route('/admin/addplaylist', methods=['GET','POST'])
+def admin_playlist_add():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    if not current_user.admin_status == 1:
+        return redirect(url_for('index'))
+    if request.method =='GET':
+        try:
+            # try to match the pages defined in -> pages/<input file>
+
+            return render_template( '/admin/admin-add-playlist.html')    
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    playlist_name=request.form["playlist_name"]
+    playlist_description =request.form["playlist_description"]
+    list_of_videos = request.form["list_of_videos"]
+    playlist_img_src = request.form["imagesource"]
+    playlist_difficulty = request.form["difficulty"]
+    playlist_author_name = request.form["author_username"]
+    playlist_author_id = request.form["author_id"]
+
+    if playlist_name and playlist_description and list_of_videos and playlist_img_src and playlist_difficulty and playlist_author_name and playlist_author_id:
+        new_playlist = Playlists(playlist_date_created = date.today(), 
+                             playlist_name=request.form["playlist_name"],
+                             playlist_description =request.form["playlist_description"],
+                             list_of_videos = request.form["list_of_videos"],
+                             playlist_img_src = request.form["imagesource"],
+                             playlist_difficulty = request.form["difficulty"],
+                             playlist_author_name = request.form["author_username"],
+                             playlist_author_id = request.form["author_id"])
+        db.session.add(new_playlist)
+        db.session.commit()
+        return render_template( '/admin/admin-add-playlist.html')
+    else:
+        flash("Complete the form")
 
 # App main route + generic routing
 @app.route('/', defaults={'path': 'index.html'})
@@ -143,7 +192,6 @@ def aim_tracker():
         # try to match the pages defined in -> pages/<input file>
 
         result = get_most_played_scenario(current_user.username)
-        print(result)
         return render_template( 'aim-data-tracker.html', scenario = result)    
     except:
         return render_template( 'pages/error-404.html' )
@@ -169,11 +217,27 @@ def logic_browse_single(video_id):
     except:
         return render_template( 'pages/error-404.html' )
 
+@app.route('/playlist/<playlist_id>/<video_id>')
+def logic_playlist_single(playlist_id, video_id):
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'single-playlist.html', playlist_id = playlist_id, video_id=video_id)    
+    except:
+        return render_template( 'pages/error-404.html' )
+
 
 #APIs
 @app.route("/api/videos/search/<video_id>", methods=["GET"])
 def get_one_video_search(video_id):
     result = get_one_video(video_id)
+    return result
+
+@app.route("/api/playlists/search/<playlist_id>", methods=["GET"])
+def get_one_playlist_search(playlist_id):
+    result = get_one_playlist(playlist_id)
+
     return result
 
 @app.route("/api/videos/search/", methods=["GET"])
@@ -239,6 +303,16 @@ def get_global_comparison_stat(scenario,aim_metric,stat_type):
     # Angular, react, to abstract away raw jquery (vue.js)
     if current_user.is_authenticated:
         result = calculate_global_stat(scenario, aim_metric, stat_type)
+        return result
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/api/admin/videos", methods=["GET"])
+def get_admin_videos():
+
+    # Angular, react, to abstract away raw jquery (vue.js)
+    if current_user.is_authenticated and current_user.admin_status==1:
+        result = get_all_videos_admin()
         return result
     else:
         return redirect(url_for('login'))
@@ -398,11 +472,41 @@ def get_all_videos():
     df_json = df.to_json(orient='records')
     return jsonify(df_json)
 
+def get_all_videos_admin():
+    df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
+    df = df[['id','video_title','video_channel_name']]
+    df_json = df.to_json(orient='records')
+    return jsonify(df_json)
+
 def get_one_video(video_id):
     videoquery = Videos.query.filter_by(id=video_id)
     df = pd.read_sql(videoquery.statement, videoquery.session.bind)
     df_json = df.to_json(orient='records')
+    return jsonify(df_json)
+
+def get_one_playlist(playlist_id):
+    playlistquery = Playlists.query.filter_by(id=playlist_id)
+    df = pd.read_sql(playlistquery.statement, playlistquery.session.bind)
+    df_json = df.to_dict(orient='records')
+    the_list = df_json[0]['list_of_videos'].split(",")
+    the_list.pop()
+    new_list=[]
+
+    for item in the_list:
+        videoquery = Videos.query.filter_by(id=int(item))
+        temp_df = pd.read_sql(videoquery.statement, videoquery.session.bind)
+        new_list.append({"video_id":int(item),
+                         "video_title":temp_df.iloc[0]['video_title'],
+                         "video_channel_name":temp_df.iloc[0]['video_channel_name'],
+                         "video_channel_url":temp_df.iloc[0]['video_channel_url'],
+                         "video_url":temp_df.iloc[0]['video_url'],
+                         "video_description":temp_df.iloc[0]['video_description'],
+                         "n1_description":temp_df.iloc[0]['n1_description'],
+                         "date_added_n1":temp_df.iloc[0]['date_added_n1'],
+                         "tags":temp_df.iloc[0]['tags']})
     
+    df_json[0]['list_of_videos']=new_list
+
     return jsonify(df_json)
 
 def process_for_all_filtered_data(username, scenario, current_user, aim_metric, date_range, smooth_flag):
