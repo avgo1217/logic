@@ -12,20 +12,28 @@
 			<!-- End Logo Header -->
 
 			<!-- Navbar Header -->
-			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark2">
+			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
 
 				<a href={{ url_for('index') }}>
-					<span class="nav-link">Home</span>
+					<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+						<span >Home</span>
+					</div>
 				</a>
 				<a href={{ url_for('logic_browse') }}>
-					<span class="nav-link">Browse</span>
+					<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+						<span>Browse</span>
+					</div>
 				</a>
 				<a href={{ url_for('logic_playlist_all') }}>
-					<span class="nav-link">Playlists</span>
+					<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+						<span>Playlists</span>
+					</div>
 				</a>
 				
 				<a href={{ url_for('aim_tracker') }}>
-					<span class="nav-link">Aim Tracker</span>
+					<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+						<span>Aim Tracker</span>
+					</div>
 				</a>
 
 				
@@ -33,8 +41,16 @@
 
 					
 					<div class="navbar-nav topbar-nav ml-md-auto align-items-right">
-						<a href={{ url_for('logout') }}><span class="nav-link">{{ current_user.username }}</span></a>
-						<a href={{ url_for('logout') }}><span class="nav-link">Logout</span></a>
+						<a href={{ url_for('logout') }}>
+							<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+								<span>{{ current_user.username }}</span>
+							</div>
+						</a>
+						<a href={{ url_for('logout') }}>
+							<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+								<span>Logout</span>
+							</div>
+						</a>
 					</div>
 
 

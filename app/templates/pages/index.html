@@ -107,28 +107,54 @@
     #next-video-box{
       width:500px;
     }
+    .homepanel{
+      position:relative;
+
+      height: 100%;
+
+      background-image: linear-gradient(rgb(7, 9, 11), rgb(28, 35, 42));
+      overflow-y: scroll;
+      padding-top: 60px;
+    }
     </style>
     <style>
     .youtube-player {
         position: relative;
         padding-bottom: 56.23%;
-        height: 0;
+        height: 100%;
         overflow: hidden;
         max-width: 100%;
-        background: #000;
-        margin: 5px;
-    }
+        background:transparent;
 
-    .youtube-player iframe,
-    .youtube-player object,
-    .youtube-player embed {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 100;
-        background: transparent;
+    }
+    .playlist-name{
+      font-size: 25px;
+      cursor: pointer;
+    }
+    .playlist-author{
+      font-size: 14px;
+    }
+    .playlist-date-added{
+      font-size: 14px;
+    }
+    .playlist-difficulty{
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .play-front-description{
+      overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 3; /* number of lines to show */
+     -webkit-box-orient: vertical;
+     font-size: 15px;
+    }
+    .playlist-image-container{
+      cursor:pointer;
+    }
+    img{
+      width:100%;
+      height:100%;
     }
 
     .youtube-player img {
@@ -167,6 +193,82 @@
     .badge {
       margin-left: 5px;
     }
+    .test {
+      /*background: #000;*/
+    }
+    .test1 {
+      /*background: #000;*/
+    }
+    .top-row {
+      margin-top: 20px;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .video-body {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .small-title {
+      color:white;
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 20px;
+      margin-top: 50px;
+    }
+ 
+    .videowidth{
+      width: 325px;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: inline-block;
+    }
+    .title-container {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 120px;
+    }
+    #title-wrapper {
+      display: inline-block;
+
+    }
+    #header1{
+      
+      font-size: 60px;
+      color: rgb(200, 200, 200);
+      font-family:'Century Gothic','Futura',san-serif;
+      margin-bottom: 30px;
+    }
+    #description1{
+      font-size: 15px;
+      width: 550px;
+      color: rgb(200, 200, 200);
+      font-family:'Century Gothic','Futura',san-serif;
+      margin-bottom: 40px;
+    }
+    .playlist-container{
+      color:rgb(220, 220, 220);
+    }
+    .play-details{
+      margin: 0px;
+      font-size: 14px;
+      color:rgb(200, 200, 200);
+    }
+    .top-button{
+      margin-top: 15px;
+    }
+    .tags-list{
+        float:right;
+        margin-top: 2px;
+
+      }
+
+  .home-contain{
+    height:300px;
+    padding-bottom: 20px;
+  }
+
+
+
 
 </style>
 
@@ -180,13 +282,77 @@
 
     {% include 'includes/navigation.html' %}
 
-    <div class="single-video-margin">
-      <div class="content">
-        <div class="page-inner">
-          <div class="row">
+    <div class="col-md-12 test homepanel">
+
+      <div class="title-container">
+        <div id="title-wrapper">
+          <div id="header1">logic</div>
+          <div id="description1">Welcome to Logic! This is a passion project (currently in beta) by the co-founders of N1 Esports, designed to provide the best content, resources, and tools for casual FPS gamers looking to improve at their own pace.</div>
+          <button type="button" class="btn btn-light">Why We Started This Project</button>
+
+        </div>
+      </div>
+
+      <div class="row top-row playlist-container">
+        <div class="col-md-4">
+          
+            <div id="playimage0">
+            </div>
+              
+            <div id="playdetails0">
+            </div>
+          
+        </div>
+        <div class="col-md-4">
+
+            <div id="playimage1">
+            </div>
+            <div id="playdetails1">
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            <div id="playimage2">
+            </div>
+            <div id="playdetails2">
+            </div>
+
+        </div>
+      </div>
+      <div class="home-contain">
+        <div class="col-md-12">
+          <div class="small-title">Best New Videos
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row" id="best-new-videos">
+          </div>
+        </div> 
+      </div>
+      <div class="home-contain">
+        <div class="col-md-12">
+          <div class="small-title">Staff Picks
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row" id="staff-picks">
+          </div>
+        </div> 
+      </div>
+      <div class="title-container">
+        <div id="title-wrapper">
+          <div id="header1">logic</div>
+          <div id="description1">Welcome to Logic! This is a passion project (currently in beta) by the co-founders of N1 Esports, designed to provide the best content, resources, and tools for casual FPS gamers looking to improve at their own pace.</div>
+          <button type="button" class="btn btn-light">Why We Started This Project</button>
+
         </div>
       </div>
     </div>
+    
+  </div>
+          
+
 
   <!--   Core JS Files   -->
 
@@ -228,71 +394,177 @@
   <script src="/static/assets/js/setting-demo.js"></script>
 
   <!-- Specific JS goes HERE -->
-    <script src="/static/assets/js/setting-demo2.js"></script>
-    <script>
-      var path = 'http://127.0.0.1:5000/api/videos/search/';
-      var video_id = {{ video_id }};
+  <script src="/static/assets/js/setting-demo2.js"></script>
+   <script>
+      var path = 'http://127.0.0.1:5000/api/home';
+      var host = 'http://127.0.0.1:5000/'
       $(document).ready(function() { 
-        GetVideo(path.concat(video_id))
+        GetHomePageInfo(path);
       })
-      function GetVideo(url) {
+
+      function GetHomePageInfo(url) {
         $.ajax({
           url:url,
           type:"GET",
 
           //If the api call is successful
           success: function(result){
-            data_object = JSON.parse(result);
-            PopulateVideoPage(data_object); 
-        },
-        error:function(error){
-          console.log(`Error ${error}`)
-        }
-      })
-    }
-
-    function PopulateVideoPage(result){
-      document.getElementById("video_title").innerHTML = result[0]['video_title']
-      document.getElementById("video_description").innerHTML = result[0]['video_description']
-      document.getElementById("description-box").innerHTML = result[0]['n1_description']
-      CreateVideoIframe(result[0]['video_url'])
-      CreateTags(result[0]["tags"])
-
-      //get related videos
-    }
-
-    function CreateVideoIframe(video_url){
-      var parent = document.getElementById("video-iframe-container")
-      parent.innerHTML=''
-      var iframe = document.createElement("iframe");
-          var embed = "https://www.youtube.com/embed/ID?autoplay=1";
-          iframe.setAttribute("src", embed.replace("ID", video_url));
-          iframe.setAttribute("frameborder", "0");
-          iframe.setAttribute("allowfullscreen", "1");
-          iframe.setAttribute("height","477");
-          iframe.setAttribute("width","848");
-
-          parent.appendChild(iframe)
-    }
-
-    function CreateTags(tags){
-      var parent = document.getElementById("tags-list")
-      parent.innerHTML=''
-      tag_array = tags.split(",")
-      taglength = tag_array.length
-
-      for (var i = 0; i<taglength;i++){
-        var spantemp = document.createElement("span");
-        spantemp.setAttribute("class", "badge badge-dark")
-        spantemp.innerHTML = tag_array[i]
-        parent.appendChild(spantemp)  
+            PopulateHomePage(result);
+          },
+          error:function(error){
+            console.log(`Error ${error}`)
+          }
+        })
       }
+
+      function PopulateHomePage(result){
+        var playlists = result[0]
+        var best_new_video = result[1]
+        var staff_picks = result[2]
+
+        for (var i=0;i<playlists.length;i++){
+          var temp = document.getElementById('playimage'+i);
+          var image_container = document.createElement("div");
+          var image_source = document.createElement("img");
+          var image_column = document.createElement("div");
+
+
+          image_column.setAttribute("class","playlist-info");
+          image_container.setAttribute("class","playlist-image-container");
+          image_container.setAttribute("id",playlists[i]['id']);
+          image_container.onclick = function () {
+                    window.open(host+"playlist/"+this.id+"/0","_self");
+                  }
+          image_source.src = playlists[i]['playlist_img_src']
+          image_source.setAttribute("class","playlist-image")
+          image_container.appendChild(image_source);
+          image_column.appendChild(image_container)
+          temp.appendChild(image_column)
+
+          var temp1 = document.getElementById('playdetails'+i);
+          var playlist_title = document.createElement("h2");
+          var playlist_description = document.createElement("p");
+          var playlist_number_of_vids = document.createElement("p");
+          var playlist_date_added = document.createElement("p");
+          var date = new Date(playlists[i]["playlist_date_created"])
+          var playlist_difficulty = document.createElement("p");
+  
+
+          playlist_title.setAttribute("class","play-front-title");
+          playlist_title.setAttribute("id",playlists[i]['id']);
+          playlist_title.onclick = function () {
+                    window.open(host+"playlist/"+this.id+"/0","_self");
+                  }
+          playlist_description.setAttribute("class","play-front-description");
+          playlist_number_of_vids.setAttribute("class","play-details");
+          playlist_date_added.setAttribute("class","play-details");
+          playlist_difficulty.setAttribute("class","play-details");
+          playlist_title.innerHTML=playlists[i]["playlist_name"];
+          playlist_description.innerHTML=playlists[i]["playlist_description"];
+          playlist_date_added.innerHTML="Date added: "+ getFormattedDate(date);
+          playlist_difficulty.innerHTML="Difficult: "+playlists[i]["playlist_difficulty"];
+          playlist_number_of_vids.innerHTML="No. of videos: "+playlists[i]["list_of_videos"].length;
+          temp1.appendChild(playlist_title);
+          temp1.appendChild(playlist_description);
+          temp1.appendChild(playlist_date_added);
+          temp1.appendChild(playlist_number_of_vids);
+          temp1.appendChild(playlist_difficulty);
+
+        }
+
+        var best_new_videos_container = document.getElementById("best-new-videos");
+        for (var i=0;i<best_new_video.length;i++){
+          var vid_container = document.createElement("div");
+          var div2 =document.createElement("div");
+          var tags = document.createElement("div");
+
+          tags.setAttribute("class","tags-list")
+          vid_container.setAttribute("class","col-md-4");
+          div2.classList.add("youtube-player")
+          div2.setAttribute("data-id", best_new_video[i].video_url);
+          div2.setAttribute("id", best_new_video[i].id);
+          div2.innerHTML = labnolThumb(best_new_video[i].video_url);
+          div2.onclick = function(){
+            window.open("http://127.0.0.1:5000/browse/".concat(this.id),"_self");
+          }
+          CreateTags(best_new_video[i].tags,tags);
+
+          vid_container.appendChild(div2);
+          vid_container.appendChild(tags);
+          best_new_videos_container.appendChild(vid_container);
+        }
+
+        var staff_picks_container = document.getElementById("staff-picks");
+        for (var i=0;i<staff_picks.length;i++){
+          var vid_container = document.createElement("div");
+          var div2 =document.createElement("div");
+          var tags = document.createElement("div");
+
+          tags.setAttribute("class","tags-list")
+          vid_container.setAttribute("class","col-md-4");
+          div2.classList.add("youtube-player")
+          div2.setAttribute("data-id", staff_picks[i].video_url);
+          div2.setAttribute("id", staff_picks[i].id);
+          div2.innerHTML = labnolThumb(staff_picks[i].video_url);
+          div2.onclick = function(){
+            window.open("http://127.0.0.1:5000/browse/".concat(this.id),"_self");
+          }
+          CreateTags(staff_picks[i].tags,tags);
+
+          vid_container.appendChild(div2);
+          vid_container.appendChild(tags);
+          staff_picks_container.appendChild(vid_container);
+        }
+      }
+
+      function labnolThumb(id) {
+          var thumb = '<img src="https://i.ytimg.com/vi/ID/hqdefault.jpg">',
+              play = '<div class="play"></div>';
+          return thumb.replace("ID", id) + play;
+      }
+
+      function getFormattedDate(date) {
+      var year = date.getFullYear();
+
+      var month = (1 + date.getMonth()).toString();
+      month = month.length > 1 ? month : '0' + month;
+
+      var day = date.getDate().toString();
+      day = day.length > 1 ? day : '0' + day;
+      
+      return month + '/' + day + '/' + year;
     }
+    function CreateTags(tags, parent){
+        var count=0;
 
-    </script>
+        if (tags){
+          tag_array = tags.split(",")
+        taglength = tag_array.length
 
+        for (var i = 0; i<taglength;i++){
+          if (count <3){
+            var spantemp = document.createElement("span");
+            spantemp.setAttribute("class", "badge badge-dark")
+            spantemp.innerHTML = tag_array[i]
+            parent.appendChild(spantemp)
+            count = count+1 
+          }
+          else {
+            var spantemp = document.createElement("span");
+            spantemp.setAttribute("class", "badge badge-dark")
+            spantemp.innerHTML = "..."
+            parent.appendChild(spantemp)
+            parent.appendChild(spantemp)
+            break;
+          }
+          
+        }
+
+        }
+      
+    }
   
-  
+   </script>
   
 </body>
 </html>

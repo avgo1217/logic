@@ -13,6 +13,7 @@ from flask_bcrypt     import Bcrypt
 from flask_mail 	  import Mail
 from flask_bootstrap  import Bootstrap
 from flask_marshmallow import Marshmallow
+from flask_dropzone import Dropzone
 
 
 # Grabs the folder where the script runs.
@@ -28,6 +29,7 @@ mail = Mail()
 bc = Bcrypt() # flask-bcrypt
 login = LoginManager() # flask-loginmanager
 ma = Marshmallow()
+dropzone = Dropzone()
 
 db.init_app(app)
 login.init_app(app)
@@ -35,6 +37,7 @@ mail.init_app(app)
 bootstrap.init_app(app)
 login.init_app(app) # init the login manager
 ma.init_app(app)
+dropzone.init_app(app)
 
 login.login_view = 'main.login'
 login.login_message = 'Please log in to access this page.'

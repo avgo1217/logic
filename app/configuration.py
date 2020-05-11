@@ -24,3 +24,5 @@ class Config():
 	ADMINS = ['ryan.kim@n1esports.com']
 	SECURITY_EMAIL_SENDER = 'ryan.kim@n1esports.com'
 	SESSION_TYPE = 'filesystem'
+	UPLOAD_FOLDER='uploads/'
+	ALLOWED_EXTENSIONS={'csv'}

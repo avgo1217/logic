@@ -75,7 +75,6 @@ class User(UserMixin, db.Model):
 				return subfiles
 
 		def get_existing_scenario_instances(self):
-			print(self.id)
 			results = db.session.query(TrainingInstance.session_file_name).filter_by(user_id = self.id)
 			list_of_results = [r for r, in results]
 			return list_of_results
@@ -215,6 +214,9 @@ class Videos(db.Model):
 	n1_select_tag=db.Column(db.Integer)
 	n1_description=db.Column(db.String(5000))
 	tags=db.Column(db.String(5000))
+	homepage_bestnew = db.Column(db.Integer)
+	homepage_staffpick = db.Column(db.Integer)
+
 
 	def __repr__(self):
 		return '<Video {}>'.format(self.video_title)
@@ -235,6 +237,7 @@ class Playlists(db.Model):
 	playlist_author_id = db.Column(db.Integer)
 	playlist_author_name = db.Column(db.String(50))
 	playlist_difficulty = db.Column(db.String(14))
+	homepage_featured = db.Column(db.Integer)
 
 	def __repr__(self):
 		return '<Playlist {}>'.format(self.video_title)

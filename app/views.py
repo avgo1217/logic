@@ -15,9 +15,10 @@ from flask_login import current_user,login_required
 from flask_login import login_user
 from flask_login import logout_user
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 import pandas as pd
 import requests
-
+from io import StringIO
 # Flask modules
 from flask               import render_template, request, url_for, redirect, send_from_directory
 from flask_login         import login_user, logout_user, current_user, login_required
@@ -31,6 +32,11 @@ from app.email import send_password_reset_email
 
 # sql modules
 from sqlalchemy.sql import func
+from sqlalchemy import or_
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 # Logout user
 @app.route('/logout.html')
@@ -101,10 +107,10 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user,remember=form.remember_me.data)
-        user.update_scenarios_table(1,'all_scenarios.csv')
-        user.add_videos_table()
-        all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
-        user.add_all_new_sessions(all_scenarios_df)
+        #user.update_scenarios_table(1,'all_scenarios.csv')
+        #user.add_videos_table()
+        #all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
+        #user.add_all_new_sessions(all_scenarios_df)
         #user.add_videos_table('temp_videos.csv')
 
         next_page = url_for('aim_tracker')
@@ -115,18 +121,69 @@ def login():
 
     return render_template('auth/login.html', title='Sign In', form=form)
 
-@app.route('/admin/home')
+#Admin
+@app.route('/admin/home', methods=['GET','POST'])
 def admin_home():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
     if not current_user.admin_status == 1:
         return redirect(url_for('index'))
-    try:
-        # try to match the pages defined in -> pages/<input file>
+    if request.method =='GET':
+        try:
+            # try to match the pages defined in -> pages/<input file>
 
-        return render_template( '/admin/admin-home.html')    
-    except:
-        return render_template( 'pages/error-404.html' )
+            return render_template( '/admin/admin-home.html')    
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    homepage_playlists=request.form["featured_playlists"]
+    best_new_videos =request.form["best_new_videos"]
+    staff_picks = request.form["staff_picks"]
+
+    if homepage_playlists:
+        try: 
+            Playlists.query.update({Playlists.homepage_featured: 0})
+            db.session.commit()
+
+            playlist_split = homepage_playlists.split(",")
+
+            for playlist_id in playlist_split:
+                playlist_temp = Playlists.query.get(int(playlist_id))
+                playlist_temp.homepage_featured = 1
+                db.session.commit()
+
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    if best_new_videos:
+        try: 
+            Videos.query.update({Videos.homepage_bestnew:0})
+            db.session.commit()
+
+            bestnew_split = best_new_videos.split(",")
+
+            for video_id in bestnew_split:
+                video_temp = Videos.query.get(int(video_id))
+                video_temp.homepage_bestnew = 1
+                db.session.commit()
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    if staff_picks:
+        try:
+            Videos.query.update({Videos.homepage_staffpick:0})
+            db.session.commit()
+
+            staff_picks_split = staff_picks.split(",")
+
+            for video_id in staff_picks_split:
+                video_temp = Videos.query.get(int(video_id))
+                video_temp.homepage_staffpick = 1
+                db.session.commit()
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    return render_template( '/admin/admin-home.html') 
 
 @app.route('/admin/addplaylist', methods=['GET','POST'])
 def admin_playlist_add():
@@ -158,7 +215,8 @@ def admin_playlist_add():
                              playlist_img_src = request.form["imagesource"],
                              playlist_difficulty = request.form["difficulty"],
                              playlist_author_name = request.form["author_username"],
-                             playlist_author_id = request.form["author_id"])
+                             playlist_author_id = request.form["author_id"],
+                             homepage_featured = 0)
         db.session.add(new_playlist)
         db.session.commit()
         return render_template( '/admin/admin-add-playlist.html')
@@ -183,7 +241,6 @@ def index(path):
         
         return render_template( 'pages/error-404.html' )
 
-# App main route + generic routing
 @app.route('/aim-data-tracker/')
 def aim_tracker():
     if not current_user.is_authenticated:
@@ -196,7 +253,37 @@ def aim_tracker():
     except:
         return render_template( 'pages/error-404.html' )
 
-# App main route + generic routing
+@app.route('/aim-data-tracker/upload', methods=['POST'])
+def upload():
+    uploaded_files = request.files.getlist("file[]")
+    filenames = []
+    for file in uploaded_files:
+        # Check if the file is one of the allowed types/extensions
+        if file and allowed_file(file.filename):
+            # Make the filename safe, remove unsupported chars
+            filename = secure_filename(file.filename)
+
+            # Save the filename into a list, we'll use it later
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print(os.getcwd())
+            subfiles = [StringIO()] 
+            with open(os.path.join(app.config['UPLOAD_FOLDER'], filename)) as bigfile:
+                    count = 0
+                    for line in bigfile:
+                            if line.strip() == "" and count != 0: # blank line, new subfile  
+                                    subfiles.append(StringIO())
+                            elif line.strip() == "" and count == 0: 
+                                    continue
+                            else: # continuation of same subfile                                                                                                                                                   
+                                    subfiles[-1].write(line)
+                            count=count+1
+            
+            #Method to go through each subfile and create Clicks classes and get relevant info
+            print(subfiles)
+
+            filenames.append(filename)
+    return render_template( 'logic-browse.html')  
+
 @app.route('/browse/')
 def logic_browse():
     #if not current_user.is_authenticated:
@@ -240,6 +327,11 @@ def logic_playlist_all():
 
 
 #APIs
+@app.route("/api/home")
+def get_home_page():
+    result = get_home_page_info()
+    return result
+
 @app.route("/api/videos/search/<video_id>", methods=["GET"])
 def get_one_video_search(video_id):
     result = get_one_video(video_id)
@@ -333,12 +425,52 @@ def get_admin_videos():
     else:
         return redirect(url_for('login'))
 
-# Return sitemap 
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
 
 #Functions
+def get_home_page_info():
+    playlist_list=[]
+    playlistquery = Playlists.query
+    df = pd.read_sql(playlistquery.statement, playlistquery.session.bind)
+    df = df.loc[df['homepage_featured']==1]
+    df_json = df.to_dict(orient='records')
+    for record in df_json:
+        the_list = record['list_of_videos'].split(",")
+        if the_list[-1] =="":
+            the_list.pop()
+        new_list=[]
+        for item in the_list:
+            videoquery = Videos.query.filter_by(id=int(item))
+            temp_df = pd.read_sql(videoquery.statement, videoquery.session.bind)
+            new_list.append({"video_id":int(item),
+                             "video_title":temp_df.iloc[0]['video_title'],
+                             "video_channel_name":temp_df.iloc[0]['video_channel_name'],
+                             "video_channel_url":temp_df.iloc[0]['video_channel_url'],
+                             "video_url":temp_df.iloc[0]['video_url'],
+                             "video_description":temp_df.iloc[0]['video_description'],
+                             "n1_description":temp_df.iloc[0]['n1_description'],
+                             "date_added_n1":temp_df.iloc[0]['date_added_n1'],
+                             "tags":temp_df.iloc[0]['tags']})
+        
+        record['list_of_videos']=new_list
+        record['type']="featured_playlist"
+    playlist_list.append(df_json)
+    #Add best new
+    videoquery = Videos.query.filter_by(homepage_bestnew=1)
+    temp_df = pd.read_sql(videoquery.statement, videoquery.session.bind)
+    best_json = temp_df.to_dict(orient='records')
+    playlist_list.append(best_json)
+
+    #Add staff selection
+    videoquery = Videos.query.filter_by(homepage_staffpick=1)
+    temp_df1 = pd.read_sql(videoquery.statement, videoquery.session.bind)
+    best_json1 = temp_df1.to_dict(orient='records')
+    playlist_list.append(best_json1)
+
+    return jsonify(playlist_list)
+
 def get_videos_by_filters(tag_list, game, difficulty, n1select, n1original):
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
     if game != "All":
@@ -495,7 +627,8 @@ def get_all_playlists():
     for record in df_json:
 
         the_list = record['list_of_videos'].split(",")
-        the_list.pop()
+        if the_list[-1] =="":
+            the_list.pop()
         new_list=[]
         for item in the_list:
             videoquery = Videos.query.filter_by(id=int(item))

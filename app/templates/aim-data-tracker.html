@@ -9,6 +9,7 @@
 
 	<!-- Fonts and icons -->
 	<script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
+	
 	<script>
 		WebFont.load({
 			google: {"families":["Lato:300,400,700,900"]},
@@ -19,6 +20,7 @@
 			}
 		});
 	</script>
+	<script src="/static/assets/js/dropzone.js"></script>
 	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -66,6 +68,69 @@
 			width:200px;
 			float:right;
 		}
+		.main-panel{
+    		background-image: linear-gradient(rgb(7, 9, 11), rgb(28, 35, 42));
+	    }
+	    .sidebar{
+	    	background-color: rgb(28, 35, 42);
+	    }
+	    .card {
+	    	background-color: rgb(28, 35, 42);
+	    	color:white;
+	    }
+	    .big-label{
+	    	font-size: 20px;
+	    	color: white;
+	    }
+	    .icon-arrow-up-circle {
+	    	font-size: 25px;
+	    	font-style: "sans-serif";
+	    	float: left;
+	    }
+	    .icon-class{
+	    	float: left;
+	    	margin-left: 10px;
+	    	font-size: 15px;
+	    }
+	    .modal {
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  padding-top: 100px; /* Location of the box */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		}
+		/* Modal Content */
+		.modal-content {
+		  background-color: grey ;
+		  margin: auto;
+		  padding: 5px;
+		  border: 1px solid #888;
+		  width: 40%;
+		  z-index: 1;
+		}
+
+		/* The Close Button */
+		.close {
+		  color: #FFF;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: #FFF;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+
+
     </style>
 
     <!-- Specific CSS goes HERE -->
@@ -87,7 +152,24 @@
 						<div class="col-md-12">
 							<div class="card">
 			                    <div class="card-header">
-			                        <div class="card-title" id="current_user_name">{{ current_user.username }}</div>
+			                        <div class="card-title big-label" id="current_user_name">{{ current_user.username }}</div>
+			                        <br>
+			                        <i class="icon-arrow-up-circle" id="upload-button"></i>
+
+			                        <div class="icon-class">Upload Kovaaks Files</div>
+			                        <div id="myModal" class="modal">
+
+									  <!-- Modal content -->
+									  <div class="modal-content">
+									    <span class="close">&times;</span>
+										<form action="upload" method="post" enctype="multipart/form-data">
+									        <input type="file" multiple="" name="file[]" class="span3" /><br />
+									        <input type="submit" value="Upload"  class="span2">
+									    </form>
+									  </div>
+
+									</div>
+			                        
 			                    </div>
 			                </div>
 						</div>
@@ -96,7 +178,7 @@
 						<div class="col-md-12">
 							<div class="card">
 			                    <div class="card-header">
-			                        <div class="card-category">Controls</div>
+			                        <div class="card-category big-label">Controls</div>
 			                    </div>
 			                    <div class="card-body">
 			                    	<div class="col-md-12">
@@ -178,8 +260,6 @@
 	                                    </div>
 				                        
                                     	<div class="col-md-5">
-
-                                    		<h5>Search</h5>
 	                                        <select class="js-data-example-ajax form-control"  id="analytics-search-bar"></select>
 	                                       	         
 	                                    </div>
@@ -243,15 +323,10 @@
 			                </div>
 			            </div>
 			        </div>
-			    </div>
-			
+			    </div>		
 			</div>
-
-			{% include 'includes/footer.html' %}
-
 		</div>
 		
-		{% include 'includes/aside-settings.html' %}
 
 	</div>
 
@@ -318,7 +393,7 @@
 					
 					borderColor: "#ff7b00",
 					pointBorderColor: "#FFF",
-					pointBackgroundColor: "#ff7b00",
+					pointBackgroundColor: "#FFF",
 					pointRadius:0,
 					pointBorderWidth: 0,
 					pointHoverRadius: 4,
@@ -329,9 +404,9 @@
 					data: []
 				},{
 					
-					borderColor: "#6e6e6e",
+					borderColor: "#FFF",
 					pointBorderColor: "#FFF",
-					pointBackgroundColor: "#6e6e6e",
+					pointBackgroundColor: "#FFF",
 					borderDash: [10,5],
 					pointRadius:0,
 					pointBorderWidth: 0,
@@ -414,8 +489,33 @@
 	    		UpdatePage();
 			});
 		});
-	        
-	  
+
+	  	// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var icon = document.getElementById("upload-button");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		icon.onclick = function() {
+		  modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		  modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+		    modal.style.display = "none";
+		  }
+		}
+
 	    function UpdatePage() {
 	    	document.getElementById('scenario-title').innerHTML = scenario_selected;
 	    	var aim_metric = String(document.getElementById('aimmetrics1').value);

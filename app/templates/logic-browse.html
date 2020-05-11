@@ -140,6 +140,37 @@
         background: url("//i.imgur.com/TxzC70f.png") no-repeat;
         cursor: pointer;
     }
+    .content{
+    	background-image: linear-gradient(rgb(7, 9, 11), rgb(28, 35, 42));
+    }
+    .sidebar{
+    	background-color: rgb(28, 35, 42);
+    }
+    .card {
+    	background-color: rgb(28, 35, 42);
+    	color:white;
+    }
+    #search-results{
+    	z-index: 1;
+    	margin-top: 7px;
+    }
+    .search-bar-container{
+    	color:white;
+    	position:fixed;
+    	z-index: 2;
+
+    }
+    .bar {
+    	display: flex;
+    }
+    #search-title{
+    	width: 70px;
+
+    }
+    #browse-search-bar{
+    	flex:1;
+    }
+
 
 </style>
 
@@ -220,27 +251,28 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="page-inner">
-			        <div class="page-header">
-			        	<h4>Search:</h4>
-			        	<div class="col-md-6">
-				        	
-				        	<select class="js-data-example-ajax form-control" name="data[]" multiple="multiple" id="browse-search-bar">
-						</select>
-						</div>
-			        </div>
 			        
-			        <div class="card">
+		        	<div class="card" id="search-bar-container">
+			            <div class="card-body">
+				        	<div class="col-md-12 bar">
+			        			<h4 id="search-title">Search</h4>
+				        		<select class="js-data-example-ajax form-control" name="data[]" multiple="multiple" id="browse-search-bar">
+								</select>
+							</div>
+						</div>
+					</div>
+			        
+			        
+			        <div class="card" id="search-results">
 			            <div class="card-body">
 			                <div class="row row-demo-grid" id="video-results">
-			                    <div class="col-md-4">
-		                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
-			                    </div>
+			                    
 			                </div>
 			            </div>
 			        </div>
 		    	</div>
 		    </div>
-		    {% include 'includes/footer.html' %}
+		   
 		</div>
 	</div>
 
@@ -438,7 +470,7 @@
 
 	            div1.classList.add("col-md-4");
 	            div2.classList.add("youtube-player")
-	            div2.setAttribute("data-id", result);
+	            div2.setAttribute("data-id", result_temp);
 	            div2.setAttribute("id", data_object[key].id);
 	            div2.innerHTML = labnolThumb(result_temp);
 	            div2.onclick = 

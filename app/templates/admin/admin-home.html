@@ -144,6 +144,17 @@
     	margin-top: 10px;
     	margin-left: 10px;
     }
+    .input-text-single {
+    	width: 100%;
+    }
+    .input-text-big {
+    	width: 100%;
+    	height: 200px;
+    }
+    #table-container{
+    	display: inline-block;
+    	vertical-align: top;
+    }
 
 </style>
 
@@ -159,26 +170,40 @@
 
 		{% include 'includes/admin-sidebar.html' %}
 
-
 		<div class="main-panel">
 			<div class="content">
 				<div class="page-inner">
 			        <div class="page-header">
 			        	
 			        </div>
-			        
-			        <div class="card">
-			            <div class="card-body">
-			                <div class="row row-demo-grid" id="video-results">
-			                    <div class="col-md-4">
-		                    		<div class="youtube-player" data-id="aSL-iIskEFU"></div>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
+			        <div class="row">
+				        <div class="col-md-4">
+				        	<form method="POST">
+								Homepage Selected Playlists (by playlist id): <br>
+								<input type="text" name="featured_playlists" class="input-text-single"><br>
+								Homepage best new videos <br>
+								<input type="text" name = "best_new_videos" id="listofbestnew" class="input-text-single"><br>
+								Homepage staff picks <br>
+								<input type="text" name = "staff_picks" id="listofstaffpicks" class="input-text-single"><br>
+								<input type="submit" value="Submit">
+							</form>
+						</div>
+						<div class="col-md-8" id="table_container">
+							<div class="table-responsive">
+	                            <table id="basic-datatables" class="display table table-striped table-hover" >
+	                                <thead>
+	                                    <tr>
+	                                    	<th>ID</th>
+	                                        <th>Title</th>
+	                                        <th>Channel</th>
+	                                    </tr>
+	                                </thead>
+	                            </table>
+                       		 </div>
+						</div>
+					</div>
 		    	</div>
 		    </div>
-		    {% include 'includes/footer.html' %}
 		</div>
 	</div>
 
@@ -224,7 +249,61 @@
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
 
-    	
+    <script>
+    	var path = 'http://127.0.0.1:5000/api/admin/videos';
+    	$(document).ready(function() { 
+	   		populateVideoTable();
+
+	   	})
+    	function populateVideoTable() {
+    		$.ajax({
+					url:path,
+					type:"GET",
+
+					//If the api call is successful
+					success: function(result){
+						CreateTable(result)		
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})
+    	}
+
+		function CreateTable(result){
+			data_object = JSON.parse(result);
+			var table_container = document.getElementById("basic-datatables");
+			var table_body = document.createElement("tbody")
+
+			for (var key in data_object) {
+
+				var new_row = document.createElement("tr")
+				var vid_id = document.createElement("th")
+				var vid_name = document.createElement("th")
+				var channel_name = document.createElement("th")
+
+
+				new_row.setAttribute("style","height:20px")
+				vid_id.setAttribute("style","width:50px")
+				vid_name.setAttribute("style","width:400px")
+				channel_name.setAttribute("style","width:100px")
+
+
+				vid_id.innerHTML = data_object[key].id
+				vid_name.innerHTML = data_object[key].video_title
+				channel_name.innerHTML = data_object[key].video_channel_name
+
+				new_row.appendChild(vid_id)
+				new_row.appendChild(vid_name)
+				new_row.appendChild(channel_name)
+
+				table_body.appendChild(new_row)
+			}
+			table_container.appendChild(table_body)
+		}
+
+
+    </script>
 	
 	
 	

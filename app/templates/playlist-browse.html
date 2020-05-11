@@ -130,9 +130,6 @@
         width: 100%;
 
     }
-
-
-
     .youtube-player iframe,
     .youtube-player object,
     .youtube-player embed {
@@ -284,7 +281,6 @@
     	var host = 'http://127.0.0.1:5000/'
     	$(document).ready(function() { 
 	   		GetPlaylists(path);
-	   		
 	   	})
     	
 		function GetPlaylists(url) {
@@ -326,6 +322,8 @@
 			x.innerHTML="All Playlists"
 			page_header.appendChild(x)
 			playlist_body.appendChild(page_header)
+
+			console.log(result)
 
 
 			for (var key in result) {
