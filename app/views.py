@@ -107,8 +107,8 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user,remember=form.remember_me.data)
-        user.update_scenarios_table(1,'all_scenarios.csv')
-        user.add_videos_table()
+        #user.update_scenarios_table(1,'all_scenarios.csv')
+        #user.add_videos_table()
         
         #user.add_videos_table('temp_videos.csv')
 
