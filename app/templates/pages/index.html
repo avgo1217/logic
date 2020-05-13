@@ -396,10 +396,11 @@
   <!-- Specific JS goes HERE -->
   <script src="/static/assets/js/setting-demo2.js"></script>
    <script>
-      var path = 'http://127.0.0.1:5000/api/home';
-      var host = 'http://127.0.0.1:5000/'
+      var root = "{{ config }}"
+      var path = 'api/home';
+
       $(document).ready(function() { 
-        GetHomePageInfo(path);
+        GetHomePageInfo(root+path);
       })
 
       function GetHomePageInfo(url) {
@@ -433,7 +434,7 @@
           image_container.setAttribute("class","playlist-image-container");
           image_container.setAttribute("id",playlists[i]['id']);
           image_container.onclick = function () {
-                    window.open(host+"playlist/"+this.id+"/0","_self");
+                    window.open(root+"playlist/"+this.id+"/0","_self");
                   }
           image_source.src = playlists[i]['playlist_img_src']
           image_source.setAttribute("class","playlist-image")
@@ -453,7 +454,7 @@
           playlist_title.setAttribute("class","play-front-title");
           playlist_title.setAttribute("id",playlists[i]['id']);
           playlist_title.onclick = function () {
-                    window.open(host+"playlist/"+this.id+"/0","_self");
+                    window.open(root+"playlist/"+this.id+"/0","_self");
                   }
           playlist_description.setAttribute("class","play-front-description");
           playlist_number_of_vids.setAttribute("class","play-details");

@@ -38,7 +38,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-# Logout user
+#############################################
+###################LOGIN######################
+#############################################
 @app.route('/logout.html')
 def logout():
     logout_user()
@@ -92,7 +94,6 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('auth/reset_password.html', form=form)
 
-# Authenticate user
 @app.route('/login.html', methods=['GET', 'POST'])
 def login():
     
@@ -121,7 +122,9 @@ def login():
 
     return render_template('auth/login.html', title='Sign In', form=form)
 
-#Admin
+#############################################
+###################ADMIN######################
+#############################################
 @app.route('/admin/home', methods=['GET','POST'])
 def admin_home():
     if not current_user.is_authenticated:
@@ -132,7 +135,7 @@ def admin_home():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-home.html')    
+            return render_template( '/admin/admin-home.html', config=app.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
@@ -183,7 +186,109 @@ def admin_home():
         except:
             return render_template( 'pages/error-404.html' )
 
-    return render_template( '/admin/admin-home.html') 
+    return render_template( '/admin/admin-home.html', config=app.config['ROOT']) 
+
+@app.route('/admin/addvideo', methods=['GET','POST'])
+def admin_video_add():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    if not current_user.admin_status == 1:
+        return redirect(url_for('index'))
+    if request.method =='GET':
+        try:
+            # try to match the pages defined in -> pages/<input file>
+
+            return render_template( '/admin/admin-add-video.html', config=app.config['ROOT'])    
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    video_url=request.form["video_url"]
+    video_title=request.form["video_title"]
+    video_description= request.form["video_description"]
+    video_channel_name= request.form["video_channel_name"]
+    video_channel_url= request.form["video_channel_url"]
+    game= request.form["game"]
+    timestamps= request.form["timestamps"]
+    tags=request.form["tags"]
+    difficulty=request.form["difficulty"]
+    featured_video_tag = request.form["featured_video_tag"]
+    best_new_video_tag = request.form["best_new_video_tag"]
+    n1_select_tag=request.form["n1_select_tag"]
+
+    if video_url and video_title and video_description and video_channel_name and video_channel_url and game and tags and timestamps and difficulty and featured_video_tag and n1_select_tag and best_new_video_tag:
+        new_video = Videos(video_url=video_url,
+                            video_title=video_title,
+                            video_description= video_description,
+                            video_channel_name= video_channel_name,
+                            video_channel_url= video_channel_url,
+                            game= game,
+                            timestamps= timestamps,
+                            tags=tags,
+                            date_added_n1=date.today(),
+                            difficulty=difficulty,
+                            featured_video_tag = featured_video_tag,
+                            best_new_video_tag = best_new_video_tag,
+                            n1_select_tag=n1_select_tag,
+                            homepage_bestnew =0,
+                            homepage_staffpick=0
+                            )
+
+        db.session.add(new_video)
+        db.session.commit()
+        return render_template( '/admin/admin-add-video.html',config=app.config['ROOT'])
+    else:
+        flash("Complete the form")
+
+@app.route('/admin/editvideo', methods=['GET','POST'])
+def admin_video_edit():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    if not current_user.admin_status == 1:
+        return redirect(url_for('index'))
+    if request.method =='GET':
+        try:
+            # try to match the pages defined in -> pages/<input file>
+
+            return render_template( '/admin/admin-edit-video.html', config=app.config['ROOT'])    
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    video_id = request.form["video_id"]
+    video_url=request.form["video_url"]
+    video_title=request.form["video_title"]
+    video_description= request.form["video_description"]
+    video_channel_name= request.form["video_channel_name"]
+    video_channel_url= request.form["video_channel_url"]
+    game= request.form["game"]
+    timestamps= request.form["timestamps"]
+    tags=request.form["tags"]
+    difficulty=request.form["difficulty"]
+    featured_video_tag = request.form["featured_video_tag"]
+    best_new_video_tag = request.form["best_new_video_tag"]
+    n1_select_tag=request.form["n1_select_tag"]
+
+    if video_id and video_url and video_title and video_channel_name and video_channel_url and game and difficulty:
+        new_video = Videos.query.filter_by(id= video_id).first()
+        new_video.video_url =video_url
+        new_video.video_title =video_title
+        new_video.video_description= video_description
+        new_video.video_channel_name= video_channel_name
+        new_video.video_channel_url= video_channel_url
+        new_video.game= game
+        new_video.timestamps= timestamps
+        new_video.tags=tags
+        new_video.date_added_n1=date.today()
+        new_video.difficulty=difficulty
+        new_video.featured_video_tag = featured_video_tag
+        new_video.best_new_video_tag = best_new_video_tag
+        new_video.n1_select_tag=n1_select_tag
+        new_video.homepage_bestnew =0
+        new_video.homepage_staffpick=0
+
+        db.session.commit()
+        return render_template( '/admin/admin-edit-video.html',config=app.config['ROOT'])
+    else:
+        flash("Complete the form")
 
 @app.route('/admin/addplaylist', methods=['GET','POST'])
 def admin_playlist_add():
@@ -195,7 +300,7 @@ def admin_playlist_add():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-add-playlist.html')    
+            return render_template( '/admin/admin-edit-playlist.html', config=app.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
@@ -219,11 +324,51 @@ def admin_playlist_add():
                              homepage_featured = 0)
         db.session.add(new_playlist)
         db.session.commit()
-        return render_template( '/admin/admin-add-playlist.html')
+        return render_template( '/admin/admin-add-playlist.html',config=app.config['ROOT'])
     else:
         flash("Complete the form")
 
-# App main route + generic routing
+@app.route('/admin/editplaylist', methods=['GET','POST'])
+def admin_playlist_edit():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    if not current_user.admin_status == 1:
+        return redirect(url_for('index'))
+    if request.method =='GET':
+        try:
+            # try to match the pages defined in -> pages/<input file>
+
+            return render_template( '/admin/admin-edit-playlist.html', config=app.config['ROOT'])    
+        except:
+            return render_template( 'pages/error-404.html' )
+
+    playlist_id = request.form["playlist_id"]
+    playlist_name=request.form["playlist_name"]
+    playlist_description =request.form["playlist_description"]
+    list_of_videos = request.form["list_of_videos"]
+    playlist_img_src = request.form["imagesource"]
+    playlist_difficulty = request.form["difficulty"]
+    playlist_author_name = request.form["author_username"]
+    playlist_author_id = request.form["author_id"]
+
+    if playlist_name and playlist_description and list_of_videos and playlist_img_src and playlist_difficulty and playlist_author_name and playlist_author_id:
+        new_playlist = Playlists.query.filter_by(id= playlist_id).first()
+        new_playlist.playlist_name = playlist_name
+        new_playlist.playlist_description = playlist_description
+        new_playlist.list_of_videos = list_of_videos
+        new_playlist.playlist_img_src = playlist_img_src
+        new_playlist.playlist_difficulty = playlist_difficulty
+        new_playlist.playlist_author_name = playlist_author_name
+        new_playlist.playlist_author_id = playlist_author_id
+
+        db.session.commit()
+        return render_template( '/admin/admin-edit-playlist.html',config=app.config['ROOT'])
+    else:
+        flash("Complete the form")
+
+#############################################
+###################MAIN LINKS######################
+#############################################
 @app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path>')
 def index(path):
@@ -235,7 +380,7 @@ def index(path):
     try:
 
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'pages/'+path )
+        return render_template( 'pages/'+path , config=app.config['ROOT'])
     
     except:
         
@@ -247,42 +392,14 @@ def aim_tracker():
         return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-
-        result = get_most_played_scenario(current_user.username)
-        return render_template( 'aim-data-tracker.html', scenario = result)    
+        user = User.query.filter_by(username = current_user.username).first()
+        if user.get_existing_scenario_instances():
+            result = get_most_played_scenario(current_user.username)
+            return render_template( 'aim-data-tracker.html', scenario = result, config=app.config['ROOT'])
+        else:
+            return render_template( 'aim-data-tracker.html',scenario = "Upload Kovaaks Data", config=app.config['ROOT'])
     except:
         return render_template( 'pages/error-404.html' )
-
-@app.route('/aim-data-tracker/upload', methods=['POST'])
-def upload():
-    uploaded_files = request.files.getlist("file[]")
-    filenames = []
-    for file in uploaded_files:
-        # Check if the file is one of the allowed types/extensions
-        if file and allowed_file(file.filename):
-            # Make the filename safe, remove unsupported chars
-            filename = secure_filename(file.filename)
-
-            # Save the filename into a list, we'll use it later
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print(os.getcwd())
-            subfiles = [StringIO()] 
-            with open(os.path.join(app.config['UPLOAD_FOLDER'], filename)) as bigfile:
-                    count = 0
-                    for line in bigfile:
-                            if line.strip() == "" and count != 0: # blank line, new subfile  
-                                    subfiles.append(StringIO())
-                            elif line.strip() == "" and count == 0: 
-                                    continue
-                            else: # continuation of same subfile                                                                                                                                                   
-                                    subfiles[-1].write(line)
-                            count=count+1
-            
-            #Method to go through each subfile and create Clicks classes and get relevant info
-            print(subfiles)
-
-            filenames.append(filename)
-    return render_template( 'logic-browse.html')  
 
 @app.route('/browse/')
 def logic_browse():
@@ -290,7 +407,7 @@ def logic_browse():
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'logic-browse.html')    
+        return render_template( 'logic-browse.html',config=app.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
@@ -300,7 +417,7 @@ def logic_browse_single(video_id):
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'single-video.html', video_id = video_id)    
+        return render_template( 'single-video.html', video_id = video_id, config=app.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
@@ -310,7 +427,7 @@ def logic_playlist_single(playlist_id, video_id):
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'single-playlist.html', playlist_id = playlist_id, video_id=video_id)    
+        return render_template( 'single-playlist.html', playlist_id = playlist_id, video_id=video_id, config=app.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
@@ -320,13 +437,15 @@ def logic_playlist_all():
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'playlist-browse.html')    
+        return render_template( 'playlist-browse.html',config=app.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
 
 
-#APIs
+#############################################
+###################APIS######################
+#############################################
 @app.route("/api/home")
 def get_home_page():
     result = get_home_page_info()
@@ -343,9 +462,19 @@ def get_one_playlist_search(playlist_id):
 
     return result
 
+@app.route("/api/admin/playlists/search/<playlist_id>", methods=["GET"])
+def get_one_playlist_admin(playlist_id):
+    result = get_one_playlist_admin(playlist_id)
+    return result
+
 @app.route("/api/playlists/all", methods=["GET"])
 def get_all_playlists():
     result = get_all_playlists()
+    return result
+
+@app.route("/api/admin/playlists/all", methods=["GET"])
+def get_all_playlists_admin():
+    result = get_all_playlists_admin()
     return result
 
 @app.route("/api/videos/search/", methods=["GET"])
@@ -355,6 +484,15 @@ def get_all_videos_search():
     else:
         term = ""
     result = get_search_bar_data(term)
+    return result
+
+@app.route("/api/videos/admin/", methods=["GET"])
+def get_all_videos_search_admin():
+    if request.args.get('search'):
+        term = request.args.get('search')
+    else:
+        term = ""
+    result = get_search_bar_data_admin(term)
     return result
 
 @app.route("/api/videos/filters/", methods=["GET"])
@@ -425,11 +563,54 @@ def get_admin_videos():
     else:
         return redirect(url_for('login'))
 
+@app.route("/api/videos/delete/<video_id>", methods=['POST'])
+def delete_video(video_id):
+    if current_user.is_authenticated and current_user.admin_status==1:
+        delete_video(video_id)
+        return render_template( '/admin/admin-edit-video.html',config=app.config['ROOT'])
+    else:
+        return render_template( '/admin/admin-edit-video.html',config=app.config['ROOT'])
+
+@app.route("/api/playlists/delete/<playlist_id>", methods=['POST'])
+def delete_playlist(playlist_id):
+    if current_user.is_authenticated and current_user.admin_status==1:
+        delete_playlist(playlist_id)
+        return render_template( '/admin/admin-edit-playlist.html',config=app.config['ROOT'])
+    else:
+        return render_template( '/admin/admin-edit-playlist.html',config=app.config['ROOT'])
+
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
 
-#Functions
+#############################################
+###################HELPER FUNCTIONS######################
+#############################################
+@app.route('/aim-data-tracker/upload', methods=['POST'])
+def upload():
+    uploaded_files = request.files.getlist("file[]")
+    user = User.query.filter_by(username = current_user.username).first()
+    all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
+    new_files = user.add_all_new_sessions(all_scenarios_df, uploaded_files)
+    flash('You have successfully uploaded {x} new files'.format(x=new_files))
+    return redirect(url_for('aim_tracker')) 
+
+def delete_video(video_id):
+    video_to_delete = Videos.query.get(video_id)
+    if not video_to_delete:
+        abort(404)
+    if request.method == 'POST':
+        db.session.delete(video_to_delete)
+        db.session.commit()
+
+def delete_playlist(playlist_id):
+    playlist_to_delete = Playlists.query.get(playlist_id)
+    if not playlist_to_delete:
+        abort(404)
+    if request.method == 'POST':
+        db.session.delete(playlist_to_delete)
+        db.session.commit()
+
 def get_home_page_info():
     playlist_list=[]
     playlistquery = Playlists.query
@@ -566,7 +747,7 @@ def apply_smoothing(filtered_df,smooth_flag, aim_metric):
         target = filtered_df[aim_metric]
         mean = target.mean()
         sd = target.std()
-        filtered_df = filtered_df[(target > mean - 2*sd) & (target < mean + 2*sd)]
+        filtered_df = filtered_df[(target > mean - 3*sd) & (target < mean + 3*sd)]
     return filtered_df
 
 def calculate_global_stat(scenario, aim_metric, stat_type):
@@ -614,10 +795,19 @@ def calculate_bottom_row_stats(username, scenario, selected_aim_metric,date_rang
 
     return jsonify([best,average,improvement,num_scenario_played])
 
-#SQL CALLS
+
+#############################################
+###################SQL CALLS######################
+#############################################
 def get_all_videos():
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
     df_json = df.to_json(orient='records')
+    return jsonify(df_json)
+
+def get_all_playlists_admin():
+    playlistquery = Playlists.query
+    df = pd.read_sql(playlistquery.statement, playlistquery.session.bind)
+    df_json = df.to_dict(orient='records')
     return jsonify(df_json)
 
 def get_all_playlists():
@@ -649,9 +839,11 @@ def get_all_playlists():
 
 def get_all_videos_admin():
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
-    df = df[['id','video_title','video_channel_name']]
+    df = df[['id','video_title','video_channel_name','date_added_n1']]
+    df = df.sort_values(by=['date_added_n1'])
     df_json = df.to_json(orient='records')
     return jsonify(df_json)
+
 
 def get_one_video(video_id):
     videoquery = Videos.query.filter_by(id=video_id)
@@ -664,7 +856,8 @@ def get_one_playlist(playlist_id):
     df = pd.read_sql(playlistquery.statement, playlistquery.session.bind)
     df_json = df.to_dict(orient='records')
     the_list = df_json[0]['list_of_videos'].split(",")
-    the_list.pop()
+    if the_list[-1] =="":
+        the_list.pop()
     new_list=[]
 
     for item in the_list:
@@ -681,6 +874,13 @@ def get_one_playlist(playlist_id):
                          "tags":temp_df.iloc[0]['tags']})
     
     df_json[0]['list_of_videos']=new_list
+
+    return jsonify(df_json)
+
+def get_one_playlist_admin(playlist_id):
+    playlistquery = Playlists.query.filter_by(id=playlist_id)
+    df = pd.read_sql(playlistquery.statement, playlistquery.session.bind)
+    df_json = df.to_dict(orient='records')
 
     return jsonify(df_json)
 

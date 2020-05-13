@@ -249,6 +249,12 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="page-inner">
+					{% for message in get_flashed_messages() %}
+				    <div class="alert alert-warning">
+				        <button type="button" class="close" data-dismiss="alert">&times;</button>
+				        {{ message }}
+				    </div>
+				    {% endfor %}
 			        <div class="row">
 						<div class="col-md-12">
 							<div class="card">   
@@ -373,10 +379,10 @@
     <script src="/static/assets/js/setting-demo2.js"></script>
     <script>
 
-		var path = 'http://127.0.0.1:5000/api/';
-		var trainingapipath = 'traininginstances/';
-		var statsapipath = 'stats/';
-		var globalstats = 'globalstat/';
+		var root = "{{ config }}"
+		var trainingapipath = 'api/traininginstances/';
+		var statsapipath = 'api/stats/';
+		var globalstats = 'api/globalstat/';
 
 		var scenario_selected = '{{ scenario }}';
 		document.getElementById('scenario-title').innerHTML = scenario_selected;
@@ -458,7 +464,7 @@
 	    	
 	    	$('#analytics-search-bar').select2({
 	   			ajax: {
-				    url: path.concat('scenarios/',current_user_name),
+				    url: root + '/api/scenarios/'+current_user_name,
 				    dataType:'json',
 				    placeholder: scenario_selected,
 				    delay:250,
@@ -542,11 +548,11 @@
 
         	//if global, get other dataset
         	//if smooth or date, set the patterns in the api call
-        	var training_url = path.concat(trainingapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+        	var training_url = root.concat(trainingapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
 
-        	var stats_url = path.concat(statsapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
+        	var stats_url = root.concat(statsapipath,current_user_name,'/',scenario_selected,'/',aim_metric,'/',date_range,'/',smooth_check)
 
-        	var global_url = path.concat(globalstats,scenario_selected,'/',aim_metric,'/',global_comparison_status)
+        	var global_url = root.concat(globalstats,scenario_selected,'/',aim_metric,'/',global_comparison_status)
         	
         	
 			$.ajax({
@@ -611,6 +617,7 @@
 	    }
 
 	</script>
+
 
 
 	

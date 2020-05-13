@@ -113,7 +113,7 @@
 		}
 		#description-box{
 			width:500px;
-			height:400px;
+			height:00px;
 		}
 		#next-video-box{
 			width:500px;
@@ -179,6 +179,42 @@
     	margin-left: 5px;
     	margin-bottom: 5px;
     }
+    .table-responsive{
+	    overflow:hidden;
+	    overflow-y: scroll;
+	    height: 470px;
+    }
+	.data-col{
+		color:white;
+    }
+    .display .table .table-hover{
+    	font-size: 8px;
+
+    }
+    .card-category{
+    	color:white;
+    }
+    .card {
+    	background-color: rgb(28, 35, 42);
+    	color:white;
+    }
+    .single-video-margin{
+    	background-color: rgb(7, 9, 11);
+    }
+    .video-details{
+    	color:white;
+    }
+    #iframeid{
+    	border:0;
+    }
+    .timer{
+    	font-weight: bold;
+    	cursor: pointer;
+    	text-decoration: underline;
+    }
+    #video-info-card{
+    	height:600px;
+    }
 
 </style>
 
@@ -199,10 +235,10 @@
 						<div class="video-playlist-container">
 			                <div class="row row-demo-grid" id="video-results">
 			                	<div class="col-md-12" id="video-iframe-container">
-		                    		<div class="youtube-player"></div>
+		                    		<iframe id="iframeid"></iframe>
 		                    	</div>
 			                </div>
-			                <div class="row row-demo-grid">
+			                <div class="row row-demo-grid video-details">
 				              	<div class="col-12 col-md-8">
 				              		<div class="single-video-title" id="video_title">
 				              		</div>
@@ -216,7 +252,7 @@
 				              		<div class="date-added" id="date-added"></div>
 				              		<div class="single-video-tags" id="tags-list"><span class="badge badge-dark">Light</span>
 				              		</div>
-				              		<div class="single-video-flags">n1 select
+				              		<div class="single-video-flags">
 				              		</div>
 				              	</div>
 				            </div>
@@ -227,11 +263,15 @@
 			                        <div class="card-category"><h4>The Breakdown</h4></div>
 			                    </div>
 			                    <div class="card-body" id ="description-box">
-			                    	<div>
-			                    	</div>
+			                    	<div class="table-responsive">
+			                            <table id="basic-datatables" class="display table table-hover" >
+			                                <tbody id="timetable">
+			                                </tbody>
+			                            </table>
+			                        </div>
 			                   	</div>
 			                </div>
-			                <div class="card">
+			                <!--<div class="card">
 			                    <div class="card-body" id="next-video-box">
 				                	<div class="row row-demo-grid">
 						              	<div class="col-12 col-md-6">
@@ -265,7 +305,7 @@
 						              	</div>
 						            </div>
 			                   	</div>
-			                </div>
+			                </div>-->
 				       	</div>
 				    </div>
 		    	</div>
@@ -316,10 +356,11 @@
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
     <script>
-    	var path = 'http://127.0.0.1:5000/api/videos/search/';
+    	var root = "{{ config }}"
+    	var path = 'api/videos/search/';
     	var video_id = {{ video_id }};
     	$(document).ready(function() { 
-	   		GetVideo(path.concat(video_id))
+	   		GetVideo(root+path+video_id)
 	   	})
 	   	function GetVideo(url) {
 	    	$.ajax({
@@ -353,18 +394,57 @@
 			//Video description
 			document.getElementById("video_description").innerHTML = result[0]['video_description']
 
+			CreateVideoIframe(result[0]['video_url'],0)
+
+			var the_table = document.getElementById("timetable")
+			if (result[0]['timestamps']){
+				var table_data = result[0]['timestamps'].split("#");
+				table_data.pop()
+				
+				for (var i = 0; i<table_data.length;i++){
+					var to_split = table_data[i].split(";");
+					var seconds = to_split[0];
+					var description = to_split[1];
+
+					var row = document.createElement("tr");
+					var time = document.createElement("td");
+					var des = document.createElement("td");
+					time.setAttribute("class","data-col timer");
+					time.setAttribute("id",seconds)
+					des.setAttribute("class","data-col");
+
+					time.innerHTML = seconds+"s"
+					des.innerHTML=description
+					time.onclick = function(){
+						console.log(seconds)
+						reloadIframe(result[0]['video_url'],this.id)
+					}
+
+					row.appendChild(time);
+					row.appendChild(des);
+					the_table.appendChild(row)
+				}
+			}
 			//N1 Description
-			document.getElementById("description-box").innerHTML = result[0]['n1_description']
+			//document.getElementById("description-box").innerHTML = result[0]['n1_description']
 
 			//date added by N1
 			var date = new Date(parseInt(result[0]['date_added_n1']))
 			document.getElementById("date-added").innerHTML = "Date added: "+getFormattedDate(date)
 
-			CreateVideoIframe(result[0]['video_url'])
 			CreateTags(result[0]["tags"])
 
 			//get related videos
 		}
+
+		function reloadIframe(url, time){
+			var iframe = document.getElementById("iframeid")
+	        var embed = "https://www.youtube.com/embed/"+url+"?autoplay=1&start="+time;
+	       	iframe.setAttribute("src", embed);
+			document.getElementById('iframeid').src = document.getElementById('iframeid').src
+		}
+
+
 		function getFormattedDate(date) {
 		  var year = date.getFullYear();
 
@@ -377,18 +457,13 @@
 		  return month + '/' + day + '/' + year;
 		}
 
-		function CreateVideoIframe(video_url){
-			var parent = document.getElementById("video-iframe-container")
-			parent.innerHTML=''
-			var iframe = document.createElement("iframe");
-	        var embed = "https://www.youtube.com/embed/ID?autoplay=1";
-	        iframe.setAttribute("src", embed.replace("ID", video_url));
-	        iframe.setAttribute("frameborder", "0");
+		function CreateVideoIframe(video_url,time){
+			var iframe = document.getElementById("iframeid")
+	        var embed = "https://www.youtube.com/embed/"+video_url+"?autoplay=1&start="+time;
+	        iframe.setAttribute("src", embed);
 	        iframe.setAttribute("allowfullscreen", "1");
 	        iframe.setAttribute("height","477");
 	        iframe.setAttribute("width","848");
-
-	        parent.appendChild(iframe)
 		}
 
 		function CreateTags(tags){

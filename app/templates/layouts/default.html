@@ -26,6 +26,11 @@
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="/static/assets/css/demo.css">
+	<style>
+		.sidebar{
+			background-image: linear-gradient(rgb(7, 9, 11), rgb(28, 35, 42));
+		}
+	</style>
 
     <!-- Specific CSS goes HERE -->
     {% block stylesheets %}{% endblock stylesheets %}
@@ -36,7 +41,12 @@
 
 		{% include 'includes/navigation.html' %}
 
-		{% include 'includes/sidenav.html' %}
+		<div class="sidebar sidebar-style-2">			
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+				</div>
+			</div>
+		</div>
 
 		<div class="main-panel">
 
@@ -46,11 +56,9 @@
 			
 			</div>
 
-			{% include 'includes/footer.html' %}
 
 		</div>
 		
-		{% include 'includes/aside-settings.html' %}
 
 	</div>
 

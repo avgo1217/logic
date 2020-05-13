@@ -53,7 +53,7 @@
         	color: "#191919";
 		}
 		#search-bar-browse{
-			height: 20px;
+			height: 30px;
 		}
 		.container-fluid {
 			width:200px;
@@ -155,7 +155,7 @@
     	display: inline-block;
     	vertical-align: top;
     }
-    .content{
+    .page-inner{
     	background-color: white;
     }
     .table-responsive{
@@ -182,21 +182,38 @@
 			<div class="content">
 				<div class="page-inner">
 			        <div class="page-header">
-			   
+			        	
 			        </div>
 			        <div class="row">
-				        <div class="col-md-4">
+				        <div class="col-md-8">
 				        	<form method="POST">
-								Homepage Selected Playlists (by playlist id): <br>
-								<input type="text" name="featured_playlists" class="input-text-single"><br>
-								Homepage best new videos <br>
-								<input type="text" name = "best_new_videos" id="listofbestnew" class="input-text-single"><br>
-								Homepage staff picks <br>
-								<input type="text" name = "staff_picks" id="listofstaffpicks" class="input-text-single"><br>
-								<input type="submit" value="Submit">
+				        		Playlist id: <br>
+				        		<input type="text" name="playlist_id" id="playlist_id" readonly><br>
+								Playlist name: <br>
+								<input type="text" id="playlist_name" name="playlist_name" class="input-text-single"><br>
+								Playlist description (5000 character limit): <br>
+								<textarea name="playlist_description" id="input-text-big" class="input-text-big"></textarea><br>
+								List of videos: <br>
+								<input type="text" name = "list_of_videos" id="listofvideos" class="input-text-single"><br>
+								Image direct link (ex: https://i.imgur.com/BSuDGBm.jpg?1): <br>
+								<input type="text" name="imagesource" id ="imagesource" class="input-text-single"><br>
+								Difficulty Level: <br>
+								<select id="difficulty" name="difficulty">
+								    <option value="Easy">Beginner</option>
+								    <option value="Intermediate">Intermediate</option>
+								    <option value="Advanced">Advanced</option>
+								</select><br>
+								Author ID: <br>
+								<input type="text" id ="author_id" name="author_id" class="input-text-single"><br>
+								Author Username: <br>
+								<input type="text" id = "author_username" name="author_username" class="input-text-single"><br>
+								<input type="submit" value="Update">
+								<input type="reset">
 							</form>
 						</div>
 					</div>
+
+					<br>
 					<br>
 					<div class="row">
 						<input type="text" id="playlists-table" placeholder="Search for playlists..">
@@ -209,13 +226,13 @@
 	                                    <tr>
 	                                    	<th>ID</th>
 	                                        <th>Title</th>
+	                                        <th>Edit</th>
 	                                    </tr>
 	                                </thead>
 	                            </table>
                        		 </div>
 						</div>
 					</div>
-
 					<div class="row">
 						<input type="text" id="videos-table" placeholder="Search for videos..">
 					</div>
@@ -234,6 +251,7 @@
                        		 </div>
 						</div>
 					</div>
+					
 		    	</div>
 		    </div>
 		</div>
@@ -283,9 +301,10 @@
 
     <script>
     	var root = "{{ config }}"
-    	console.log(root)
     	var path_video = 'api/admin/videos';
-    	var path_playlist = 'api/playlists/all';
+    	var path_playlist = 'api/admin/playlists/all';
+    	var path_playlist_single = 'api/admin/playlists/search/';
+    	var path_delete_playlist = 'api/playlists/delete/';
     	$(document).ready(function() { 
 	   		populateVideoTable();
 	   		populatePlaylistTable();
@@ -365,32 +384,84 @@
 		}
 
 		function CreateTablePlaylists(result){
-			data_object = result;
+			data_objects = result;
 			var table_container = document.getElementById("basic-datatables-playlist");
 			var table_body = document.createElement("tbody")
 
 
-			for (var key in data_object) {
+			for (var key in data_objects) {
 
 				var new_row = document.createElement("tr")
 				var vid_id = document.createElement("td")
 				var vid_name = document.createElement("td")
-
+				var edit_container = document.createElement("td")
+				var edit_button = document.createElement("button")
+				var delete_container = document.createElement("td")
+				var delete_button = document.createElement("button")
 
 				new_row.setAttribute("style","height:20px")
 				vid_id.setAttribute("style","width:50px")
 				vid_name.setAttribute("style","width:400px")
+				edit_container.setAttribute("style","width:20px")
+				delete_container.setAttribute("style","width:20px")
+				edit_button.innerHTML = "Edit"
+				delete_button.innerHTML = "Delete"
+				edit_button.setAttribute("id",data_objects[key].id)
+				delete_button.setAttribute("id",data_objects[key].id)
+				edit_button.onclick = function (){
+					updatePlaylistForm(this.id);
+				}
+				delete_button.onclick = function(){
+					deletePlaylistBox(this.id);
+				}
+
+				edit_container.appendChild(edit_button)
+				delete_container.appendChild(delete_button)
 
 
-				vid_id.innerHTML = data_object[key].id
-				vid_name.innerHTML = data_object[key].playlist_name
+				vid_id.innerHTML = data_objects[key].id
+				vid_name.innerHTML = data_objects[key].playlist_name
 
 				new_row.appendChild(vid_id)
 				new_row.appendChild(vid_name)
+				new_row.appendChild(edit_container)
+				new_row.appendChild(delete_container)
 
 				table_body.appendChild(new_row)
 			}
 			table_container.appendChild(table_body)
+		}
+
+		function updatePlaylistForm(result){
+			$.ajax({
+					url:root + path_playlist_single+result,
+					type:"GET",
+
+					//If the api call is successful
+					success: function(result){
+						var playlist_id = document.getElementById("playlist_id")
+						var playlist_name = document.getElementById("playlist_name");
+						var playlist_description = document.getElementById("input-text-big");
+						var list_of_videos = document.getElementById("listofvideos");
+						var imagesrc = document.getElementById("imagesource")
+						var difficulty = document.getElementById("difficulty");
+						var author_id = document.getElementById("author_id");
+						var author_name = document.getElementById("author_username");
+
+						playlist_id.value = result[0].id
+						playlist_name.value = result[0].playlist_name
+						playlist_description.value = result[0].playlist_description
+						list_of_videos.value = result[0].list_of_videos
+						imagesrc.value = result[0].playlist_img_src
+						difficulty.value = result[0].playlist_difficulty
+						author_id.value = result[0].playlist_author_id
+						author_name.value = result[0].playlist_author_name
+					
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})	
 		}
 
 		function returnVideos() {
@@ -404,7 +475,6 @@
 		  // Loop through all table rows, and hide those who don't match the search query
 		  for (i = 0; i < tr.length; i++) {
 		    td = tr[i].getElementsByTagName("td")[1];
-		    console.log(td)
 		    if (td) {
 		      txtValue = td.textContent || td.innerText;
 		      if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -414,6 +484,27 @@
 		      }
 		    }
 		  }
+		}
+
+		function deletePlaylistBox(result){
+			if (confirm("Are you sure you want to delete?")) {
+				deletePlaylist(result);
+			}
+		}
+
+		function deletePlaylist(result){
+			$.ajax({
+				url:root + path_delete_playlist + result,
+				type:"POST",
+
+				//If the api call is successful
+				success: function(result){
+					alert("Record Deleted");
+				},
+				error:function(error){
+					console.log(`Error ${error}`)
+				}
+			})	
 		}
 
 		function returnPlaylists() {
@@ -427,7 +518,6 @@
 		  // Loop through all table rows, and hide those who don't match the search query
 		  for (i = 0; i < tr.length; i++) {
 		    td = tr[i].getElementsByTagName("td")[1];
-		    console.log(td)
 		    if (td) {
 		      txtValue = td.textContent || td.innerText;
 		      if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -439,7 +529,7 @@
 		  }
 		}
 
-
+		
     </script>
 	
 	

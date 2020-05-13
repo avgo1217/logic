@@ -319,16 +319,18 @@
     <script src="/static/assets/js/setting-demo2.js"></script>
 
     <script>
-    	var path = 'http://127.0.0.1:5000/api/videos/';
+    	var root = "{{ config }}";
+    	var path = 'api/videos/';
     	var video_title = '';
     	$(document).ready(function() { 
 	   		$('#browse-search-bar').select2({
 	   			
 	   			ajax: {
-				    url: path.concat('search'),
+				    url: root+path+'search',
 				    dataType:'json',
 				    delay:250,
 				    data: function (params) {
+
 				    	var query = {
 				    		search: params.term
 				    	}
@@ -339,6 +341,7 @@
 				    	
 				      // Transforms the top-level key of the response object from 'items' to 'results'
 						return {
+
 							results: data.results
 						};
 
@@ -373,7 +376,7 @@
 	   		//PopulateSearchBar();
 	   	})
     	function collectParameters() {
-    		var new_url = path.concat('filters/');
+    		var new_url = root+path+'filters/';
     		var searchterm = $('#browse-search-bar').select2('data');
     		var game = document.getElementById("game-list").value;
     		var difficulty = document.getElementById("difficulty-level").value;

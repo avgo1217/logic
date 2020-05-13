@@ -155,6 +155,14 @@
     	display: inline-block;
     	vertical-align: top;
     }
+    .page-inner{
+    	background-color: white;
+    }
+    .table-responsive{
+	    overflow:hidden;
+	    overflow-y: scroll;
+	    height: 470px;
+    }
 
 </style>
 
@@ -177,7 +185,7 @@
 			        	
 			        </div>
 			        <div class="row">
-				        <div class="col-md-4">
+				        <div class="col-md-8">
 				        	<form method="POST">
 								Playlist name: <br>
 								<input type="text" name="playlist_name" class="input-text-single"><br>
@@ -201,23 +209,29 @@
 								<input type="reset">
 							</form>
 						</div>
-						<div class="col-md-8" id="table_container">
+					</div>
+
+					<br>
+					<br>
+					<div class="row">
+						<input type="text" id="videos-table" placeholder="Search for videos..">
+					</div>
+					<div class="row">
+						<div class="col-md-12" id="table_container">
 							<div class="table-responsive">
-	                            <table id="basic-datatables" class="display table table-striped table-hover" >
+	                            <table id="basic-datatables" class="table" >
 	                                <thead>
 	                                    <tr>
 	                                    	<th>ID</th>
 	                                        <th>Title</th>
 	                                        <th>Channel</th>
-	                                        <th>Addition</th>
 	                                    </tr>
 	                                </thead>
-	                                
-	                                
 	                            </table>
                        		 </div>
 						</div>
 					</div>
+					
 		    	</div>
 		    </div>
 		</div>
@@ -266,14 +280,23 @@
     <script src="/static/assets/js/setting-demo2.js"></script>
 
     <script>
-    	var path = 'http://127.0.0.1:5000/api/admin/videos';
+    	var root = "{{ config }}"
+    	console.log(root)
+    	var path_video = 'api/admin/videos';
+    	var path_playlist = '/api/playlists/all';
     	$(document).ready(function() { 
 	   		populateVideoTable();
 
+	   		var video_search_bar = document.getElementById("videos-table");
+	   		video_search_bar.onkeyup= function() {
+				returnVideos();
+			}
+
 	   	})
+
     	function populateVideoTable() {
     		$.ajax({
-					url:path,
+					url:root + path_video,
 					type:"GET",
 
 					//If the api call is successful
@@ -286,51 +309,65 @@
 			})
     	}
 
+
 		function CreateTable(result){
 			data_object = JSON.parse(result);
 			var table_container = document.getElementById("basic-datatables");
 			var table_body = document.createElement("tbody")
 
+
 			for (var key in data_object) {
 
 				var new_row = document.createElement("tr")
-				var vid_id = document.createElement("th")
-				var vid_name = document.createElement("th")
-				var channel_name = document.createElement("th")
-				var vidbuttonrow = document.createElement("th")
-				var vidbutton = document.createElement("button")
+				var vid_id = document.createElement("td")
+				var vid_name = document.createElement("td")
+				var channel_name = document.createElement("td")
+
 
 				new_row.setAttribute("style","height:20px")
 				vid_id.setAttribute("style","width:50px")
 				vid_name.setAttribute("style","width:400px")
 				channel_name.setAttribute("style","width:100px")
-				vidbutton.setAttribute("style","width:100px; height:25px")
-				vidbutton.setAttribute("onclick","addVideo(this)")
-				vidbutton.innerHTML=data_object[key].id
+
 
 				vid_id.innerHTML = data_object[key].id
 				vid_name.innerHTML = data_object[key].video_title
 				channel_name.innerHTML = data_object[key].video_channel_name
-				vidbutton.setAttribute("value",data_object[key].id)
-				//need a method for onclick
-				vidbuttonrow.appendChild(vidbutton)
+
 				new_row.appendChild(vid_id)
 				new_row.appendChild(vid_name)
 				new_row.appendChild(channel_name)
-				new_row.appendChild(vidbuttonrow)
 
 				table_body.appendChild(new_row)
 			}
 			table_container.appendChild(table_body)
 		}
 
-		function addVideo(objButton){
-			var current_list = document.getElementById("listofvideos").value
-			current_list = current_list + objButton.innerHTML + ","
-			console.log(current_list)
-			document.getElementById("listofvideos").value=current_list
-			
+
+		function returnVideos() {
+		  // Declare variables
+		  var input, filter, table, tr, td, i, txtValue;
+		  input = document.getElementById("videos-table");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("basic-datatables");
+		  tr = table.getElementsByTagName("tr");
+
+		  // Loop through all table rows, and hide those who don't match the search query
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[1];
+		    console.log(td)
+		    if (td) {
+		      txtValue = td.textContent || td.innerText;
+		      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }
+		  }
 		}
+
+
 		
     </script>
 	

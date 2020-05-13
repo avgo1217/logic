@@ -125,7 +125,7 @@
 			width:500px;
 		}
 		#picked_video {
-		    background:#e0ffff;
+		    background:rgb(70, 70, 70);
 		}
     </style>
     <style>
@@ -188,6 +188,16 @@
     	margin-left: 5px;
     	margin-bottom: 5px;
     }
+    .single-video-margin{
+    		background-color:rgb(7, 9, 11);
+	    }
+	.card{
+		color:white;
+		background-color:rgb(28, 35, 42);
+	}
+	.video-container{
+    	color:white;
+    }
 
 </style>
 
@@ -225,7 +235,7 @@
 				              		<div class="date-added" id="date-added"></div>
 				              		<div class="single-video-tags" id="tags-list"><span class="badge badge-dark"></span>
 				              		</div>
-				              		<div class="single-video-flags">n1 select
+				              		<div class="single-video-flags">
 				              		</div>
 				              	</div>
 				            </div>
@@ -289,14 +299,13 @@
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
     <script>
-    	var path = 'http://127.0.0.1:5000/api/playlists/search/';
-    	var vid_path = 'http://127.0.0.1:5000/api/videos/search/';
-    	var host = 'http://127.0.0.1:5000/'
+    	var root = "{{ config }}";
+    	var path = 'api/playlists/search/';
     	var playlist_id = {{ playlist_id }};
     	var video_id = {{ video_id }};
 
     	$(document).ready(function() { 
-	   		GetPlaylist(path+playlist_id);
+	   		GetPlaylist(root+path+playlist_id);
 	   	})
 
 		function GetPlaylist(url) {
@@ -350,7 +359,7 @@
 				video_thumbnail.setAttribute("data_id",result[i]["video_url"])
 				video_thumbnail.setAttribute("id",i)
 				video_thumbnail.onclick = function () {
-	            		window.open(host+"playlist/"+playlist_id+"/"+this.id,"_self");
+	            		window.open(root+"playlist/"+playlist_id+"/"+this.id,"_self");
 	            	}
 				description_container.setAttribute("class","col-6 col-md-7 description-container")
 				description_title.setAttribute("class","single-video-description")

@@ -53,7 +53,7 @@
         	color: "#191919";
 		}
 		#search-bar-browse{
-			height: 20px;
+			height: 30px;
 		}
 		.container-fluid {
 			width:200px;
@@ -155,7 +155,7 @@
     	display: inline-block;
     	vertical-align: top;
     }
-    .content{
+    .page-inner{
     	background-color: white;
     }
     .table-responsive{
@@ -182,56 +182,38 @@
 			<div class="content">
 				<div class="page-inner">
 			        <div class="page-header">
-			   
+			        	
 			        </div>
 			        <div class="row">
-				        <div class="col-md-4">
+				        <div class="col-md-8">
 				        	<form method="POST">
-								Homepage Selected Playlists (by playlist id): <br>
-								<input type="text" name="featured_playlists" class="input-text-single"><br>
-								Homepage best new videos <br>
-								<input type="text" name = "best_new_videos" id="listofbestnew" class="input-text-single"><br>
-								Homepage staff picks <br>
-								<input type="text" name = "staff_picks" id="listofstaffpicks" class="input-text-single"><br>
+								Video URL: <br>
+								<input type="text" name="video_url" id="video_url" class="input-text-single"><br>
+								Video Title: <br>
+								<input type="text" name="video_title" id="video_title" class="input-text-single"><br>
+								Video description (5000 character limit): <br>
+								<textarea name="video_description" id="video_description" class="input-text-big"></textarea><br>
+								Video Channel Name: <br>
+								<input type="text" name="video_channel_name" id="video_channel_name" class="input-text-single"><br>
+								Video Channel URL: <br>
+								<input type="text" name="video_channel_url" id="video_channel_url" class="input-text-single"><br>
+								Game: <br>
+								<input type="text" name="game" id="game" class="input-text-single"><br>
+								Timestamps: SECOND;DESCRIPTION#... <br>
+								<input type="text" name="timestamps" id="timestamps" class="input-text-single"><br>
+								Tags: tag1,tag2,...<br>
+								<input type="text" name="tags" id="tags" class="input-text-single"><br>
+								Difficulty:<br>
+								<input type="text" name="difficulty" id="difficulty" class="input-text-single"><br>
+								featured_video_tag:<br>
+								<input type="text" name="featured_video_tag" id="featured_video_tag" class="input-text-single"><br>
+								best_new_video_tag:<br>
+								<input type="text" name="best_new_video_tag" id="best_new_video_tag" class="input-text-single"><br>
+								n1_select_tag:<br>
+								<input type="text" name="n1_select_tag" id="n1_select_tag" class="input-text-single"><br>
 								<input type="submit" value="Submit">
+								<input type="reset">
 							</form>
-						</div>
-					</div>
-					<br>
-					<div class="row">
-						<input type="text" id="playlists-table" placeholder="Search for playlists..">
-					</div>
-					<div class="row">
-						<div class="col-md-12" id="table_container">
-							<div class="table-responsive">
-	                            <table id="basic-datatables-playlist" class="table" >
-	                                <thead>
-	                                    <tr>
-	                                    	<th>ID</th>
-	                                        <th>Title</th>
-	                                    </tr>
-	                                </thead>
-	                            </table>
-                       		 </div>
-						</div>
-					</div>
-
-					<div class="row">
-						<input type="text" id="videos-table" placeholder="Search for videos..">
-					</div>
-					<div class="row">
-						<div class="col-md-12" id="table_container">
-							<div class="table-responsive">
-	                            <table id="basic-datatables" class="table" >
-	                                <thead>
-	                                    <tr>
-	                                    	<th>ID</th>
-	                                        <th>Title</th>
-	                                        <th>Channel</th>
-	                                    </tr>
-	                                </thead>
-	                            </table>
-                       		 </div>
 						</div>
 					</div>
 		    	</div>
@@ -280,168 +262,6 @@
 
 	<!-- Specific JS goes HERE -->
     <script src="/static/assets/js/setting-demo2.js"></script>
-
-    <script>
-    	var root = "{{ config }}"
-    	console.log(root)
-    	var path_video = 'api/admin/videos';
-    	var path_playlist = 'api/playlists/all';
-    	$(document).ready(function() { 
-	   		populateVideoTable();
-	   		populatePlaylistTable();
-
-	   		var playlist_search_bar = document.getElementById("playlists-table");
-	   		playlist_search_bar.onkeyup= function() {
-				returnPlaylists();
-			}
-	   		var video_search_bar = document.getElementById("videos-table");
-	   		video_search_bar.onkeyup= function() {
-				returnVideos();
-			}
-
-	   	})
-
-    	function populateVideoTable() {
-    		$.ajax({
-					url:root + path_video,
-					type:"GET",
-
-					//If the api call is successful
-					success: function(result){
-						CreateTable(result)		
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-			})
-    	}
-
-    	function populatePlaylistTable() {
-    		$.ajax({
-					url:root + path_playlist,
-					type:"GET",
-
-					//If the api call is successful
-					success: function(result){
-						CreateTablePlaylists(result)		
-				},
-				error:function(error){
-					console.log(`Error ${error}`)
-				}
-			})
-    	}
-
-		function CreateTable(result){
-			data_object = JSON.parse(result);
-			var table_container = document.getElementById("basic-datatables");
-			var table_body = document.createElement("tbody")
-
-
-			for (var key in data_object) {
-
-				var new_row = document.createElement("tr")
-				var vid_id = document.createElement("td")
-				var vid_name = document.createElement("td")
-				var channel_name = document.createElement("td")
-
-
-				new_row.setAttribute("style","height:20px")
-				vid_id.setAttribute("style","width:50px")
-				vid_name.setAttribute("style","width:400px")
-				channel_name.setAttribute("style","width:100px")
-
-
-				vid_id.innerHTML = data_object[key].id
-				vid_name.innerHTML = data_object[key].video_title
-				channel_name.innerHTML = data_object[key].video_channel_name
-
-				new_row.appendChild(vid_id)
-				new_row.appendChild(vid_name)
-				new_row.appendChild(channel_name)
-
-				table_body.appendChild(new_row)
-			}
-			table_container.appendChild(table_body)
-		}
-
-		function CreateTablePlaylists(result){
-			data_object = result;
-			var table_container = document.getElementById("basic-datatables-playlist");
-			var table_body = document.createElement("tbody")
-
-
-			for (var key in data_object) {
-
-				var new_row = document.createElement("tr")
-				var vid_id = document.createElement("td")
-				var vid_name = document.createElement("td")
-
-
-				new_row.setAttribute("style","height:20px")
-				vid_id.setAttribute("style","width:50px")
-				vid_name.setAttribute("style","width:400px")
-
-
-				vid_id.innerHTML = data_object[key].id
-				vid_name.innerHTML = data_object[key].playlist_name
-
-				new_row.appendChild(vid_id)
-				new_row.appendChild(vid_name)
-
-				table_body.appendChild(new_row)
-			}
-			table_container.appendChild(table_body)
-		}
-
-		function returnVideos() {
-		  // Declare variables
-		  var input, filter, table, tr, td, i, txtValue;
-		  input = document.getElementById("videos-table");
-		  filter = input.value.toUpperCase();
-		  table = document.getElementById("basic-datatables");
-		  tr = table.getElementsByTagName("tr");
-
-		  // Loop through all table rows, and hide those who don't match the search query
-		  for (i = 0; i < tr.length; i++) {
-		    td = tr[i].getElementsByTagName("td")[1];
-		    console.log(td)
-		    if (td) {
-		      txtValue = td.textContent || td.innerText;
-		      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-		        tr[i].style.display = "";
-		      } else {
-		        tr[i].style.display = "none";
-		      }
-		    }
-		  }
-		}
-
-		function returnPlaylists() {
-		  // Declare variables
-		  var input, filter, table, tr, td, i, txtValue;
-		  input = document.getElementById("playlists-table");
-		  filter = input.value.toUpperCase();
-		  table = document.getElementById("basic-datatables-playlist");
-		  tr = table.getElementsByTagName("tr");
-
-		  // Loop through all table rows, and hide those who don't match the search query
-		  for (i = 0; i < tr.length; i++) {
-		    td = tr[i].getElementsByTagName("td")[1];
-		    console.log(td)
-		    if (td) {
-		      txtValue = td.textContent || td.innerText;
-		      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-		        tr[i].style.display = "";
-		      } else {
-		        tr[i].style.display = "none";
-		      }
-		    }
-		  }
-		}
-
-
-    </script>
-	
 	
 	
 </body>

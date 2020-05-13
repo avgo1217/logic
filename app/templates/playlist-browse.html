@@ -175,6 +175,16 @@
         background: url("//i.imgur.com/TxzC70f.png") no-repeat;
         cursor: pointer;
     }
+    .content{
+    		background-color:rgb(7, 9, 11);
+	    }
+	.card{
+		color:white;
+		background-color:rgb(28, 35, 42);
+	}
+	.page-header{
+		color:white;
+	}
 
 </style>
 
@@ -221,9 +231,6 @@
 	                    			<div class="playlist-description">description</div>
 	                    		</div>
 	                    		
-		                    </div>
-		                    <div class="col-md-2">
-		                    	Play
 		                    </div>
 		                </div>
 		            </div>
@@ -277,10 +284,10 @@
     <script src="/static/assets/js/setting-demo2.js"></script>
 
     <script>
-    	var path = 'http://127.0.0.1:5000/api/playlists/all';
-    	var host = 'http://127.0.0.1:5000/'
+    	var root = "{{ config }}"
+    	var path = 'api/playlists/all';
     	$(document).ready(function() { 
-	   		GetPlaylists(path);
+	   		GetPlaylists(root+path);
 	   	})
     	
 		function GetPlaylists(url) {
@@ -341,7 +348,7 @@
 				image_container.setAttribute("class","playlist-image-container");
 				image_container.setAttribute("id",result[key]['id']);
 				image_container.onclick = function () {
-	            		window.open(host+"playlist/"+this.id+"/0","_self");
+	            		window.open(root+"playlist/"+this.id+"/0","_self");
 	            	}
 				image_source.src=result[key]['playlist_img_src']
 				image_source.setAttribute("class","playlist-image")
@@ -363,7 +370,7 @@
 				name_row.setAttribute("class","row");
 				name_row.setAttribute("id",result[key]['id'])
 				name_row.onclick = function () {
-	            		window.open(host+"playlist/"+this.id+"/0","_self");
+	            		window.open(root+"playlist/"+this.id+"/0","_self");
 	            	}
 				author_row.setAttribute("class","row");
 				date_added_row.setAttribute("class","row");
@@ -389,14 +396,9 @@
 				info_column.appendChild(date_added_row)
 				info_column.appendChild(difficulty_row)
 				info_column.appendChild(description_row)
-
-				var play_container = document.createElement("div")
-				play_container.setAttribute("class","play-container")
-				play_container.innerHTML="PLAY"
 				
 				playlist_results.appendChild(image_column)
 				playlist_results.appendChild(info_column)
-				playlist_results.appendChild(play_container)
 				card_body.appendChild(playlist_results)
 				card.appendChild(card_body)
 

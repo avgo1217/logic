@@ -35,13 +35,14 @@
 						<span>Aim Tracker</span>
 					</div>
 				</a>
+				
 
 				
 				{% if current_user.is_authenticated %}
 
 					
 					<div class="navbar-nav topbar-nav ml-md-auto align-items-right">
-						<a href={{ url_for('logout') }}>
+						<a href={{ url_for('index') }}>
 							<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
 								<span>{{ current_user.username }}</span>
 							</div>
@@ -49,6 +50,16 @@
 						<a href={{ url_for('logout') }}>
 							<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
 								<span>Logout</span>
+							</div>
+						</a>
+					</div>
+
+				{% else %}
+				<div class="navbar-nav topbar-nav ml-md-auto align-items-right">
+						
+						<a href={{ url_for('login') }}>
+							<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+								<span>Login</span>
 							</div>
 						</a>
 					</div>

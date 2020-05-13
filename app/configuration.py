@@ -26,3 +26,4 @@ class Config():
 	SESSION_TYPE = 'filesystem'
 	UPLOAD_FOLDER='uploads/'
 	ALLOWED_EXTENSIONS={'csv'}
+	ROOT='http://127.0.0.1:5000/'

@@ -287,13 +287,14 @@
     <script src="/static/assets/js/setting-demo2.js"></script>
 
     <script>
-    	var path = 'http://127.0.0.1:5000/api/videos/';
+    	var root = "{{ config }}"
+    	var path = 'api/videos/';
     	var video_title = '';
     	$(document).ready(function() { 
 	   		$('#browse-search-bar').select2({
 	   			
 	   			ajax: {
-				    url: path.concat('search'),
+				    url: root+path+'search',
 				    dataType:'json',
 				    delay:250,
 				    data: function (params) {
