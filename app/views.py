@@ -57,7 +57,7 @@ def register():
     # declare the Registration Form
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, email=form.email.data, admin_status=1)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -107,9 +107,9 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user,remember=form.remember_me.data)
-        #user.update_scenarios_table(1,'all_scenarios.csv')
-        #user.add_videos_table()
-        #all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
+        user.update_scenarios_table(1,'all_scenarios.csv')
+        user.add_videos_table()
+        all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
         #user.add_videos_table('temp_videos.csv')
 
         next_page = url_for('aim_tracker')
