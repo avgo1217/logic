@@ -10,6 +10,7 @@ from flask            import Flask, jsonify, abort, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login      import LoginManager
 from flask_mail 	  import Mail
+from flask_bootstrap import Bootstrap
 
 
 # Grabs the folder where the script runs.
@@ -22,11 +23,13 @@ app.config.from_object('app.configuration.Config')
 db = SQLAlchemy() # flask-sqlalchemy
 mail = Mail()
 login = LoginManager() # flask-loginmanager
+bootstrap = Bootstrap()
 
 
 db.init_app(app)
 login.init_app(app)
 mail.init_app(app)
+bootstrap.init_app(app)
 login.init_app(app) # init the login manager
 
 login.login_view = 'main.login'
