@@ -25,4 +25,4 @@ class Config():
 	SESSION_TYPE = 'filesystem'
 	UPLOAD_FOLDER='app/uploads/'
 	ALLOWED_EXTENSIONS={'csv'}
-	ROOT='http://127.0.0.1:5000/'
+	ROOT='https://warm-journey-64560.herokuapp.com/'
