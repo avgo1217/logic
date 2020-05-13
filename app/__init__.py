@@ -6,13 +6,13 @@ Copyright (c) 2019 - present AppSeed.us
 
 import os
 
-from .flask            import Flask, jsonify, abort, request
-from .flask_sqlalchemy import SQLAlchemy
-from .flask_login      import LoginManager
-from .flask_mail 	  import Mail
-from .flask_bootstrap  import Bootstrap
-from .flask_marshmallow import Marshmallow
-from .flask_dropzone import Dropzone
+from flask            import Flask, jsonify, abort, request
+from flask_sqlalchemy import SQLAlchemy
+from flask_login      import LoginManager
+from flask_mail 	  import Mail
+from flask_bootstrap  import Bootstrap
+from flask_marshmallow import Marshmallow
+from flask_dropzone import Dropzone
 
 
 # Grabs the folder where the script runs.
