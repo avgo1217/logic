@@ -27,7 +27,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 # App modules
 from app import db, app
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, TrainingInstance, Scenarios, TrainingInstanceSchema, Videos, Playlists
+from app.models import User, TrainingInstance, Scenarios, Videos, Playlists
 from app.email import send_password_reset_email
 
 # sql modules
