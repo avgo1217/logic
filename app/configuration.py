@@ -13,8 +13,7 @@ class Config():
 
 	CSRF_ENABLED = True
 	SECRET_KEY   = "77tgFCdrEEdv77554##@3" 
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
-	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:RaliWeinskim@localhost/unlockd_test?host=localhost?port=3306'
+	SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@localhost:5432/logic-database'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	MAIL_SERVER = 'smtp.gmail.com'
 	MAIL_PORT = 465
@@ -24,6 +23,6 @@ class Config():
 	ADMINS = ['ryan.kim@n1esports.com']
 	SECURITY_EMAIL_SENDER = 'ryan.kim@n1esports.com'
 	SESSION_TYPE = 'filesystem'
-	UPLOAD_FOLDER='uploads/'
+	UPLOAD_FOLDER='app/uploads/'
 	ALLOWED_EXTENSIONS={'csv'}
 	ROOT='http://127.0.0.1:5000/'

@@ -28,7 +28,6 @@ class User(UserMixin, db.Model):
         id = db.Column(db.Integer, primary_key=True)
         username = db.Column(db.String(64), index=True, unique=True)
         admin_status = db.Column(db.Integer)
-        user_enc = db.Column(db.String(44))
         email = db.Column(db.String(120), index=True, unique=True)
         password_hash = db.Column(db.String(128))
         aim_training_tool_user_status = db.Column(db.Integer)
@@ -85,8 +84,9 @@ class User(UserMixin, db.Model):
             return list_of_results
 
         def add_all_new_sessions(self, all_scenarios_df, files):
+            print(os.getcwd())
             existing_session_instances = self.get_existing_scenario_instances()
-            new_files =0
+            new_file =0
             for file in files:
                 # Check if the file is one of the allowed types/extensions
                 if file and allowed_file(file.filename):
@@ -97,7 +97,7 @@ class User(UserMixin, db.Model):
                     if filename not in existing_session_instances:
                         new_file = new_file+1
 
-                        # Save the filename into a list, we'll use it later
+                        
                         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
                         subfile = self.read_input_data(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -166,7 +166,7 @@ class User(UserMixin, db.Model):
                         db.session.commit()
                         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            return new_files
+            return new_file
 
         def add_videos_table(self):
             db.session.query(Videos).delete()
@@ -296,7 +296,7 @@ class TrainingInstance(db.Model):
     sum_damage_possible = db.Column(db.Float)
     kills = db.Column(db.Integer)
     deaths = db.Column(db.Integer)
-    fight_time = db.Column(db.Integer)
+    fight_time = db.Column(db.Float)
     avg_ttk = db.Column(db.Float)
     dmg_done = db.Column(db.Float)
     dmg_taken = db.Column(db.Float)

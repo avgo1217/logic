@@ -59,7 +59,6 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
-        user.set_name_encrypt()
         db.session.add(user)
         db.session.commit()
         flash('Congrats! You have suceessfully registered.')
@@ -111,7 +110,6 @@ def login():
         #user.update_scenarios_table(1,'all_scenarios.csv')
         #user.add_videos_table()
         #all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
-        #user.add_all_new_sessions(all_scenarios_df)
         #user.add_videos_table('temp_videos.csv')
 
         next_page = url_for('aim_tracker')
@@ -300,7 +298,7 @@ def admin_playlist_add():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-edit-playlist.html', config=app.config['ROOT'])    
+            return render_template( '/admin/admin-add-playlist.html', config=app.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
