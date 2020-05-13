@@ -69,7 +69,7 @@ pickleshare==0.7.5
 plotly==4.1.1
 prometheus-client==0.7.1
 prompt-toolkit==3.0.4
-Psycopg2==2.8.6
+Psycopg2==2.8.5
 ptyprocess==0.6.0
 pycparser==2.19
 Pygments==2.6.1
