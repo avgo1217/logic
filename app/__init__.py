@@ -9,7 +9,6 @@ import os
 from flask            import Flask, jsonify, abort, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login      import LoginManager
-from flask_bcrypt     import Bcrypt
 from flask_mail 	  import Mail
 from flask_bootstrap  import Bootstrap
 from flask_marshmallow import Marshmallow
@@ -26,7 +25,6 @@ app.config.from_object('app.configuration.Config')
 db = SQLAlchemy() # flask-sqlalchemy
 bootstrap = Bootstrap()
 mail = Mail()
-bc = Bcrypt() # flask-bcrypt
 login = LoginManager() # flask-loginmanager
 ma = Marshmallow()
 dropzone = Dropzone()
