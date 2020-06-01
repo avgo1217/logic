@@ -1,4 +1,4 @@
-from app import db, login, ma, app
+from app import db, login, app
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -414,47 +414,4 @@ class TrainingInstance(db.Model):
                             settings_stats_dict['Horiz Sens'], 
                             settings_stats_dict['Vert Sens'],
                             settings_stats_dict['FOV'])
-
-class TrainingInstanceSchema(ma.Schema):
-    class Meta:
-        fields =('session_file_name',
-        'user_id',
-        'date_time',
-        'sum_shots',
-        'sum_hits',
-        'accuracy',
-        'sum_damage_done',
-        'sum_damage_possible',
-        'kills',
-        'deaths',
-        'fight_time',
-        'avg_ttk',
-        'dmg_done',
-        'dmg_taken',
-        'midairs',
-        'midaired',
-        'directs',
-        'directed',
-        'distance_traveled',
-        'score',
-        'scenario',
-        'hash_no',
-        'game_version',
-        'input_lag',
-        'max_fps_config',
-        'sens_scale',
-        'horiz_sens',
-        'vert_sens',
-        'fov',
-        'test',
-        'scenario_id',
-        'scenario_type',
-        'scenario_level',
-        'scenario_direction',
-        'scenario_fov',
-        'scenario_skills_tags',
-        'scenario_click_data',
-        'scenario_target_acquisition')
-
-        
 
