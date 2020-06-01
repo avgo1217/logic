@@ -13,7 +13,7 @@ class Config():
 
 	CSRF_ENABLED = True
 	SECRET_KEY   = "77tgFCdrEEdv77554##@3" 
-	SQLALCHEMY_DATABASE_URI = 'postgres://mvtceftihysnsf:53e94b349d53a09735f2b285328a5106658badec007047fec68e18733c03664a@ec2-50-17-90-177.compute-1.amazonaws.com:5432/d586tdvmrasj8g'
+	SQLALCHEMY_DATABASE_URI = 'postgres://zabhqwgiinaxvr:1bcca0b0a8f92323d1020095f22980a1b0af1d027d98407716ce48ac711c95c4@ec2-54-211-210-149.compute-1.amazonaws.com:5432/d85mu1oa759pn4'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	MAIL_SERVER = 'smtp.gmail.com'
 	MAIL_PORT = 465
