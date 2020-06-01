@@ -7,4 +7,4 @@ Copyright (c) 2019 - present AppSeed.us
 from app import app, db
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
