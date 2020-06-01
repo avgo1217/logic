@@ -213,7 +213,7 @@ def admin_video_add():
     best_new_video_tag = request.form["best_new_video_tag"]
     n1_select_tag=request.form["n1_select_tag"]
 
-    if video_url and video_title and video_description and video_channel_name and video_channel_url and game and tags and timestamps and difficulty and featured_video_tag and n1_select_tag and best_new_video_tag:
+    if video_url and video_title and video_description and video_channel_name and video_channel_url and game and difficulty and featured_video_tag and n1_select_tag and best_new_video_tag:
         new_video = Videos(video_url=video_url,
                             video_title=video_title,
                             video_description= video_description,
