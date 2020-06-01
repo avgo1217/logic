@@ -27,7 +27,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 # App modules
 from app import db, app
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, TrainingInstance, Scenarios, TrainingInstanceSchema, Videos, Playlists
+from app.models import User, TrainingInstance, Scenarios, Videos, Playlists
 from app.email import send_password_reset_email
 
 # sql modules
@@ -109,7 +109,7 @@ def login():
         login_user(user,remember=form.remember_me.data)
         #user.update_scenarios_table(1,'all_scenarios.csv')
         #user.add_videos_table()
-        #all_scenarios_df = pd.read_sql(db.session.query(Scenarios).statement,db.session.bind)
+        
         #user.add_videos_table('temp_videos.csv')
 
         next_page = url_for('aim_tracker')

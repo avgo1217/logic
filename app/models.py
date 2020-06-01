@@ -415,3 +415,8 @@ class TrainingInstance(db.Model):
                             settings_stats_dict['Vert Sens'],
                             settings_stats_dict['FOV'])
 
+<<<<<<< HEAD
+=======
+        
+
+>>>>>>> 7f2a89201ab971f41bffa81febb69be16ffed6d7
