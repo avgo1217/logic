@@ -652,6 +652,7 @@ def get_home_page_info():
 
 def get_videos_by_filters(tag_list, game, difficulty, n1select, n1original):
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
+    print(df)
     if game != "All":
         df = df.loc[df['game']==game]
     if difficulty != "All":
@@ -698,6 +699,7 @@ def get_most_played_scenario(username):
 
 def get_search_bar_data(term): 
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
+    print(df)
     all_tags = []
     count = 1
     for item in df.tags:

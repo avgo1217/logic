@@ -377,6 +377,7 @@
 	   	})
     	function collectParameters() {
     		var new_url = root+path+'filters/';
+    		console.log(new_url)
     		var searchterm = $('#browse-search-bar').select2('data');
     		var game = document.getElementById("game-list").value;
     		var difficulty = document.getElementById("difficulty-level").value;
@@ -448,6 +449,7 @@
 		}
 
 		function CreateBrowseDashboard(result){
+			console.log(result)
 			data_object = JSON.parse(result);
 			var video_body = document.getElementById("video-results");
 

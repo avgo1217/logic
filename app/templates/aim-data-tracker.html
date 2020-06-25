@@ -422,6 +422,20 @@
 					fill: false,
 					borderWidth: 2,
 					data: []
+				},{
+					
+					borderColor: "#bfbfbf",
+					pointBorderColor: "#FFF",
+					pointBackgroundColor: "#FFF",
+					borderDash: [5,5],
+					pointRadius:0,
+					pointBorderWidth: 0,
+					pointHoverRadius: 4,
+					pointHoverBorderWidth: 1,
+					backgroundColor: 'transparent',
+					fill: false,
+					borderWidth: 2,
+					data: []
 				}]
 			},
 			options : {
@@ -433,17 +447,17 @@
                     }
                 },
 				maintainAspectRatio: false,
-				scaleBeginAtZero: true,
+				/*scaleBeginAtZero: true,*/
 				legend: {
 		            display: false
 		         },
-		        scales: {
+		        /*scales: {
 		          yAxes: [{
 		            ticks: {
 		                beginAtZero: true
 		            }
 		          }]
-		        },
+		        },*/
 				
 				tooltips: {
 					bodySpacing: 4,
@@ -464,7 +478,7 @@
 	    	
 	    	$('#analytics-search-bar').select2({
 	   			ajax: {
-				    url: root + '/api/scenarios/'+current_user_name,
+				    url: root + 'api/scenarios/'+current_user_name,
 				    dataType:'json',
 				    placeholder: scenario_selected,
 				    delay:250,
@@ -482,6 +496,7 @@
 	        UpdatePage();
 	        $('#analytics-search-bar').on('select2:select', function (e) {
 	        	var data = $('#analytics-search-bar').select2('data');
+	        	console.log(data)
 	        	scenario_selected = data[0]['text']
 	   			UpdatePage();			
 			});
@@ -574,6 +589,41 @@
 
 					myLineChart['data']['labels'] = date_time_data;
 					myLineChart['data']['datasets'][0]['data'] = chart_data;
+
+					var sum_x = 0;
+				    var sum_y = 0;
+				    var sum_xy = 0;
+				    var sum_xx = 0;
+				    var count = 0;
+				    var x = 0;
+				    var y = 0;
+				    var values_length = chart_data.length;
+
+					for (var v = 0; v < values_length; v++) {
+						x = count;
+				        y = chart_data[v];
+				        sum_x += x;
+				        sum_y += y;
+				        sum_xx += x*x;
+				        sum_xy += x*y;
+				        count++;
+					}
+
+					var m = (count*sum_xy - sum_x*sum_y) / (count*sum_xx - sum_x*sum_x);
+    				var b = (sum_y/count) - (m*sum_x)/count;
+
+    				var result_values_x = [];
+				    var result_values_y = [];
+
+				    var count_other = 0;
+				    for (var v = 0; v < values_length; v++) {
+				        x = count_other;
+				        y = x * m + b;
+				        result_values_x.push(x);
+				        result_values_y.push(y);
+				        count_other++;
+				    }
+					myLineChart['data']['datasets'][2]['data'] = result_values_y;
 					myLineChart.update();
 				},
 				error:function(error){
