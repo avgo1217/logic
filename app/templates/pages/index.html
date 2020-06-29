@@ -258,13 +258,21 @@
     }
     .tags-list{
         float:right;
-        margin-top: 2px;
+        margin-top: 10px;
 
       }
 
   .home-contain{
     height:300px;
     padding-bottom: 20px;
+  }
+  .vidtitle{
+    color: white;
+    font-weight: bold;
+    overflow:hidden;
+  }
+  .homepanel{
+    padding-bottom: 100px;
   }
 
 
@@ -288,7 +296,11 @@
         <div id="title-wrapper">
           <div id="header1">logic</div>
           <div id="description1">Welcome to Logic! This is a passion project (currently in beta) by the co-founders of N1 Esports, designed to provide the best content, resources, and tools for casual FPS gamers looking to improve at their own pace.</div>
-          <button type="button" class="btn btn-light">Why We Started This Project</button>
+          <a href={{ url_for('about') }}>
+          <div style="text-align: center;  color: orange;font-size: 20px;font-family:'Century Gothic','Futura',san-serif;">
+            <span>Why We Started This Project</span>
+          </div>
+        </a>
 
         </div>
       </div>
@@ -340,17 +352,11 @@
           </div>
         </div> 
       </div>
-      <div class="title-container">
-        <div id="title-wrapper">
-          <div id="header1">logic</div>
-          <div id="description1">Welcome to Logic! This is a passion project (currently in beta) by the co-founders of N1 Esports, designed to provide the best content, resources, and tools for casual FPS gamers looking to improve at their own pace.</div>
-          <button type="button" class="btn btn-light">Why We Started This Project</button>
-
-        </div>
-      </div>
+      
     </div>
-    
+
   </div>
+
           
 
 
@@ -421,6 +427,7 @@
       function PopulateHomePage(result){
         var playlists = result[0]
         var best_new_video = result[1]
+        console.log(best_new_video)
         var staff_picks = result[2]
 
         for (var i=0;i<playlists.length;i++){
@@ -477,10 +484,12 @@
         for (var i=0;i<best_new_video.length;i++){
           var vid_container = document.createElement("div");
           var div2 =document.createElement("div");
+          var vidtitle = document.createElement("div");
           var tags = document.createElement("div");
 
           tags.setAttribute("class","tags-list")
-          vid_container.setAttribute("class","col-md-4");
+          vidtitle.setAttribute("class","vidtitle")
+          vid_container.setAttribute("class","col-md-3");
           div2.classList.add("youtube-player")
           div2.setAttribute("data-id", best_new_video[i].video_url);
           div2.setAttribute("id", best_new_video[i].id);
@@ -488,9 +497,11 @@
           div2.onclick = function(){
             window.open("http://127.0.0.1:5000/browse/".concat(this.id),"_self");
           }
+          vidtitle.innerHTML=best_new_video[i]['video_title']
           CreateTags(best_new_video[i].tags,tags);
 
           vid_container.appendChild(div2);
+          vid_container.appendChild(vidtitle);
           vid_container.appendChild(tags);
           best_new_videos_container.appendChild(vid_container);
         }
@@ -498,21 +509,25 @@
         var staff_picks_container = document.getElementById("staff-picks");
         for (var i=0;i<staff_picks.length;i++){
           var vid_container = document.createElement("div");
+          var vidtitle = document.createElement("div");
           var div2 =document.createElement("div");
           var tags = document.createElement("div");
 
           tags.setAttribute("class","tags-list")
-          vid_container.setAttribute("class","col-md-4");
+          vidtitle.setAttribute("class","vidtitle")
+          vid_container.setAttribute("class","col-md-3");
           div2.classList.add("youtube-player")
           div2.setAttribute("data-id", staff_picks[i].video_url);
           div2.setAttribute("id", staff_picks[i].id);
           div2.innerHTML = labnolThumb(staff_picks[i].video_url);
           div2.onclick = function(){
-            window.open("http://127.0.0.1:5000/browse/".concat(this.id),"_self");
+            window.open(root+this.id,"_self");
           }
+          vidtitle.innerHTML=staff_picks[i]['video_title']
           CreateTags(staff_picks[i].tags,tags);
 
           vid_container.appendChild(div2);
+          vid_container.appendChild(vidtitle)
           vid_container.appendChild(tags);
           staff_picks_container.appendChild(vid_container);
         }

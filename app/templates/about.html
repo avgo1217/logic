@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Flask Dashboard Atlantis - {% block title %}Open-Source Admin Panel{% endblock %} | AppSeed </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <link rel="icon" href="/static/assets/img/icon.ico" type="image/x-icon"/>
+
+  <!-- Fonts and icons -->
+  <script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      google: {"families":["Lato:300,400,700,900"]},
+      custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], 
+      urls: ['/static/assets/css/fonts.min.css']},
+      active: function() {
+        sessionStorage.fonts = true;
+      }
+    });
+  </script>
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/assets/css/atlantis.min.css">
+
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link rel="stylesheet" href="/static/assets/css/demo.css">
+  <style>
+        p, div, input {
+            font: 14px Calibri;
+        }
+        .ui-autocomplete { 
+            cursor:pointer; 
+            height:150px;
+            width:400px;
+            overflow-y:scroll;
+        } 
+        .statheader {
+          font-size: 15px;
+          text-align: center;
+          color: "#d3d3d3";
+        }
+        .statbody {
+          font-size: 20px;
+          text-align: center;
+          color: "#191919";
+    }
+    #search-bar-browse{
+      height: 30px;
+    }
+    .container-fluid {
+      width:200px;
+      float:right;
+    }
+    .single-video-margin{
+      padding-top: 50px;
+      overflow-y:auto;
+    }
+    #video-info-card{
+      height: 100%
+      width:300px;
+    }
+    .video-container {
+      display:flex;
+      height: 650px;
+    }
+    .video-playlist-container {
+      width:1200px;
+    }
+    .video-info-container {
+      flex-grow:1;
+      margin-left: 10px;
+
+    }
+    .single-video-title {
+      font-size: 25px;
+      text-align: left;
+      margin-left: 5px;
+    }
+    .single-video-description {
+      font-size: 18px;
+      text-align: left;
+      margin-left: 5px;
+    }
+    .single-video-tags{
+      font-size: 18px;
+      text-align: right;
+      margin-right: 10px;
+      margin-bottom: 5px;
+    }
+    .single-video-flags{
+      font-size: 18px;
+      text-align: right;
+      margin-right: 10px;
+    }
+    #description-box{
+      width:500px;
+      height:400px;
+    }
+    #next-video-box{
+      width:500px;
+    }
+    .homepanel{
+      position:relative;
+
+      height: 100%;
+
+      background-image: linear-gradient(rgb(7, 9, 11), rgb(28, 35, 42));
+      overflow-y: scroll;
+      padding-top: 60px;
+    }
+    </style>
+    <style>
+    .youtube-player {
+        position: relative;
+        padding-bottom: 56.23%;
+        height: 100%;
+        overflow: hidden;
+        max-width: 100%;
+        background:transparent;
+
+    }
+    .playlist-name{
+      font-size: 25px;
+      cursor: pointer;
+    }
+    .playlist-author{
+      font-size: 14px;
+    }
+    .playlist-date-added{
+      font-size: 14px;
+    }
+    .playlist-difficulty{
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .play-front-description{
+      overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 3; /* number of lines to show */
+     -webkit-box-orient: vertical;
+     font-size: 15px;
+    }
+    .playlist-image-container{
+      cursor:pointer;
+    }
+    img{
+      width:100%;
+      height:100%;
+    }
+
+    .youtube-player img {
+        bottom: 0;
+        display: block;
+        left: 0;
+        margin: auto;
+        max-width: 100%;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        height: auto;
+        cursor: pointer;
+        -webkit-transition: .4s all;
+        -moz-transition: .4s all;
+        transition: .4s all;
+    }
+
+    .youtube-player img:hover {
+        -webkit-filter: brightness(75%);
+    }
+
+    .youtube-player .play {
+        height: 72px;
+        width: 72px;
+        left: 50%;
+        top: 50%;
+        margin-left: -36px;
+        margin-top: -36px;
+        position: absolute;
+        background: url("//i.imgur.com/TxzC70f.png") no-repeat;
+        cursor: pointer;
+    }
+    .badge {
+      margin-left: 5px;
+    }
+    .test {
+      /*background: #000;*/
+    }
+    .test1 {
+      /*background: #000;*/
+    }
+    .top-row {
+      margin-top: 20px;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .video-body {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .small-title {
+      color:white;
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 20px;
+      margin-top: 50px;
+    }
+ 
+    .videowidth{
+      width: 325px;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: inline-block;
+    }
+    .title-container {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 120px;
+    }
+    #title-wrapper {
+      display: inline-block;
+
+    }
+    #header1{
+      
+      font-size: 60px;
+      color: rgb(200, 200, 200);
+      font-family:'Century Gothic','Futura',san-serif;
+      margin-bottom: 30px;
+    }
+    #description1{
+      font-size: 15px;
+      width: 550px;
+      color: rgb(200, 200, 200);
+      font-family:'Century Gothic','Futura',san-serif;
+      margin-bottom: 40px;
+    }
+    .playlist-container{
+      color:rgb(220, 220, 220);
+    }
+    .play-details{
+      margin: 0px;
+      font-size: 14px;
+      color:rgb(200, 200, 200);
+    }
+    .top-button{
+      margin-top: 15px;
+    }
+    .tags-list{
+        float:right;
+        margin-top: 10px;
+
+      }
+
+  .home-contain{
+    height:300px;
+    padding-bottom: 20px;
+  }
+  .vidtitle{
+    color: white;
+    font-weight: bold;
+    overflow:hidden;
+  }
+  .homepanel{
+    padding-bottom: 100px;
+  }
+
+
+
+
+</style>
+
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body>
+  <div class="wrapper {% block layout %}{% endblock layout %}">
+
+    {% include 'includes/navigation.html' %}
+
+    <div class="col-md-12 test homepanel">
+
+      <div class="title-container">
+        <div id="title-wrapper">
+          <div id="header1">logic</div>
+          <div id="description1">First, a quick intro and a plug. My name is Ryan Kim and I'm the CEO and co-founder of <a href="https://www.n1esports.com">N1 Esports.</a> We're a brand new esports start up and our goal is to create dedicated esports gyms, where gamers can join teams, take classes, and work with pro coaches, all in person. We opened our first location in Chicago on February 2019.
+          <br>
+          <br>
+
+          Then, the world was hit with the coronavirus and we had to temporarily shut down the physical location. This gave the team a lot more time to fill and I decided to try my hand at an FPS game. I have always been a MOBA/RTS fan but I was never good at either. I take care of the business end of things while my co-founder (Mac) and coaches push the limits of esports coaching. It felt like a perfect opportunity to dive into the FPS world.
+
+          <br>
+          <br>
+
+          As I started my journey, I was blown away by how vast and deep the FPS training and community were. There was so much information, tools, and methodologies so as a casual (and noob) gamer, I found it overwhleming. However, I was lucky enough to have a business partner and team of coaches to guide me.
+          <br>
+          <br>
+
+          I organized all of the guidance, tools, and information they provided and ended up with a pretty cool training regimen. I wanted to share some of the most impactful elements of my own training with all casual gamers looking to get better. So, I took some time to learn how to code, built logic with Mac as a pet project, and here we are today!
+          <br>
+          <br>
+
+          My hope is that Logic becomes a useful tool that all FPS gamers use to improve. It is not a professionally designed website so please let me know how to improve it! And finally, if you are looking for classes or 1-1 coaching, visit our <a href="https://www.n1esports.com">website</a> and work with our team of coaches!
+      </div>
+    </div>
+  </div>
+
+
+          
+
+
+  <!--   Core JS Files   -->
+
+  <!--<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>-->
+  <script src="/static/assets/js/core/popper.min.js"></script>
+  <script src="/static/assets/js/core/bootstrap.min.js"></script>
+
+  <!-- jQuery UI -->
+  <!--<script src="/static/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
+
+  <!-- jQuery Scrollbar -->
+  <script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+  <!-- Chart JS -->
+  <script src="/static/assets/js/plugin/chart.js/chart.min.js"></script>
+
+  <!-- jQuery Sparkline -->
+  <script src="/static/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+  <!-- Chart Circle -->
+  <script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+  <!-- Datatables -->
+  <script src="/static/assets/js/plugin/datatables/datatables.min.js"></script>
+
+  <!-- Bootstrap Notify -->
+  <script src="/static/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+  <!-- jQuery Vector Maps -->
+  <script src="/static/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+  <script src="/static/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+  <!-- Sweet Alert -->
+  <script src="/static/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+  <!-- Atlantis JS -->
+  <script src="/static/assets/js/atlantis.min.js"></script>
+
+  <script src="/static/assets/js/setting-demo.js"></script>
+
+  <!-- Specific JS goes HERE -->
+  <script src="/static/assets/js/setting-demo2.js"></script>
+  
+</body>
+</html>
+
+  
+
+

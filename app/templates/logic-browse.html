@@ -170,7 +170,14 @@
     #browse-search-bar{
     	flex:1;
     }
-
+    .page-nav{
+    	margin: auto;
+  		width: 50%;
+    }
+    #smallSelect{
+    	width: 100px;
+    	background-color: transparent;
+    }
 
 </style>
 
@@ -261,15 +268,28 @@
 							</div>
 						</div>
 					</div>
-			        
-			        
+
+					
+			      
 			        <div class="card" id="search-results">
 			            <div class="card-body">
+			            	
+			            	
 			                <div class="row row-demo-grid" id="video-results">
 			                    
 			                </div>
+
 			            </div>
+
 			        </div>
+			        
+			        <div class="page-nav">
+				        <input class = "btn btn-primary" type="button" id="first" onclick="firstPage()" value="first" />
+				        <input class = "btn btn-primary" type="button" id="previous" onclick="previousPage()" value="previous" />
+						<input class = "btn btn-primary" type="button" id="next" onclick="nextPage()" value="next" />
+						<input class = "btn btn-primary" type="button" id="last" onclick="lastPage()" value="last" />
+					</div>
+
 		    	</div>
 		    </div>
 		   
@@ -322,6 +342,66 @@
     	var root = "{{ config }}";
     	var path = 'api/videos/';
     	var video_title = '';
+
+		var list = new Array();
+		var pageList = new Array();
+		var currentPage = 1;
+		var numberPerPage = 12;
+		var numberOfPages = 1; 
+
+    	function load(list){
+    		if (list.length > 0){
+    			numberOfPages = getNumberOfPages(list);
+    			return loadList(list);
+    		}
+		    else {
+		    	currentPage=1;
+		    	numberOfPages=1;
+		    	check();
+		    }
+		}
+
+		function getNumberOfPages(list) {
+		    return Math.ceil(list.length / numberPerPage);
+		}
+
+		function nextPage() {
+		    currentPage += 1;
+		    collectParameters();
+		}
+
+		function previousPage() {
+		    currentPage -= 1;
+		    collectParameters();
+		}
+
+		function firstPage() {
+		    currentPage = 1;
+		    collectParameters();
+		}
+
+		function lastPage() {
+		    currentPage = numberOfPages;
+		    collectParameters();
+		}
+
+		function loadList(list) {
+		    var begin = ((currentPage - 1) * numberPerPage);
+		    var end = begin + numberPerPage;
+
+		    pageList = list.slice(begin, end);
+		    check();         // determines the states of the pagination buttons
+
+		    return pageList
+		}
+
+		function check() {
+		    document.getElementById("next").disabled = currentPage == numberOfPages ? true : false;
+		    document.getElementById("previous").disabled = currentPage == 1 ? true : false;
+		    document.getElementById("first").disabled = currentPage == 1 ? true : false;
+		    document.getElementById("last").disabled = currentPage == numberOfPages ? true : false;
+		}
+
     	$(document).ready(function() { 
 	   		$('#browse-search-bar').select2({
 	   			
@@ -349,25 +429,30 @@
 			  	}
 	   		});
 	   		collectParameters();
-	   		
 
 	   		//listeners
 	   		$('#browse-search-bar').on('select2:unselect', function (e) {
+	   			currentPage=1;
 	   			collectParameters();
 			});
 	   		$('#browse-search-bar').on('select2:select', function (e) {
+	   			currentPage=1;
 	   			collectParameters();   			
 			});
 			$('#n1-original').change(function() {
+				currentPage=1;
 				collectParameters();
 			})
 			$('#n1-select').change(function() {
+				currentPage=1;
 				collectParameters();
 			})
 			if ($('#n1-select').is(':checked')) {
+				currentPage=1;
 	        	collectParameters();  
 			}
 			if ($('#n1-original').is(':checked')) {
+				currentPage=1;
 	        	collectParameters(); 
 			}
 
@@ -377,7 +462,6 @@
 	   	})
     	function collectParameters() {
     		var new_url = root+path+'filters/';
-    		console.log(new_url)
     		var searchterm = $('#browse-search-bar').select2('data');
     		var game = document.getElementById("game-list").value;
     		var difficulty = document.getElementById("difficulty-level").value;
@@ -449,9 +533,10 @@
 		}
 
 		function CreateBrowseDashboard(result){
-			console.log(result)
 			data_object = JSON.parse(result);
 			var video_body = document.getElementById("video-results");
+
+			data_object = load(data_object);
 
 			video_body.innerHTML = '';
 			for (var key in data_object) {

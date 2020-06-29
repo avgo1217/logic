@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Flask Dashboard Atlantis - {% block title %}Open-Source Admin Panel{% endblock %} | AppSeed </title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="/static/assets/img/icon.ico" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
+	
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], 
+			urls: ['/static/assets/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+	<script src="/static/assets/js/dropzone.js"></script>
+	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/assets/css/atlantis.min.css">
+
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="/static/assets/css/demo.css">
+	<style>
+        p, div, input {
+            font: 14px Calibri;
+        }
+        .ui-autocomplete { 
+            cursor:pointer; 
+            height:150px;
+            width:400px;
+            overflow-y:scroll;
+        } 
+        .statheader {
+        	font-size: 15px;
+        	text-align: center;
+        	color: "#d3d3d3";
+        }
+        .statbody {
+        	font-size: 20px;
+        	text-align: center;
+        	color: "#191919";
+        }
+        #autocomplete
+		{
+		    font-size: 20px;
+		    width: 500px;
+		    height: 20px;
+		    float: left;
+		    padding-left: 5px;
+		    padding-right: 5px;
+		    margin-top: 0px;
+		    border:0;
+		}
+		.container-fluid {
+			width:200px;
+			float:right;
+		}
+		.main-panel{
+    		background-image: linear-gradient(rgb(7, 9, 11), rgb(28, 35, 42));
+    		overflow: scroll;	
+	    }
+	    .sidebar{
+	    	background-color: rgb(28, 35, 42);
+	    }
+	    .card {
+	    	background-color: rgb(28, 35, 42);
+	    	color:white;
+	    }
+	    .big-label{
+	    	font-size: 20px;
+	    	color: white;
+	    }
+	    .icon-arrow-up-circle {
+	    	font-size: 25px;
+	    	font-style: "sans-serif";
+	    	float: left;
+	    }
+	    .icon-class{
+	    	float: left;
+	    	margin-left: 10px;
+	    	font-size: 15px;
+	    }
+	    .modal {
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  padding-top: 100px; /* Location of the box */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		}
+		/* Modal Content */
+		.modal-content {
+		  background-color: grey ;
+		  margin: auto;
+		  padding: 5px;
+		  border: 1px solid #888;
+		  width: 40%;
+		  z-index: 1;
+		}
+
+		/* The Close Button */
+		.close {
+		  color: #FFF;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: #FFF;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+		.guide-links{
+			padding-bottom: 10px;
+		}
+		.guide-post{
+			color: white;
+		}
+
+    </style>
+
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body>
+	<div class="wrapper {% block layout %}{% endblock layout %}">
+
+		{% include 'includes/navigation.html' %}
+
+		
+		<!-- Sidebar -->
+		<div class="sidebar sidebar-style-2">			
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+			                    <div class="card-header">
+			                        <div class="card-category big-label">Aim Tracker Guide</div>
+			                    </div>
+			                    <div class="card-body">
+			                    	<a href={{ url_for('aim_tracker_guide') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>Intro to FPS Aim Training</span>
+										</div>
+									</a>
+									<a href={{ url_for('aim_tracker_guide_train') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>What is Kovaak's FPS Aim Trainer?</span>
+										</div>
+									</a>
+			                        <a href={{ url_for('aim_tracker_guide_upload') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>How to upload Kovaak's Data</span>
+										</div>
+									</a>
+									<a href={{ url_for('aim_tracker_guide_tool') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>How to train using this tool</span>
+										</div>
+									</a>
+									<a href={{ url_for('aim_tracker_guide_setup') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>Setting Up Kovaak's Aim Trainer</span>
+										</div>
+									</a>
+									<br>
+									<br>
+									<a href={{ url_for('aim_tracker') }}>
+										<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+											<span><< Aim Tracker Tool</span>
+										</div>
+									</a>
+									
+			                    </div>
+			                </div>
+						</div>
+	                </div>
+					
+				</div>
+			</div>
+		</div>
+		<!-- End Sidebar -->
+
+
+
+
+		<div class="main-panel">
+			<div class="content">
+				<div class="page-inner guide-post">
+					
+			        <h1>What is Kovaak’s FPS Aim Trainer and How Can You Use It to Improve?</h1>
+			        <p>Written by Coach Moby - N1 Esports</p>
+			        <br>
+
+			        <h3>What is an Aim Trainer?</h3>
+			        <p style="font-size: 18px;">An aim trainer is a game/tool used to isolate and practice aim mechanics by eliminating other factors common in mainstream games.</p>
+			        <br>
+
+			        <h3>Why use an aim trainer?</h3>
+			        <p style="font-size: 18px;">Aim trainers increase your aiming uptime. When playing a standard game of Fortnite or Valorant, you spend a large percent of your time looting or running around without firing your weapon. Aim trainers, on the other hand, allow you to isolate that skill and practice it with near 100% uptime.</p>
+
+			        <p style="font-size: 18px;">This will allow you to improve your aiming mechanics faster than you ever could playing your main game. 
+					</p>
+			        <br>
+
+			        <h3>Why use Kovaak's FPS Aim Trainer?</h3>
+			        <p style="font-size: 18px;">There are numerous FPS aim trainers on the market and Kovaak’s is only one of your options.</p>
+
+					<p style="font-size: 18px;">The first thing you should look for when picking an FPS aim trainer is one that is played in a 3D space. 2D aim trainers do not transfer as well to 3D games like Fortnite, Valorant, CS GO, Overwatch, etc.</p>
+
+					<p style="font-size: 18px;">The next thing you should look for is customization and depth of options. Kovaak’s has a wealth of options that enable you to change your sensitivity, FOV, UI, crosshair, textures, colors, etc to match whatever game you want to emulate.</p>
+
+					<p style="font-size: 18px;">Kovaak’s also features over 3,000 scenarios that allow you to isolate specific aspects of your aim whether it be clicking, tracking, target switching or strafing. This is accomplished by changing the size of targets, the speed at which they move, their health, how far away they are and many other variables within each individual scenario
+					</p>
+			        <br>
+
+			        <h3>How can you use Kovaak's to improve?</h3>
+			        <p style="font-size: 18px;">Due to the overwhelming amount of community developed scenarios within Kovaak’s, it can be difficult to know what scenarios to practice, how long to practice (volume) and how often to practice (frequency). As a result, many users waste their time playing scenarios like Jumbo Tile Frenzy for hours. </p>
+
+			        <p style="font-size: 18px;">In order to structure your practice more intelligently, I recommend you build a well rounded playlist within Kovaak’s and keep practicing a set of 5-10 scenarios to more accurately access your progress over time instead of playing random scenarios every time you log in.</p>
+
+			        <p style="font-size: 18px;">You can find good playlist recommendations on our Logic playlist page, on the Sparky discord (hyperlink), in the Aimer7 guide (hyperlink) or within the default playlists on Kovaak’s.</p>
+
+			        <p style="font-size: 18px;">Once you find a playlist you like, it is time to structure your practice regime and begin accessing progression with our stat tracking tool</p>
+
+
+			    </div>		
+			</div>
+		</div>
+		
+
+	</div>
+
+	<!--   Core JS Files   -->
+
+	<!--<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>-->
+	<script src="/static/assets/js/core/popper.min.js"></script>
+	<script src="/static/assets/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<!--<script src="/static/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
+
+	<!-- jQuery Scrollbar -->
+	<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+	<!-- Chart JS -->
+	<script src="/static/assets/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="/static/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="/static/assets/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="/static/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="/static/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="/static/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="/static/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Atlantis JS -->
+	<script src="/static/assets/js/atlantis.min.js"></script>
+
+	<script src="/static/assets/js/setting-demo.js"></script>
+
+	<!-- Specific JS goes HERE -->
+    <script src="/static/assets/js/setting-demo2.js"></script>
+    
+
+
+
+	
+</body>
+</html>
+
+	
+
+

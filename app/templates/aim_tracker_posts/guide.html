@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Flask Dashboard Atlantis - {% block title %}Open-Source Admin Panel{% endblock %} | AppSeed </title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="/static/assets/img/icon.ico" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
+	
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], 
+			urls: ['/static/assets/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+	<script src="/static/assets/js/dropzone.js"></script>
+	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/assets/css/atlantis.min.css">
+
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="/static/assets/css/demo.css">
+	<style>
+        p, div, input {
+            font: 14px Calibri;
+        }
+        .ui-autocomplete { 
+            cursor:pointer; 
+            height:150px;
+            width:400px;
+            overflow-y:scroll;
+        } 
+        .statheader {
+        	font-size: 15px;
+        	text-align: center;
+        	color: "#d3d3d3";
+        }
+        .statbody {
+        	font-size: 20px;
+        	text-align: center;
+        	color: "#191919";
+        }
+        #autocomplete
+		{
+		    font-size: 20px;
+		    width: 500px;
+		    height: 20px;
+		    float: left;
+		    padding-left: 5px;
+		    padding-right: 5px;
+		    margin-top: 0px;
+		    border:0;
+		}
+		.container-fluid {
+			width:200px;
+			float:right;
+		}
+		.main-panel{
+    		background-image: linear-gradient(rgb(7, 9, 11), rgb(28, 35, 42));
+    		overflow: scroll;	
+	    }
+	    .sidebar{
+	    	background-color: rgb(28, 35, 42);
+	    }
+	    .card {
+	    	background-color: rgb(28, 35, 42);
+	    	color:white;
+	    }
+	    .big-label{
+	    	font-size: 20px;
+	    	color: white;
+	    }
+	    .icon-arrow-up-circle {
+	    	font-size: 25px;
+	    	font-style: "sans-serif";
+	    	float: left;
+	    }
+	    .icon-class{
+	    	float: left;
+	    	margin-left: 10px;
+	    	font-size: 15px;
+	    }
+	    .modal {
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  padding-top: 100px; /* Location of the box */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		}
+		/* Modal Content */
+		.modal-content {
+		  background-color: grey ;
+		  margin: auto;
+		  padding: 5px;
+		  border: 1px solid #888;
+		  width: 40%;
+		  z-index: 1;
+		}
+
+		/* The Close Button */
+		.close {
+		  color: #FFF;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: #FFF;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+		.guide-links{
+			padding-bottom: 10px;
+		}
+		.guide-post{
+			color: white;
+		}
+
+    </style>
+
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body>
+	<div class="wrapper {% block layout %}{% endblock layout %}">
+
+		{% include 'includes/navigation.html' %}
+
+		
+		<!-- Sidebar -->
+		<div class="sidebar sidebar-style-2">			
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+			                    <div class="card-header">
+			                        <div class="card-category big-label">Aim Tracker Guide</div>
+			                    </div>
+			                    <div class="card-body">
+			                    	<a href={{ url_for('aim_tracker_guide') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>Intro to FPS Aim Training</span>
+										</div>
+									</a>
+									<a href={{ url_for('aim_tracker_guide_train') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>What is Kovaak's FPS Aim Trainer?</span>
+										</div>
+									</a>
+			                        <a href={{ url_for('aim_tracker_guide_upload') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>How to upload Kovaak's Data</span>
+										</div>
+									</a>
+									<a href={{ url_for('aim_tracker_guide_tool') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>How to train using this tool</span>
+										</div>
+									</a>
+									<a href={{ url_for('aim_tracker_guide_setup') }}>
+										<div class="guide-links" style="text-align: left;  color:white;font-size: 15px;">
+											<span>Setting Up Kovaak's Aim Trainer</span>
+										</div>
+									</a>
+									<br>
+									<br>
+									<a href={{ url_for('aim_tracker') }}>
+										<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+											<span><< Aim Tracker Tool</span>
+										</div>
+									</a>
+			                    </div>
+			                </div>
+						</div>
+	                </div>
+					
+				</div>
+			</div>
+		</div>
+		<!-- End Sidebar -->
+
+
+
+
+		<div class="main-panel">
+			<div class="content">
+				<div class="page-inner guide-post">
+					
+			        <h1>Introduction to FPS Aim Training</h1>
+			        <p>Written by Coach Moby - N1 Esports</p>
+			        <br>
+
+			        <h3>What is Raw Aim?</h3>
+			        <p style="font-size: 18px;">Raw aim is the mechanical ability an athlete possesses in relation to mouse control. This includes clicking, tracking and target switching and excludes any component of game sense, crosshair placement, prediction, reaction, etc.</p>
+
+			        <br>
+			        <h3>Types of Raw Aim</h3>
+			        <p style="font-size: 18px; font-weight: bold;">Clicking: The ability to hit targets with single clicks.</p>
+			        <iframe src="https://giphy.com/embed/h6lW8bocLIQ3WwuXcY" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/h6lW8bocLIQ3WwuXcY"></a></p>
+			        <p style="font-size: 18px;">Example Kovaak’s scenarios:</p>
+			        <div class="row">
+				        <ul>
+				        	<li>1wall6targets TE</li>
+				        	<li>1wall6targets small</li>
+				        	<li>1w2ts reload</li>
+				        	<li>1w6ts reload</li>
+				        	<li>1wall5targets_pasu</li>
+				        	<li>Tile Frenzy</li>
+				        	<li>Tile Frenzy 180 Strafing</li>
+				        </ul>
+				    </div>
+			        <br>
+
+			        <p style="font-size: 18px; font-weight: bold;">Tracking: The ability to keep one’s crosshair on a moving target.</p>
+			        <iframe src="https://giphy.com/embed/MFgEDKxbVvvDp4Wg6m" width="480" height="264" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/MFgEDKxbVvvDp4Wg6m"></a></p>
+			        <p style="font-size: 18px;">Example Kovaak’s scenarios:</p>
+			        <div class="row">
+				        <ul>
+				        	<li>Close long strafes (invincible)</li>
+				        	<li>Vertical long strafes</li>
+				        	<li>Thin aiming long invincible</li>
+				        	<li>Air Invincible</li>
+				        	<li>Close fast strafes (invincible)</li>
+				        	<li>Midrange Long Strafes Invincible</li>
+				        	<li>FuglaaXYLongstrafes </li>
+				        </ul>
+				    </div>
+			        <br>
+			        
+			        <p style="font-size: 18px; font-weight: bold;">Switching: The ability to transition one’s crosshair from tracking target A to tracking target B.</p>
+			        <iframe src="https://giphy.com/embed/iG4mDkfwR0VyMlJ9W2" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/iG4mDkfwR0VyMlJ9W2"></a></p>
+			        <p style="font-size: 18px;">Example Kovaak’s scenarios:</p>
+			        <div class="row">
+				        <ul>
+				        	<li>Bounce 180 Tracking</li>
+				        	<li>patTargetSwitch</li>
+				        	<li>patTargetSwitch small</li>
+				        	<li>Tile Frenzy 180 Tracking</li>
+				        	<li>Tile Frenzy 180 Tracking 200%</li>
+				        </ul>
+				    </div>
+			        <br>
+
+			        <h3>Mechanical Components of Raw Aim</h3>
+			        <p style="font-size: 18px;"><b>Accuracy</b>: Shots hit divided by shots fired. Ability to adjust crosshair to a target location with precision.</p>
+			        <p style="font-size: 18px;"><b>Precision</b>: Ability to replicate a shot on a target location repeatedly.</p>
+			        <p style="font-size: 18px;"><b>Visual Reaction Time</b>: Interval of time between presentation of stimulus and appearance of appropriate voluntary response.</p>
+			        <p style="font-size: 18px;"><b>Speed</b>: The speed at which one adjusts aim from target to target.</p>
+			        <p style="font-size: 18px;"><b>Smoothness</b>: Ability to move one’s crosshair in a direction with a consistent velocity.</p>
+			        <p style="font-size: 18px;"><b>Pathing</b>: The path your crosshair follows when adjusting from target A to target B.</p>
+			        <br>
+
+			        <h3>Mental Components of Raw Aim</h3>
+			        <p style="font-size: 18px;"><b>Reading</b>: Ability to analyze and interpret current target movement to predict future location.</p>
+			        <p style="font-size: 18px;"><b>Reacting</b>: Ability to react to a change in direction of a target and adjust crosshair accordingly.</p>
+			        <p style="font-size: 18px;"><b>Predicting</b>: Ability to predict a target’s future movement patterns and location in order to adjust crosshair.</p>
+			        <br>
+
+			        <h3>Game Specific Aim Mechanics</h3>
+			        <p style="font-size: 18px;"><b>Recoil Pattern</b>: Some games like Counter Strike and Valorant have specific reproducible recoil patterns for each gun. This is the direction the gun barrel moves as each shot is fired. These spray patterns can be inverted and accounted for with recoil control.</p>
+			        <p style="font-size: 18px;"><b>Recoil Control</b>: Counteracting a weapon’s predetermined recoil pattern by mirroring that spray pattern with its inverse (ex. Spray goes up to the left, you must pull down to the right).</p>
+			        <br>
+	                
+			    </div>		
+			</div>
+		</div>
+		
+
+	</div>
+
+	<!--   Core JS Files   -->
+
+	<!--<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>-->
+	<script src="/static/assets/js/core/popper.min.js"></script>
+	<script src="/static/assets/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<!--<script src="/static/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
+
+	<!-- jQuery Scrollbar -->
+	<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+	<!-- Chart JS -->
+	<script src="/static/assets/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="/static/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="/static/assets/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="/static/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="/static/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="/static/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="/static/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Atlantis JS -->
+	<script src="/static/assets/js/atlantis.min.js"></script>
+
+	<script src="/static/assets/js/setting-demo.js"></script>
+
+	<!-- Specific JS goes HERE -->
+    <script src="/static/assets/js/setting-demo2.js"></script>
+    
+
+
+
+	
+</body>
+</html>
+
+	
+
+

@@ -35,6 +35,12 @@
 						<span>Aim Tracker</span>
 					</div>
 				</a>
+
+				<a href={{ url_for('about') }}>
+					<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
+						<span>About</span>
+					</div>
+				</a>
 				
 
 				
@@ -42,7 +48,7 @@
 
 					
 					<div class="navbar-nav topbar-nav ml-md-auto align-items-right">
-						<a href={{ url_for('index') }}>
+						<a href={{ url_for('profile') }}>
 							<div style="text-align: center; margin-right: 40px; color:white;font-size: 14px;font-family:'Century Gothic','Futura',san-serif;">
 								<span>{{ current_user.username }}</span>
 							</div>

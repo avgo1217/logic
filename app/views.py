@@ -46,6 +46,14 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/profile.html')
+def profile():
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'auth/profile.html')    
+    except:
+        return render_template( 'pages/error-404.html' )
+
 # Register a new user
 @app.route('/register.html', methods=['GET', 'POST'])
 def register():
@@ -439,6 +447,67 @@ def logic_playlist_all():
     except:
         return render_template( 'pages/error-404.html' )
 
+@app.route('/aim_data_tracker/guide')
+def aim_tracker_guide():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'aim_tracker_posts/guide.html',config=app.config['ROOT'])    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+@app.route('/aim_data_tracker/kovaaks-upload')
+def aim_tracker_guide_upload():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'aim_tracker_posts/upload.html',config=app.config['ROOT'])    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+@app.route('/aim_data_tracker/train')
+def aim_tracker_guide_train():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'aim_tracker_posts/train.html',config=app.config['ROOT'])    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+@app.route('/aim_data_tracker/tool')
+def aim_tracker_guide_tool():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'aim_tracker_posts/tool.html',config=app.config['ROOT'])    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+@app.route('/aim_data_tracker/setup')
+def aim_tracker_guide_setup():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'aim_tracker_posts/setup.html',config=app.config['ROOT'])    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+@app.route('/about')
+def about():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('login'))
+    try:
+        # try to match the pages defined in -> pages/<input file>
+        return render_template( 'about.html',config=app.config['ROOT'])    
+    except:
+        return render_template( 'pages/error-404.html' )
+
+
 
 
 #############################################
@@ -652,7 +721,6 @@ def get_home_page_info():
 
 def get_videos_by_filters(tag_list, game, difficulty, n1select, n1original):
     df = pd.read_sql(db.session.query(Videos).statement, db.session.bind)
-    print(df)
     if game != "All":
         df = df.loc[df['game']==game]
     if difficulty != "All":
