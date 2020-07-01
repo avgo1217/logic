@@ -25,10 +25,10 @@ from flask_login         import login_user, logout_user, current_user, login_req
 from werkzeug.exceptions import HTTPException, NotFound, abort
 
 # App modules
-from application import db, application
-from application.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from application.models import User, TrainingInstance, Scenarios, Videos, Playlists
-from application.email import send_password_reset_email
+from logic import db, application
+from logic.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
+from logic.models import User, TrainingInstance, Scenarios, Videos, Playlists
+from logic.email import send_password_reset_email
 
 # sql modules
 from sqlalchemy.sql import func

@@ -1,7 +1,7 @@
 from threading import Thread
 from flask import current_app
 from flask_mail import Message
-from application import mail
+from logic import mail
 from flask import render_template, current_app
 
 def send_async_email(app, msg):

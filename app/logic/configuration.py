@@ -13,7 +13,7 @@ class Config():
 
 	CSRF_ENABLED = True
 	SECRET_KEY   = "77tgFCdrEEdv77554##@3" 
-	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ryan.kim@n1esports.com:yN(<Zcu$Hnm?;9M@logic-database.cfhypkzsmt4g.us-east-2.rds.amazonaws.com/logic-database'
+	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://admin:yN(<Zcu$Hnm?;9M@logic-test.cfhypkzsmt4g.us-east-2.rds.amazonaws.com/logic-test'
 	#SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:RaliWeinskim@localhost/unlockd_test'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	MAIL_SERVER = 'smtp.gmail.com'

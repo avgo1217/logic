@@ -1,14 +1,17 @@
 version: '3'
 services:
-  appseed-app:
+  app:
     restart: always
-    env_file: .env
+    volumes:
+      - ./app:/app
     build: .
     ports:
       - "5005:5005"
     networks:
       - db_network
       - web_network
+    command: ["gunicorn", "--config", "/app/gunicorn-cfg.py", "application:application"]
+
   nginx:
     restart: always
     image: "nginx:latest"
@@ -19,7 +22,8 @@ services:
     networks:
       - web_network
     depends_on: 
-      - appseed-app
+      - app
+
 networks:
   db_network:
     driver: bridge

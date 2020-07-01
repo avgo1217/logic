@@ -4,18 +4,18 @@ License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from flask   import json, url_for, jsonify, render_template
-from jinja2  import TemplateNotFound
-from application     import application
+from flask import json, url_for, jsonify, render_template
+from jinja2 import TemplateNotFound
+from logic import application
 
 from . models import User
-from application    import db,bc,mail
+from logic import db,bc,mail
 from . common import *
 from sqlalchemy import desc,or_
 import hashlib
 from flask_mail  import Message
 import re
-from flask       import render_template
+from flask import render_template
 
 import      os, datetime, time, random
 
