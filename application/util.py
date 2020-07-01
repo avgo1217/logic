@@ -6,10 +6,10 @@ Copyright (c) 2019 - present AppSeed.us
 
 from flask   import json, url_for, jsonify, render_template
 from jinja2  import TemplateNotFound
-from app     import app
+from application     import application
 
 from . models import User
-from app    import app,db,bc,mail
+from application    import db,bc,mail
 from . common import *
 from sqlalchemy import desc,or_
 import hashlib
@@ -21,7 +21,7 @@ import      os, datetime, time, random
 
 # build a Json response
 def response( data ):
-    return app.response_class( response=json.dumps(data),
+    return application.response_class( response=json.dumps(data),
                                status=200,
                                mimetype='application/json' )
 

@@ -4,7 +4,7 @@ License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from app import app, db
+from application import application, db
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    application.run(debug=True)

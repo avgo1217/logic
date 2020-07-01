@@ -18,9 +18,9 @@ from flask_bootstrap import Bootstrap
 # Grabs the folder where the script runs.
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-app.config.from_object('app.configuration.Config')
+application.config.from_object('app.configuration.Config')
 
 db = SQLAlchemy() # flask-sqlalchemy
 mail = Mail()
@@ -28,20 +28,20 @@ login = LoginManager() # flask-loginmanager
 bootstrap = Bootstrap()
 
 
-db.init_app(app)
-login.init_app(app)
-mail.init_app(app)
-bootstrap.init_app(app)
-login.init_app(app) # init the login manager
+db.init_app(application)
+login.init_app(application)
+mail.init_app(application)
+bootstrap.init_app(application)
+login.init_app(application) # init the login manager
 
 login.login_view = 'main.login'
 login.login_message = 'Please log in to access this page.'
 
 # Setup database
-@app.before_first_request
+@application.before_first_request
 def initialize_database():
 	db.create_all()
 
 # Import routing, models and Start the App
-from app import views, models
+from application import views, models
 	
