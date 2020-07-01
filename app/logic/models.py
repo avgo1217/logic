@@ -1,4 +1,4 @@
-from app import db, login, app
+from logic import db, login, application
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -22,7 +22,7 @@ def load_user(id):
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+           filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
 
 class User(UserMixin, db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -98,9 +98,9 @@ class User(UserMixin, db.Model):
                         new_file = new_file+1
 
                         
-                        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                        file.save(os.path.join(application.config['UPLOAD_FOLDER'], filename))
 
-                        subfile = self.read_input_data(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                        subfile = self.read_input_data(os.path.join(application.config['UPLOAD_FOLDER'], filename))
                         new_session = TrainingInstance()
                         new_session.session_file_name = filename
                         new_session.user_id = self.id 
@@ -164,7 +164,7 @@ class User(UserMixin, db.Model):
 
                         db.session.add(new_session)
                         db.session.commit()
-                        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                        os.remove(os.path.join(application.config['UPLOAD_FOLDER'], filename))
 
             return new_file
 
@@ -210,7 +210,7 @@ class User(UserMixin, db.Model):
         @staticmethod
         def verify_reset_password_token(token):
             try:
-                id = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
+                id = jwt.decode(token, current_application.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
             except:
                 return
 

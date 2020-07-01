@@ -25,10 +25,10 @@ from flask_login         import login_user, logout_user, current_user, login_req
 from werkzeug.exceptions import HTTPException, NotFound, abort
 
 # App modules
-from app import db, app
-from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, TrainingInstance, Scenarios, Videos, Playlists
-from app.email import send_password_reset_email
+from logic import db, application
+from logic.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
+from logic.models import User, TrainingInstance, Scenarios, Videos, Playlists
+from logic.email import send_password_reset_email
 
 # sql modules
 from sqlalchemy.sql import func
@@ -36,17 +36,17 @@ from sqlalchemy import or_
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+           filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
 
 #############################################
 ###################LOGIN######################
 #############################################
-@app.route('/logout.html')
+@application.route('/logout.html')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile.html')
+@application.route('/profile.html')
 def profile():
     try:
         # try to match the pages defined in -> pages/<input file>
@@ -55,7 +55,7 @@ def profile():
         return render_template( 'pages/error-404.html' )
 
 # Register a new user
-@app.route('/register.html', methods=['GET', 'POST'])
+@application.route('/register.html', methods=['GET', 'POST'])
 def register():
     
     # cut the page for authenticated users
@@ -73,7 +73,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('auth/register.html', title='Register', form=form)
 
-@app.route('/reset_password_request', methods=['GET', 'POST'])
+@application.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -86,7 +86,7 @@ def reset_password_request():
         return redirect(url_for('login'))
     return render_template('auth/reset_password_request.html', title='Reset Password', form=form)
 
-@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+@application.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -101,7 +101,7 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('auth/reset_password.html', form=form)
 
-@app.route('/login.html', methods=['GET', 'POST'])
+@application.route('/login.html', methods=['GET', 'POST'])
 def login():
     
     if current_user.is_authenticated:
@@ -131,7 +131,7 @@ def login():
 #############################################
 ###################ADMIN######################
 #############################################
-@app.route('/admin/home', methods=['GET','POST'])
+@application.route('/admin/home', methods=['GET','POST'])
 def admin_home():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -141,7 +141,7 @@ def admin_home():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-home.html', config=app.config['ROOT'])    
+            return render_template( '/admin/admin-home.html', config=application.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
@@ -192,9 +192,9 @@ def admin_home():
         except:
             return render_template( 'pages/error-404.html' )
 
-    return render_template( '/admin/admin-home.html', config=app.config['ROOT']) 
+    return render_template( '/admin/admin-home.html', config=application.config['ROOT']) 
 
-@app.route('/admin/addvideo', methods=['GET','POST'])
+@application.route('/admin/addvideo', methods=['GET','POST'])
 def admin_video_add():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -204,7 +204,7 @@ def admin_video_add():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-add-video.html', config=app.config['ROOT'])    
+            return render_template( '/admin/admin-add-video.html', config=application.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
@@ -241,11 +241,11 @@ def admin_video_add():
 
         db.session.add(new_video)
         db.session.commit()
-        return render_template( '/admin/admin-add-video.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-add-video.html',config=application.config['ROOT'])
     else:
         flash("Complete the form")
 
-@app.route('/admin/editvideo', methods=['GET','POST'])
+@application.route('/admin/editvideo', methods=['GET','POST'])
 def admin_video_edit():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -255,7 +255,7 @@ def admin_video_edit():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-edit-video.html', config=app.config['ROOT'])    
+            return render_template( '/admin/admin-edit-video.html', config=application.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
@@ -292,11 +292,11 @@ def admin_video_edit():
         new_video.homepage_staffpick=0
 
         db.session.commit()
-        return render_template( '/admin/admin-edit-video.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-edit-video.html',config=application.config['ROOT'])
     else:
         flash("Complete the form")
 
-@app.route('/admin/addplaylist', methods=['GET','POST'])
+@application.route('/admin/addplaylist', methods=['GET','POST'])
 def admin_playlist_add():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -306,7 +306,7 @@ def admin_playlist_add():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-add-playlist.html', config=app.config['ROOT'])    
+            return render_template( '/admin/admin-add-playlist.html', config=application.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
@@ -330,11 +330,11 @@ def admin_playlist_add():
                              homepage_featured = 0)
         db.session.add(new_playlist)
         db.session.commit()
-        return render_template( '/admin/admin-add-playlist.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-add-playlist.html',config=application.config['ROOT'])
     else:
         flash("Complete the form")
 
-@app.route('/admin/editplaylist', methods=['GET','POST'])
+@application.route('/admin/editplaylist', methods=['GET','POST'])
 def admin_playlist_edit():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -344,7 +344,7 @@ def admin_playlist_edit():
         try:
             # try to match the pages defined in -> pages/<input file>
 
-            return render_template( '/admin/admin-edit-playlist.html', config=app.config['ROOT'])    
+            return render_template( '/admin/admin-edit-playlist.html', config=application.config['ROOT'])    
         except:
             return render_template( 'pages/error-404.html' )
 
@@ -368,15 +368,15 @@ def admin_playlist_edit():
         new_playlist.playlist_author_id = playlist_author_id
 
         db.session.commit()
-        return render_template( '/admin/admin-edit-playlist.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-edit-playlist.html',config=application.config['ROOT'])
     else:
         flash("Complete the form")
 
 #############################################
 ###################MAIN LINKS######################
 #############################################
-@app.route('/', defaults={'path': 'index.html'})
-@app.route('/<path>')
+@application.route('/', defaults={'path': 'index.html'})
+@application.route('/<path>')
 def index(path):
 
     #if not current_user.is_authenticated:
@@ -386,13 +386,13 @@ def index(path):
     try:
 
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'pages/'+path , config=app.config['ROOT'])
+        return render_template( 'pages/'+path , config=application.config['ROOT'])
     
     except:
         
         return render_template( 'pages/error-404.html' )
 
-@app.route('/aim-data-tracker/')
+@application.route('/aim-data-tracker/')
 def aim_tracker():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -401,109 +401,109 @@ def aim_tracker():
         user = User.query.filter_by(username = current_user.username).first()
         if user.get_existing_scenario_instances():
             result = get_most_played_scenario(current_user.username)
-            return render_template( 'aim-data-tracker.html', scenario = result, config=app.config['ROOT'])
+            return render_template( 'aim-data-tracker.html', scenario = result, config=application.config['ROOT'])
         else:
-            return render_template( 'aim-data-tracker.html',scenario = "Upload Kovaaks Data", config=app.config['ROOT'])
+            return render_template( 'aim-data-tracker.html',scenario = "Upload Kovaaks Data", config=application.config['ROOT'])
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/browse/')
+@application.route('/browse/')
 def logic_browse():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'logic-browse.html',config=app.config['ROOT'])    
+        return render_template( 'logic-browse.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/browse/<video_id>')
+@application.route('/browse/<video_id>')
 def logic_browse_single(video_id):
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'single-video.html', video_id = video_id, config=app.config['ROOT'])    
+        return render_template( 'single-video.html', video_id = video_id, config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/playlist/<playlist_id>/<video_id>')
+@application.route('/playlist/<playlist_id>/<video_id>')
 def logic_playlist_single(playlist_id, video_id):
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'single-playlist.html', playlist_id = playlist_id, video_id=video_id, config=app.config['ROOT'])    
+        return render_template( 'single-playlist.html', playlist_id = playlist_id, video_id=video_id, config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/playlists/')
+@application.route('/playlists/')
 def logic_playlist_all():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'playlist-browse.html',config=app.config['ROOT'])    
+        return render_template( 'playlist-browse.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/aim_data_tracker/guide')
+@application.route('/aim_data_tracker/guide')
 def aim_tracker_guide():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'aim_tracker_posts/guide.html',config=app.config['ROOT'])    
+        return render_template( 'aim_tracker_posts/guide.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/aim_data_tracker/kovaaks-upload')
+@application.route('/aim_data_tracker/kovaaks-upload')
 def aim_tracker_guide_upload():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'aim_tracker_posts/upload.html',config=app.config['ROOT'])    
+        return render_template( 'aim_tracker_posts/upload.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/aim_data_tracker/train')
+@application.route('/aim_data_tracker/train')
 def aim_tracker_guide_train():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'aim_tracker_posts/train.html',config=app.config['ROOT'])    
+        return render_template( 'aim_tracker_posts/train.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/aim_data_tracker/tool')
+@application.route('/aim_data_tracker/tool')
 def aim_tracker_guide_tool():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'aim_tracker_posts/tool.html',config=app.config['ROOT'])    
+        return render_template( 'aim_tracker_posts/tool.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/aim_data_tracker/setup')
+@application.route('/aim_data_tracker/setup')
 def aim_tracker_guide_setup():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'aim_tracker_posts/setup.html',config=app.config['ROOT'])    
+        return render_template( 'aim_tracker_posts/setup.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
-@app.route('/about')
+@application.route('/about')
 def about():
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
     try:
         # try to match the pages defined in -> pages/<input file>
-        return render_template( 'about.html',config=app.config['ROOT'])    
+        return render_template( 'about.html',config=application.config['ROOT'])    
     except:
         return render_template( 'pages/error-404.html' )
 
@@ -513,38 +513,38 @@ def about():
 #############################################
 ###################APIS######################
 #############################################
-@app.route("/api/home")
+@application.route("/api/home")
 def get_home_page():
     result = get_home_page_info()
     return result
 
-@app.route("/api/videos/search/<video_id>", methods=["GET"])
+@application.route("/api/videos/search/<video_id>", methods=["GET"])
 def get_one_video_search(video_id):
     result = get_one_video(video_id)
     return result
 
-@app.route("/api/playlists/search/<playlist_id>", methods=["GET"])
+@application.route("/api/playlists/search/<playlist_id>", methods=["GET"])
 def get_one_playlist_search(playlist_id):
     result = get_one_playlist(playlist_id)
 
     return result
 
-@app.route("/api/admin/playlists/search/<playlist_id>", methods=["GET"])
+@application.route("/api/admin/playlists/search/<playlist_id>", methods=["GET"])
 def get_one_playlist_admin(playlist_id):
     result = get_one_playlist_admin(playlist_id)
     return result
 
-@app.route("/api/playlists/all", methods=["GET"])
+@application.route("/api/playlists/all", methods=["GET"])
 def get_all_playlists():
     result = get_all_playlists()
     return result
 
-@app.route("/api/admin/playlists/all", methods=["GET"])
+@application.route("/api/admin/playlists/all", methods=["GET"])
 def get_all_playlists_admin():
     result = get_all_playlists_admin()
     return result
 
-@app.route("/api/videos/search/", methods=["GET"])
+@application.route("/api/videos/search/", methods=["GET"])
 def get_all_videos_search():
     if request.args.get('search'):
         term = request.args.get('search')
@@ -553,7 +553,7 @@ def get_all_videos_search():
     result = get_search_bar_data(term)
     return result
 
-@app.route("/api/videos/admin/", methods=["GET"])
+@application.route("/api/videos/admin/", methods=["GET"])
 def get_all_videos_search_admin():
     if request.args.get('search'):
         term = request.args.get('search')
@@ -562,7 +562,7 @@ def get_all_videos_search_admin():
     result = get_search_bar_data_admin(term)
     return result
 
-@app.route("/api/videos/filters/", methods=["GET"])
+@application.route("/api/videos/filters/", methods=["GET"])
 def get_filtered_videos_list():
     # get all args
     tags = request.args.getlist('tag')
@@ -580,7 +580,7 @@ def get_filtered_videos_list():
     result = get_videos_by_filters(tag_list, game, difficulty, n1select, n1original)
     return result
 
-@app.route("/api/traininginstances/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
+@application.route("/api/traininginstances/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
 def get_training_instances(username, scenario, aimmetric,daterange,smoothflag):
     if current_user.is_authenticated and current_user.username == username:
         result = get_training_instances_by_username_scenario(username, scenario, current_user,aimmetric, daterange, smoothflag)
@@ -588,7 +588,7 @@ def get_training_instances(username, scenario, aimmetric,daterange,smoothflag):
     else:
         return redirect(url_for('login'))
 
-@app.route("/api/scenarios/<username>", methods=["GET"])
+@application.route("/api/scenarios/<username>", methods=["GET"])
 def get_unique_scenarios(username):
     # Angular, react, to abstract away raw jquery (vue.js)
     if current_user.is_authenticated and current_user.username == username:
@@ -602,7 +602,7 @@ def get_unique_scenarios(username):
         return redirect(url_for('login'))
 
 
-@app.route("/api/stats/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
+@application.route("/api/stats/<username>/<scenario>/<aimmetric>/<daterange>/<smoothflag>", methods=["GET"])
 def get_bottom_row_stats(username, scenario, aimmetric,daterange,smoothflag):
     if current_user.is_authenticated and current_user.username == username:
         result = calculate_bottom_row_stats(username, scenario, aimmetric, daterange, smoothflag)
@@ -610,7 +610,7 @@ def get_bottom_row_stats(username, scenario, aimmetric,daterange,smoothflag):
     else:
         return redirect(url_for('login'))
 
-@app.route("/api/globalstat/<scenario>/<aim_metric>/<stat_type>", methods=["GET"])
+@application.route("/api/globalstat/<scenario>/<aim_metric>/<stat_type>", methods=["GET"])
 def get_global_comparison_stat(scenario,aim_metric,stat_type):
 
     # Angular, react, to abstract away raw jquery (vue.js)
@@ -620,7 +620,7 @@ def get_global_comparison_stat(scenario,aim_metric,stat_type):
     else:
         return redirect(url_for('login'))
 
-@app.route("/api/admin/videos", methods=["GET"])
+@application.route("/api/admin/videos", methods=["GET"])
 def get_admin_videos():
 
     # Angular, react, to abstract away raw jquery (vue.js)
@@ -630,30 +630,30 @@ def get_admin_videos():
     else:
         return redirect(url_for('login'))
 
-@app.route("/api/videos/delete/<video_id>", methods=['POST'])
+@application.route("/api/videos/delete/<video_id>", methods=['POST'])
 def delete_video(video_id):
     if current_user.is_authenticated and current_user.admin_status==1:
         delete_video(video_id)
-        return render_template( '/admin/admin-edit-video.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-edit-video.html',config=application.config['ROOT'])
     else:
-        return render_template( '/admin/admin-edit-video.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-edit-video.html',config=application.config['ROOT'])
 
-@app.route("/api/playlists/delete/<playlist_id>", methods=['POST'])
+@application.route("/api/playlists/delete/<playlist_id>", methods=['POST'])
 def delete_playlist(playlist_id):
     if current_user.is_authenticated and current_user.admin_status==1:
         delete_playlist(playlist_id)
-        return render_template( '/admin/admin-edit-playlist.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-edit-playlist.html',config=application.config['ROOT'])
     else:
-        return render_template( '/admin/admin-edit-playlist.html',config=app.config['ROOT'])
+        return render_template( '/admin/admin-edit-playlist.html',config=application.config['ROOT'])
 
-@app.route('/sitemap.xml')
+@application.route('/sitemap.xml')
 def sitemap():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
+    return send_from_directory(os.path.join(application.root_path, 'static'), 'sitemap.xml')
 
 #############################################
 ###################HELPER FUNCTIONS######################
 #############################################
-@app.route('/aim-data-tracker/upload', methods=['POST'])
+@application.route('/aim-data-tracker/upload', methods=['POST'])
 def upload():
     uploaded_files = request.files.getlist("file[]")
     user = User.query.filter_by(username = current_user.username).first()
