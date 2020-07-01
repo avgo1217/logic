@@ -24,7 +24,7 @@ class Config():
 	ADMINS = ['ryan.kim@n1esports.com']
 	SECURITY_EMAIL_SENDER = 'ryan.kim@n1esports.com'
 	SESSION_TYPE = 'filesystem'
-	UPLOAD_FOLDER='app/uploads/'
+	UPLOAD_FOLDER='application/uploads/'
 	ALLOWED_EXTENSIONS={'csv'}
 	ROOT='http://127.0.0.0:5000/'
 	#ROOT = 'http://127.0.0.1:5000/'
